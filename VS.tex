@@ -1,0 +1,215 @@
+\documentclass[ngerman,a4paper]{report}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
+\usepackage{listings}
+
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{language=C,
+numbers=left,
+numberstyle=\tiny\color{gray},
+stepnumber=1,
+numbersep=5pt,
+%basicstyle=\tiny,
+%frame = single,
+tabsize =2,
+breaklines = true,
+breakatwhitespace = false,
+keywordstyle=\color{blue},          % keyword style
+commentstyle=\color{dkgreen},       % comment style
+stringstyle=\color{mauve},         % string literal style
+literate=%
+{Ö}{{\"O}}1
+{Ä}{{\"A}}1
+{Ü}{{\"U}}1
+{ß}{{\ss}}2
+{ü}{{\"u}}1
+{ä}{{\"a}}1
+{ö}{{\"o}}1
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{lastpage}
+\makeatletter
+
+\lhead{\textbf{\@title} \\ \@author}
+\chead{}
+\rhead{\@date \\ \thepage \ von \pageref{LastPage}}
+\cfoot{}
+
+\renewcommand{\maketitle}{}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+ 
+\author{Hinnerk van Bruinehsen}
+\title{Verteilte Systeme}
+\date{SoSe 2013}
+
+\begin{document}
+\maketitle
+
+\section{Verteilte Systeme/Distributed Systems}
+\subsection{Orga}
+VL Di 10-12 (nicht am 23.04.)\\
+Ue Do 10-12\\
+
+\subsubsection{Elektisches}
+\begin{itemize}
+\item (kvv)
+\item Website AG
+\item Sakai
+\end{itemize}
+
+\subsubsection{Übungen}
+
+\begin{itemize}
+\item ca. 5 Übungsblätter, 14-tägig
+\item Vorträge in Gruppen über \glqq verteilte Systeme\grqq
+\end{itemize}
+
+\subsubsection{Material/Inhalt}
+\begin{itemize}
+\item[1. Hälfte] Distributed Systems (Tanenbaum, van Steen)
+	\begin{itemize}
+	\item Architektur
+	\item Prozesse
+	\item Kommunikation
+	\item Namen
+	\item Synchronisation
+	\item Konsistenz
+	\item Replikation
+	\item Fehlertoleranz
+	\end{itemize}
+\item[2. Hälfte] Distributed Algorithms (Nancy Lynch)
+	\begin{itemize}
+	\item synchronous network algorithms
+	\item network models (leader election, shortest path, distributed consensus, byzantine agreement)
+	\item asynchronous network algorithms (shared memory, mutual exclusion, resource allocation, consensus)
+	\item timing
+	\item network resource allocation
+	\item failure detectors
+	\end{itemize}
+\end{itemize}
+
+\section{Distributed Systems}
+\textbb{Def:} A distributed System is a collection of independent computers that appears to it's users as a single coherent system.
+
+Characteristics:\\
+\begin{itemize}
+\item autonomous components
+\item appears as single system
+\item communication is hidden
+\item organisation is hidden \\(could be high-performance mainframe or sensor net)
+\item heterogenous system offers homogenous look/interface
+\end{itemize}
+
+Objectives:\\
+\begin{itemize}
+\item provide resources (printer, storage, computing)
+\begin{itemize}
+\item share in a controlled, efficient way
+\item grant access\\
+$\Rightarrow$ connect users and resources
+\end{itemize}
+
+\end{itemize}
+
+Transparency:\\
+hide the fact that processes and resources are physically distributed.
+
+Types of transparancy:\\
+\begin{itemize}
+\item[access] hide differences in representation and how a resource is accessed
+\item[location]
+\item[migration]
+\item[relocation]
+\item[replikation]
+\item[concurrency]
+\item[failure]
+\end{itemize}
+
+transparancy is desireable, but not always perfectly possible
+
+tradeoff between transparancy and complexity, maintainablility and performance
+
+\textbb{Open System}
+
+\begin{itemize}
+\item service interfaces specified using Interface Definition Language (IDL)
+\item service specification as text
+\end{itemize}
+
+\textbb{Scalability} is an important property
+
+\begin{itemize}
+\item scalable in size (number of nodes)
+\item scalable in geographic spread
+\item scalable in administration
+\end{itemize}
+
+\textbb{Problems}
+
+\begin{itemize}
+\item centralized services
+\item centralized data
+\item centralized algorithms
+\end{itemize}
+
+\textbb{Scaling techiques)
+
+\begin{itemize}
+\item use only asynchronous communication
+\item distribution, split components
+\item replication of components
+\end{itemize}
+
+\textbb{pitfalls}
+
+\begin{enummerate}
+\item reliable network
+\item secure network
+\item homogenous network
+\item constant topologgy
+\item zero latency
+\item infinite bandwith
+\item zero transport cost
+\item one administrator!
+\end{enummerate}
+
+\textbb{Types of distributed systems}
+\begin{itemize}
+\item computing systems
+\begin{itemize}
+\item cluster computing
+\item grid computing(virtual organisation, geographically distributed and heterogenous))
+\end{itemize}
+\item distributed inforamtion systems
+\begin{itemize}
+\item transaction processing systems (database) \\
+ACID (atomicity, consistency, isolated, durable)
+\item enterprise systems
+\end{itemize}
+\item Distributed pervasive systems\\
+small, wireless, adhoc, no administration\\
+home automation, health systems, sensor networks
+\end{itemize}
+
+\textbb{Why do we need distributed systems?}\\
+\begin{itemize}
+\item performance
+\item distribution inherent
+\item reliability
+\item incremental growth (scalability)
+\item sharing resources
+\end{itemize}
+
+
+\end{document}
