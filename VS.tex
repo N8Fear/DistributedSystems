@@ -211,5 +211,145 @@ home automation, health systems, sensor networks
 \item sharing resources
 \end{itemize}
 
+\section{Architectures of distributed Systems}
+
+\begin{itemize}
+\item how to split software into components\\
+$\Rightarrow$ Softwarearchiticture
+\item how to build a system out of the components\\
+$\Rightarrow$ Systemarchitecture
+\end{itemize}
+
+Middleware can  help to create distribution transparency\\
+
+Architecturestyles:\\
+\begin{itemize}
+\item Layered architecture\\
+$\Rightarrow$ network stack, messages or data flow up and down\\
+\begin{itemize}
+\item control flow between layers
+\item requests down
+\item reply up
+\end{itemize}
+\item Object-based architectures\\
+\begin{itemize}
+\item interaction between components
+\item e.g. remote procedure calls
+\item can be client-server system
+\end{itemize}
+\item data-centered architectures\\
+\begin{itemize}
+\item data is key element
+\item communication over data, distributed database
+\item web-systems mostly data-centric
+\end{itemize}
+\item event-based architecture\\
+\begin{itemize}
+\item publish-subscribe systems
+\item processes communicates threough events
+\item publisher announces events at broker\\
+$\Rightarrow$ loose coupling (publisher and subscriber need not to know each other), decoupled in space\\
+$\Rightarrow$ scalability better than client-server, parallel processing, caching\\
+\end{itemize}
+Event-based and data-based can be combined\\
+$\Rightarrow$ shared Data space \\
+\end{itemize}
+
+\subsection{System architectures}
+\begin{enummerate}
+\item centralized architectures\\
+client - server\\
+\begin{itemize}
+\item[(i)] single point of failure
+\item[(ii)] performance (server is bottleneck)\\
+can request be repeated without harm?\\
+$\Rightarrow$ request is idempotent
+\item[(iii)] aplication layering\\
+Layers:\begin{itemize}
+\item[1.)] User interface
+\item[2.)] processing
+\item[3.)] data level
+\end{itemize}
+$\Rightarrow$ a lot of waiting\\
+$\Rightarrow$ does not scale\\
+\end{itemize}
+\item Decentralized architectures\\
+\begin{ itemize}
+\item vertical distribution (layering)\\
+different logic on different machines
+\item horizontal distribution \\
+replicated client/server operating on different data\\
+$\Rightarrow$ overlay-underlay hides physical structure by adding logical structure\\
+\end{itemize}
+
+Structured P2P architectures\\
+\begin{itemize}
+\item most popular technique is distributed hashtables (DHT)\\
+\item randomly 128 bit or 160 bit ke for data and nodes. Two or more keys are very unlikely\\
+\item Chord system arranges items in a ring 
+\item data item k is assigened to node with smallest identifier id $\geq$ k
+\end{itemize}
+ie item 1 belongs to node 1\\
+item 2 belongs to node 2\\
+for each item k$_i$ succ(k)=id\\
+returns  the name of the node k is assigened to\\
+to find data item k the function LOOKUP(k) returns the adress of succ(k) in O(log(N)(later!)\\
+
+membership management\\
+join:\\
+create SHA1 identifier\\
+LOOKUP(id) = succ(id)\\
+contact succ(id) and pred(id) to join ring\\
+
+leave:\\
+node id informs succ(id) and pred(id) and assigns it's data to succ(id)\\
+
+Content adressable network (CAN)\\
+\begin{itemize}
+\item d-dimensional cartesian space
+\item every node draws random number
+\item space is divided among nodes
+\item every data draws identifier (coodinates) which assigns a node
+
+\item join\begin{itemize}
+\item select random point
+\item half the square in which id falls
+\item assign item to centers
+\end{itemize}
+\item leave\begin{itemize}
+\item one node takes the rectangle\\
+$\Rightarrow$ reassign rectangles periodically
+\end{itemize}
+\end{itemize}
+
+Unstructured P2P Network\\
+\begin{itemize}
+\item random graph
+\item each node maintains a list of c neighbours
+\item partial view or neighbourhood list  with age
+\item nodes exchange neighbour information \\active thread\\ select peer\\
+
+PUSH\\
+select c/2 youngest entries+myself\\
+send to peer\\
+
+PULL\\
+receive peer buffer\\
+construct new partial view\\
+increment age\\
+
+passive thread\\
+recieve buffer from peer\\
+
+PULL:\\
+select c/2\\
+send to peer\\
+construct new partial view
+increment age\\
+
+\end{itemize}
+
+\end{enummerate}
+
 
 \end{document}
