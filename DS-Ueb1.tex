@@ -1,0 +1,85 @@
+\documentclass[ngerman,a4paper]{report}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage{paralist}
+\usepackage{array}
+\usepackage{color}
+\usepackage{caption}
+\usepackage{url}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinelanguage
+[x64]{Assembler}     % add a "`x64"' dialect of Assembler
+[x86masm]{Assembler} % based on the "`x86masm"' dialect
+% with these extra keywords:
+{morekeywords={CDQE,CQO,CMPSQ,CMPXCHG16B,JRCXZ,LODSQ,MOVSXD, %
+               POPFQ,PUSHFQ,SCASQ,STOSQ,IRETQ,RDTSCP,SWAPGS, %
+               rax,rdx,rcx,rbx,rsi,rdi,rsp,rbp, %
+               r8,r8d,r8w,r8b,r9,r9d,r9w,r9b}} % etc.
+
+\lstset{language=[x64]Assembler,
+title=\lstname,
+numbers=left,
+numberstyle=\tiny\color{gray},
+stepnumber=1,
+numbersep=5pt,
+%frame = single,
+tabsize =2,
+breaklines = true,
+breakatwhitespace = false,
+keywordstyle=\color{blue},          % keyword style
+commentstyle=\color{dkgreen},       % comment style
+stringstyle=\color{mauve},         % string literal style
+literate=%
+{Ö}{{\"O}}1
+{Ä}{{\"A}}1
+{Ü}{{\"U}}1
+{ß}{{\ss}}2
+{ü}{{\"u}}1
+{ä}{{\"a}}1
+{ö}{{\"o}}1
+}
+\providecommand{\tabularnewline}{\\}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{lastpage}
+\makeatletter
+
+\lhead{\textbf{\@title} \\ \@author}
+\chead{}
+\rhead{\@date \\ \thepage \ von \pageref{LastPage}}
+\cfoot{}
+
+\renewcommand{\maketitle}{}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+ 
+\author{Tobias Höppner, Hinnerk van Bruinehsen, Tobias Famulla}
+\title{Distributed Systems - Ueb1}
+\date{SoSe 2013}
+
+\begin{document}
+\maketitle
+
+\section*{Assignment 1. Client-Server}
+The 
+i
+
+\section*{Assignment 2. Unstructured Overlay}
+Wahrscheinlichkeit: $P = \frac{c-1}{n-1}$
+
+
+\section*{Assignment 3. Structured Overlay}
+i
+Wenn nach der Topologie des Overlaynetworks geroutet wird, kann es sein, dass die Verbindungen im darüber liegenden Netz sehr ungünstig sind und es eigentlich bessere Verbindungen gäbe.
+
+\end{document}
