@@ -1,0 +1,40 @@
+%<TpX v="5" ArrowsSize="0.7" StarsSize="1" DefaultFontHeight="5" DefaultSymbolSize="30" ApproximationPrecision="0.01" PicScale="1" Border="2" BitmapRes="20000" HatchingStep="2" DottedSize="0.5" DashSize="1" LineWidth="0.3">
+%  <ellipse x="24.9919" y="110.116" dx="29.8997" dy="19.7822"/>
+%  <ellipse x="60.1015" y="75.0816" dx="99.8168" dy="30.0507"/>
+%  <ellipse x="95.06" y="109.965" dx="29.8997" dy="19.7822" rotdeg="180"/>
+%  <line x1="39.9497" y1="88.9381" x2="34.2823" y2="102.162" arr1="h44"/>
+%  <line x1="25.0588" y1="100.273" x2="30.0595" y2="87.4935" arr1="h44"/>
+%  <line x1="83.8443" y1="88.4936" x2="89.9563" y2="100.606" arr1="h44"/>
+%  <text x="41.1721" y="72.047" t="Dataspace" h="9"/>
+%  <text x="18.8358" y="109.052" t="comp." h="5"/>
+%  <text x="88.7339" y="109.052" t="comp." h="5"/>
+%  <text x="37.3938" y="96.9391" t="publish" h="3"/>
+%  <text x="87.7337" y="93.9388" t="publish" h="3"/>
+%  <text x="16.2799" y="90.7161" t="subscribe" h="3"/>
+%</TpX>
+\begin{figure}
+\centering
+\ifpdf
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(294.71, 181.28)(0,0)
+  \put(0,0){\includegraphics{shared_data_space.pdf}}
+  \put(93.91,39.66){\fontsize{25.61}{30.73}\selectfont Dataspace}
+  \put(30.60,144.55){\fontsize{14.23}{17.07}\selectfont comp.}
+  \put(228.73,144.55){\fontsize{14.23}{17.07}\selectfont comp.}
+  \put(83.20,110.22){\fontsize{8.54}{10.24}\selectfont publish}
+  \put(225.90,101.71){\fontsize{8.54}{10.24}\selectfont publish}
+  \put(23.35,92.58){\fontsize{8.54}{10.24}\selectfont subscribe}
+  \end{picture}%
+\else
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(294.71, 181.28)(0,0)
+  \put(0,0){\includegraphics{shared_data_space}}
+  \put(93.91,39.66){\fontsize{25.61}{30.73}\selectfont Dataspace}
+  \put(30.60,144.55){\fontsize{14.23}{17.07}\selectfont comp.}
+  \put(228.73,144.55){\fontsize{14.23}{17.07}\selectfont comp.}
+  \put(83.20,110.22){\fontsize{8.54}{10.24}\selectfont publish}
+  \put(225.90,101.71){\fontsize{8.54}{10.24}\selectfont publish}
+  \put(23.35,92.58){\fontsize{8.54}{10.24}\selectfont subscribe}
+  \end{picture}%
+\fi
+\end{figure}

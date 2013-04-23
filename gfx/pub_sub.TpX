@@ -1,0 +1,30 @@
+%<TpX v="5" ArrowsSize="0.7" StarsSize="1" DefaultFontHeight="5" DefaultSymbolSize="30" ApproximationPrecision="0.01" PicScale="1" Border="2" BitmapRes="20000" HatchingStep="2" DottedSize="0.5" DashSize="1" LineWidth="0.3">
+%  <text x="15.2625" y="69.0153" t="publisher" h="5"/>
+%  <text x="58.3264" y="88.9953" t="broker" h="5"/>
+%  <text x="94.607" y="68.9537" t="subscriber" h="5"/>
+%  <ellipse x="25.0778" y="70.0328" dx="30.1139" dy="19.8361"/>
+%  <ellipse x="65.007" y="89.8689" dx="30.0111" dy="20.0417"/>
+%  <ellipse x="104.936" y="70.0328" dx="30.1139" dy="19.8361"/>
+%  <line x1="52.4681" y1="84.2675" x2="38.0792" y2="75.1203" arr1="h44"/>
+%  <line x1="93.5792" y1="76.7648" x2="78.6764" y2="85.6037" arr1="h44"/>
+%</TpX>
+\begin{figure}
+\centering
+\ifpdf
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(323.07, 124.09)(0,0)
+  \put(0,0){\includegraphics{pub_sub.pdf}}
+  \put(20.53,30.90){\fontsize{14.23}{17.07}\selectfont publisher}
+  \put(142.60,87.54){\fontsize{14.23}{17.07}\selectfont broker}
+  \put(245.44,30.72){\fontsize{14.23}{17.07}\selectfont subscriber}
+  \end{picture}%
+\else
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(323.07, 124.09)(0,0)
+  \put(0,0){\includegraphics{pub_sub}}
+  \put(20.53,30.90){\fontsize{14.23}{17.07}\selectfont publisher}
+  \put(142.60,87.54){\fontsize{14.23}{17.07}\selectfont broker}
+  \put(245.44,30.72){\fontsize{14.23}{17.07}\selectfont subscriber}
+  \end{picture}%
+\fi
+\end{figure}

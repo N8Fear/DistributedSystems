@@ -6,8 +6,10 @@
 \usepackage{graphicx}
 \geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
 \usepackage{listings}
-
+\usepackage{stmaryrd}
 \usepackage{color}
+\usepackage{floatflt}
+\usepackage{float}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -129,9 +131,9 @@ Types of transparancy:\\
 \begin{itemize}
 \item[access] hide differences in representation and how a resource is accessed
 \item[location]
-\item[migration]
-\item[relocation]
-\item[replikation]
+\item[migration] move ressources
+\item[relocation] move ressources while using
+\item[replication]
 \item[concurrency]
 \item[failure]
 \end{itemize}
@@ -189,6 +191,12 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item computing systems
 \begin{itemize}
 \item cluster computing
+\begin{figure}
+	\centering
+	\includegraphics[width=200px]{gfx/cluster_computing.png}
+	\caption{cluster computing}
+	\label{img:cluster_comp}
+\end{figure}
 \item grid computing(virtual organisation, geographically distributed and heterogenous))
 \end{itemize}
 \item distributed inforamtion systems
@@ -246,6 +254,12 @@ $\Rightarrow$ network stack, messages or data flow up and down\\
 \item event-based architecture\\
 \begin{itemize}
 \item publish-subscribe systems
+\begin{figure}
+	\centering
+	\includegraphics[width=200px]{gfx/pub_sub.png}
+	\caption{publish subsribe system}
+	\label{img:publish_subscribe}
+\end{figure}
 \item processes communicates threough events
 \item publisher announces events at broker\\
 $\Rightarrow$ loose coupling (publisher and subscriber need not to know each other), decoupled in space\\
@@ -253,6 +267,12 @@ $\Rightarrow$ scalability better than client-server, parallel processing, cachin
 \end{itemize}
 Event-based and data-based can be combined\\
 $\Rightarrow$ shared Data space \\
+\begin{figure}
+	\centering
+	\includegraphics[width=200px]{gfx/shared_data_space.png}
+	\caption{shared data space}
+	\label{img:shared_data_space}
+\end{figure}
 \end{itemize}
 
 \subsection{System architectures}
@@ -262,6 +282,16 @@ client - server\\
 \begin{itemize}
 \item[(i)] single point of failure
 \item[(ii)] performance (server is bottleneck)\\
+\begin{figure}
+	\centering
+	\includegraphics[width=200px]{gfx/cs_simple_wait.png}
+	\caption{client server simple waiting situation}
+	\label{img:cs_simple_wait}
+\end{figure}
+\begin{enumerate}
+\item communication problems\\
+\item server problems\\
+\end{enumerate}
 can request be repeated without harm?\\
 $\Rightarrow$ request is idempotent
 \item[(iii)] aplication layering\\
@@ -269,6 +299,12 @@ Layers:\begin{itemize}
 \item[1.)] User interface
 \item[2.)] processing
 \item[3.)] data level
+\begin{figure}
+	\centering
+	\includegraphics[width=200px]{gfx/cs_app_layer.png}
+	\caption{application layer}
+	\label{img:cs_app_layer}
+\end{figure}
 \end{itemize}
 $\Rightarrow$ a lot of waiting\\
 $\Rightarrow$ does not scale\\
