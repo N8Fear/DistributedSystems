@@ -1,0 +1,52 @@
+%<TpX v="5" ArrowsSize="0.7" StarsSize="1" DefaultFontHeight="5" DefaultSymbolSize="30" ApproximationPrecision="0.01" PicScale="1" Border="2" BitmapRes="20000" HatchingStep="2" DottedSize="0.5" DashSize="1" LineWidth="0.3">
+%  <rect x="10.1236" y="80.1153" w="9.86667" h="9.86667"/>
+%  <rect x="10.1236" y="80.1153" w="9.86667" h="9.86667"/>
+%  <rect x="10.1236" y="80.1153" w="9.86667" h="9.86667"/>
+%  <rect x="40.032" y="80.1153" w="9.96945" h="9.96944"/>
+%  <rect x="59.9709" y="80.2181" w="10.0722" h="9.76389"/>
+%  <rect x="89.8792" y="80.0125" w="10.3806" h="10.0722"/>
+%  <line x1="14.9542" y1="75.182" x2="95.1209" y2="75.182"/>
+%  <line x1="44.9653" y1="80.1153" x2="44.9653" y2="75.0792"/>
+%  <line x1="65.1098" y1="80.1153" x2="65.1098" y2="75.182"/>
+%  <line x1="95.0181" y1="80.0125" x2="95.0181" y2="75.182"/>
+%  <line x1="14.9542" y1="80.1153" x2="14.9542" y2="75.2848"/>
+%  <line x1="44.9653" y1="95.6348" x2="95.1209" y2="95.6348"/>
+%  <line x1="65.1098" y1="90.1875" x2="65.1098" y2="95.532"/>
+%  <line x1="95.1209" y1="90.0848" x2="95.1209" y2="95.6348"/>
+%  <line x1="44.9653" y1="89.982" x2="44.9653" y2="95.532"/>
+%  <text x="78.4709" y="82.8903" t="..." h="5"/>
+%  <text x="11.1514" y="83.0959" t="Master" h="3"/>
+%  <text x="43.732" y="83.0959" t="1" h="5"/>
+%  <text x="63.7736" y="83.1986" t="2" h="5"/>
+%  <text x="93.8876" y="83.1986" t="n" tex="$n$" h="5"/>
+%  <text x="16.4958" y="76.4153" t="remote network" h="2"/>
+%  <text x="44.9653" y="96.9709" t="highspeed network" h="2"/>
+%</TpX>
+\begin{figure}
+\centering
+\ifpdf
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(266.84, 77.84)(0,0)
+  \put(0,0){\includegraphics{cluster_computing(TpX).pdf}}
+  \put(199.41,27.81){\fontsize{14.23}{17.07}\selectfont ...}
+  \put(8.58,28.39){\fontsize{8.54}{10.24}\selectfont Master}
+  \put(100.94,28.39){\fontsize{14.23}{17.07}\selectfont 1}
+  \put(157.75,28.69){\fontsize{14.23}{17.07}\selectfont 2}
+  \put(243.11,28.69){\fontsize{14.23}{17.07}\selectfont $n$}
+  \put(23.73,9.46){\fontsize{5.69}{6.83}\selectfont remote network}
+  \put(104.43,67.72){\fontsize{5.69}{6.83}\selectfont highspeed network}
+  \end{picture}%
+\else
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(266.84, 77.84)(0,0)
+  \put(0,0){\includegraphics{cluster_computing(TpX)}}
+  \put(199.41,27.81){\fontsize{14.23}{17.07}\selectfont ...}
+  \put(8.58,28.39){\fontsize{8.54}{10.24}\selectfont Master}
+  \put(100.94,28.39){\fontsize{14.23}{17.07}\selectfont 1}
+  \put(157.75,28.69){\fontsize{14.23}{17.07}\selectfont 2}
+  \put(243.11,28.69){\fontsize{14.23}{17.07}\selectfont $n$}
+  \put(23.73,9.46){\fontsize{5.69}{6.83}\selectfont remote network}
+  \put(104.43,67.72){\fontsize{5.69}{6.83}\selectfont highspeed network}
+  \end{picture}%
+\fi
+\end{figure}

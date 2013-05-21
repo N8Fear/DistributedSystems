@@ -1,0 +1,45 @@
+%<TpX v="5" ArrowsSize="0.7" StarsSize="1" DefaultFontHeight="5" DefaultSymbolSize="30" ApproximationPrecision="0.01" PicScale="1" Border="2" BitmapRes="20000" HatchingStep="2" DottedSize="0.5" DashSize="1" LineWidth="0.3">
+%  <line x1="129.85" y1="139.9" x2="9.94575" y2="139.9" arr1="h44" li="dot"/>
+%  <line x1="129.739" y1="120.009" x2="9.83462" y2="120.009" arr1="h44" li="dot"/>
+%  <text x="9.83463" y="141.012" t="client" h="5"/>
+%  <text x="9.94575" y="120.987" t="server" h="5"/>
+%  <line x1="9.94575" y1="139.878" x2="9.94575" y2="139.878" arr1="h44"/>
+%  <line x1="9.83463" y1="138.989" x2="39.8386" y2="138.989" lc="lime"/>
+%  <line x1="39.9497" y1="139.1" x2="49.7288" y2="128.988" lc="lime"/>
+%  <line x1="39.9497" y1="145.99" x2="119.627" y2="145.99" arr1="r0" arr2="r0"/>
+%  <text x="75.2877" y="146.99" t="wait" h="5"/>
+%  <text x="126.406" y="117.097" t="time" h="2"/>
+%  <line x1="129.962" y1="130.121" x2="10.0569" y2="130.121" arr1="h44" li="dot"/>
+%  <line x1="49.951" y1="129.099" x2="59.8412" y2="129.099" lc="lime"/>
+%  <line x1="60.0635" y1="128.988" x2="69.8425" y2="118.986" lc="lime"/>
+%  <line x1="69.9536" y1="119.098" x2="80.0661" y2="119.098" lc="lime"/>
+%  <line x1="80.0661" y1="119.098" x2="89.9563" y2="128.988" lc="lime"/>
+%  <line x1="89.9563" y1="128.877" x2="109.959" y2="128.877" lc="lime"/>
+%  <line x1="109.959" y1="128.877" x2="119.96" y2="138.989" lc="lime"/>
+%  <line x1="119.96" y1="138.989" x2="125.072" y2="138.989" lc="lime"/>
+%  <text x="9.94575" y="130.988" t="k" h="5"/>
+%</TpX>
+\begin{figure}
+\centering
+\ifpdf
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(351.86, 108.41)(0,0)
+  \put(0,0){\includegraphics{cs_app_layer.pdf}}
+  \put(5.67,74.68){\fontsize{14.23}{17.07}\selectfont client}
+  \put(5.98,17.92){\fontsize{14.23}{17.07}\selectfont server}
+  \put(191.21,91.63){\fontsize{14.23}{17.07}\selectfont wait}
+  \put(336.11,6.89){\fontsize{5.69}{6.83}\selectfont time}
+  \put(5.98,46.27){\fontsize{14.23}{17.07}\selectfont k}
+  \end{picture}%
+\else
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(351.86, 108.41)(0,0)
+  \put(0,0){\includegraphics{cs_app_layer}}
+  \put(5.67,74.68){\fontsize{14.23}{17.07}\selectfont client}
+  \put(5.98,17.92){\fontsize{14.23}{17.07}\selectfont server}
+  \put(191.21,91.63){\fontsize{14.23}{17.07}\selectfont wait}
+  \put(336.11,6.89){\fontsize{5.69}{6.83}\selectfont time}
+  \put(5.98,46.27){\fontsize{14.23}{17.07}\selectfont k}
+  \end{picture}%
+\fi
+\end{figure}

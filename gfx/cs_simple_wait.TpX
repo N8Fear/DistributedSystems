@@ -1,0 +1,46 @@
+%<TpX v="5" ArrowsSize="0.7" StarsSize="1" DefaultFontHeight="5" DefaultSymbolSize="30" ApproximationPrecision="0.01" PicScale="1" Border="2" BitmapRes="20000" HatchingStep="2" DottedSize="0.5" DashSize="1" LineWidth="0.3">
+%  <line x1="129.85" y1="139.9" x2="9.94575" y2="139.9" arr1="h44" li="dot"/>
+%  <line x1="129.962" y1="130.121" x2="10.0569" y2="130.121" arr1="h44" li="dot"/>
+%  <text x="9.83463" y="141.012" t="client" h="5"/>
+%  <text x="9.83463" y="131.01" t="server" h="5"/>
+%  <line x1="9.94575" y1="139.878" x2="9.94575" y2="139.878" arr1="h44"/>
+%  <line x1="9.83463" y1="138.989" x2="39.8386" y2="138.989" lc="lime"/>
+%  <line x1="39.9497" y1="139.1" x2="49.7288" y2="128.988" lc="lime"/>
+%  <line x1="49.951" y1="128.988" x2="79.7327" y2="128.988" lc="lime"/>
+%  <line x1="79.7327" y1="128.988" x2="89.9563" y2="138.989" lc="lime"/>
+%  <line x1="89.734" y1="138.767" x2="124.405" y2="138.767" lc="lime"/>
+%  <line x1="39.9497" y1="145.99" x2="89.9563" y2="145.99" arr1="r0" arr2="r0"/>
+%  <text x="60.6191" y="147.101" t="wait" h="5"/>
+%  <text x="126.85" y="126.988" t="time" h="2"/>
+%  <text x="45.8394" y="133.988" t="1." h="5"/>
+%  <text x="80.3995" y="133.988" t="1." h="5"/>
+%  <text x="63.0639" y="125.098" t="2." h="5"/>
+%</TpX>
+\begin{figure}
+\centering
+\ifpdf
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(353.12, 87.88)(0,0)
+  \put(0,0){\includegraphics{cs_simple_wait.pdf}}
+  \put(5.67,53.84){\fontsize{14.23}{17.07}\selectfont client}
+  \put(5.67,25.49){\fontsize{14.23}{17.07}\selectfont server}
+  \put(149.63,71.10){\fontsize{14.23}{17.07}\selectfont wait}
+  \put(337.37,14.09){\fontsize{5.69}{6.83}\selectfont time}
+  \put(107.73,33.93){\fontsize{14.23}{17.07}\selectfont 1.}
+  \put(205.70,33.93){\fontsize{14.23}{17.07}\selectfont 1.}
+  \put(156.56,8.73){\fontsize{14.23}{17.07}\selectfont 2.}
+  \end{picture}%
+\else
+  \setlength{\unitlength}{1bp}%
+  \begin{picture}(353.12, 87.88)(0,0)
+  \put(0,0){\includegraphics{cs_simple_wait}}
+  \put(5.67,53.84){\fontsize{14.23}{17.07}\selectfont client}
+  \put(5.67,25.49){\fontsize{14.23}{17.07}\selectfont server}
+  \put(149.63,71.10){\fontsize{14.23}{17.07}\selectfont wait}
+  \put(337.37,14.09){\fontsize{5.69}{6.83}\selectfont time}
+  \put(107.73,33.93){\fontsize{14.23}{17.07}\selectfont 1.}
+  \put(205.70,33.93){\fontsize{14.23}{17.07}\selectfont 1.}
+  \put(156.56,8.73){\fontsize{14.23}{17.07}\selectfont 2.}
+  \end{picture}%
+\fi
+\end{figure}
