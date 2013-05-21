@@ -100,7 +100,7 @@ Ue Do 10-12\\
 \end{itemize}
 
 \section{Distributed Systems}
-\textbb{Def:} A distributed System is a collection of independent computers that appears to it's users as a single coherent system.
+\textbf{Def:} A distributed System is a collection of independent computers that appears to it's users as a single coherent system.
 
 Characteristics:\\
 \begin{itemize}
@@ -140,14 +140,14 @@ transparancy is desireable, but not always perfectly possible
 
 tradeoff between transparancy and complexity, maintainablility and performance
 
-\textbb{Open System}
+\textbf{Open System}
 
 \begin{itemize}
 \item service interfaces specified using Interface Definition Language (IDL)
 \item service specification as text
 \end{itemize}
 
-\textbb{Scalability} is an important property
+\textbf{Scalability} is an important property
 
 \begin{itemize}
 \item scalable in size (number of nodes)
@@ -155,7 +155,7 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item scalable in administration
 \end{itemize}
 
-\textbb{Problems}
+\textbf{Problems}
 
 \begin{itemize}
 \item centralized services
@@ -163,7 +163,7 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item centralized algorithms
 \end{itemize}
 
-\textbb{Scaling techiques)
+\textbf{Scaling techiques}
 
 \begin{itemize}
 \item use only asynchronous communication
@@ -171,9 +171,9 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item replication of components
 \end{itemize}
 
-\textbb{pitfalls}
+\textbf{pitfalls}
 
-\begin{enummerate}
+\begin{enumerate}
 \item reliable network
 \item secure network
 \item homogenous network
@@ -182,9 +182,9 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item infinite bandwith
 \item zero transport cost
 \item one administrator!
-\end{enummerate}
+\end{enumerate}
 
-\textbb{Types of distributed systems}
+\textbf{Types of distributed systems}
 \begin{itemize}
 \item computing systems
 \begin{itemize}
@@ -202,7 +202,7 @@ small, wireless, adhoc, no administration\\
 home automation, health systems, sensor networks
 \end{itemize}
 
-\textbb{Why do we need distributed systems?}\\
+\textbf{Why do we need distributed systems?}\\
 \begin{itemize}
 \item performance
 \item distribution inherent
@@ -256,7 +256,7 @@ $\Rightarrow$ shared Data space \\
 \end{itemize}
 
 \subsection{System architectures}
-\begin{enummerate}
+\begin{enumerate}
 \item centralized architectures\\
 client - server\\
 \begin{itemize}
@@ -274,7 +274,7 @@ $\Rightarrow$ a lot of waiting\\
 $\Rightarrow$ does not scale\\
 \end{itemize}
 \item Decentralized architectures\\
-\begin{ itemize}
+\begin{itemize}
 \item vertical distribution (layering)\\
 different logic on different machines
 \item horizontal distribution \\
@@ -349,7 +349,112 @@ increment age\\
 
 \end{itemize}
 
-\end{enummerate}
+\end{enumerate}
+
+
+\section{PeerSim}
+
+\section{Processes}
+\begin{tabular}{p{7cm} p{7cm}}
+\textbf{processes}			&\textbf{threads}\\
+-execution of program			&-several threads share CPU\\
+-processor creates virtual processor	&-thread context has little memory information, perhaps mutex lock\\
+-for each program everyting is stored in process table	&-threads avoid blocking application (e.g. spreadsheet,computation of dependent cells, intermediate backup)\\
+-transparent sharing of resources,(processor, memory) separation&-thread switch is fast\\
+-each virtual processor has it's own independent adress space&-user level threads allow parallel computation of program sections\\
+-process switch is expensive, (save cpu context, pointers, translation lookaside buffer (TLB), memory management unit (MMU))&I/O or other blocking system calls block all threads, but thread creation/deletion is kernel task = expensive \\
+-perhaps even swaps to disk, if memory exhausted& advantages of threads over processes vanishes\\
+\end{tabular}
+
+2 possible solutions:\\
+\begin{enumerate}
+\item scheduler activation, upcall to achieve process switch
+\item light-weight processes (LWP)\\
+user level thread package\\
+execute scheduler and run thread of parent\\
+may block on systemcall, then other LWP may run\\
+triggered from userspace\\
+\end{enumerate}
+Advantages of LWP and user-level thread package:\\
+\begin{enumerate}
+\item creation, deletion etc is easy, no kernel intervention
+\item blocking syscall does not suspend process if enough LWPs are available
+\item applications do not see LWP. They only see user-level threads
+\item LWP can run on different processors in multiprocessor systems
+\end{enumerate}
+
+Disadvantages:\\
+\begin{enumerate}
+\item LWP creation as expensive as creation of kernel-level thread
+\end{enumerate}
+
+Advantages:\\
+- a blocking systemcall blocks only thread, not process
+$\Rightarrow$ system call for communication in distributed systems
+
+Multiple threads in clients and servers\\
+
+\textbf{Clients:}\\
+\begin{itemize}
+\item multiple thread may hide communication delay (distribution transparency)
+\item web browser opens several connections to load parts of a document/page
+\item web server may be replicated in same or different location\\
+$\Rightarrow$ truly parallel access to items and parallel download
+\end{itemize}
+
+\textbf{Servers:}\\
+\begin{itemize}
+\item single threaded, e.g. file server\\
+thread serves incoming request, waits for disk, returns file\\
+serves next
+\item multithreaded\\
+dispatcher thread recieves request\\
+hands over to worker thread\\
+waits for disk etc.\\
+dispatcher takes next request
+\item finite state machine\\
+only one thread\\
+examines request, either read from \ldots or from disk\\
+during wait stores requests in table\\
+serves next request\\
+manage control either new request or reply from disk\\
+act accordingly\\
+process acts as finite state machine that receives messages and acts/changes state
+\end{itemize}
+
+\textbf{summary:}\\
+\begin{tabular}{l l}
+model&characteristics\\
+single thread& no parallelism, blocking syscalls\\
+multi thread& parallelism, blocking syscalls\\
+finite state machine& parallelism, non-blocking syscalls\\
+\end{tabular}
+
+\section{Virtualisation}
+% Bild von Höpster
+
+V pretends there are more resources then available.\\
+
+Reasons for the need for V.\\
+-hardware changes much faster then SW\\
+$\Rightarrow$ improves portability\\
+-networks consist of different hardware\\
+$\Rightarrow$ enables portability of programs for all\\
+usage (distributed applications, network protocols)\\
+
+2 Types of Architectures for Virtualisation:\\
+\begin{enumerate}
+\item Runtime system providing instruction set\\
+	\begin{itemize}
+	\item interpreted as Java
+	\item emulated as for Windows applications on UNIX-platform processes VM
+	\end{itemize}
+\item Virtualisation shields hardware and offers instruction set of the same or other hardware\\
+- can host different OS that run simultaneosly\\
+$\Rightarrow$ VMM such as VMware, Xen\\
+
+
+\end{enumerate}
 
 
 \end{document}
