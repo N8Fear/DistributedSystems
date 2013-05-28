@@ -466,7 +466,7 @@ multi thread& parallelism, blocking syscalls\\
 finite state machine& parallelism, non-blocking syscalls\\
 \end{tabular}
 
-\section{Virtualisation}
+\subsection{Virtualisation}
 % Bild von Höpster
 
 V pretends there are more resources then available.\\
@@ -491,6 +491,121 @@ $\Rightarrow$ VMM such as VMware, Xen\\
 
 
 \end{enumerate}
+
+
+\subsection{Client-/Serverprocesses}
+\textbf{CLients:}\\
+%Bild von Tobi !!! :D
+%Mehr Bild!
+
+
+\begin{itemize}
+\item b) allows to store data at the server
+\item \textbf{thin client} e.g. X-windows
+\item thin client should separate application logic from user interaction
+\item ooften not implemented $\Rightarrow$ poor performance
+\item compression of interaction commands as solution
+\item compound documents where user interaction triggers several processing steps on the server. must be implemented (e.g. rotation of picture changes placement in texts)
+\end{itemize}
+
+\textbf{Servers:}\\
+\begin{itemize}
+	\item serves requests on behalf of the client
+	\item Types of servers\\
+		\begin{itemize}
+			\item \textbf{iterative Server} handles requests itself
+			\item \textbf{concurrent server} passes requests to worker, e.g. multithreaded server
+		\end{itemize}
+	\item server listens to port, endpoint to the client; some ports are reserved for special services
+	\item superserver listens to several ports, replacinf several (mostly idle) servers
+	\item stateless servers, keeps no information on state of client $\rightarrow$ change state without informing the client, e.g. web server
+	\item soft state server, maintains client state for limited time, e.g. servers informing about updates
+	\item stateful server keeps information about client (file server keeps (client, file) table), often better performance, fault-tolerance poorer
+	\item cookies allow to share information for server upon next visit client sends it'S cookies, allows state information for stateless server
+
+\end{itemize}
+\textbf{Distributed Servers}\\
+\begin{itemize}
+	\item servers in different locations that have different ip-adresses in DNS under the same name
+	\item MIPv6: mobility support for IPv6
+	\item mobile node has home network with stable home adress (HoA)
+	\item special router is home agent and takes care of traffic to the mobile node
+	\item mobile node receives care-of-adress (CoA), never seen by client
+	\item route optimisation avoids routing through home agent
+\end{itemize}
+
+\subsection{Code Migration}
+\begin{itemize}
+	\item Code migration on (running) process - Why?
+	\item service placement in distributed system $\Rightarrow$ minimize communication cost
+	\item load balancing in multiprocessor machine or cluster $\Rightarrow$ performace
+	\item (security)
+
+\end{itemize}
+
+\textbf{Models of Migration}
+\begin{itemize}
+	\item or process model\begin{enumerate}
+		\item code segment, instructions
+		\item resource segement, references to external resources, ie.e. file, printer, devices
+		\item execution segement, execution state process, stack, private data, programm counter
+
+	\end{enumerate}
+	\item \textbf{Migration types}\begin{itemize}
+		\item weak mobility, transfer code, (1), mabe 3)), which executes from beginning (i.e. java applets)
+		\item strong mobility, transfer 1)3), stop executions, transfer, resume
+	\end{itemize}
+\end{itemize}
+
+%bild
+
+Migrating resource segment 2) is difficult\\
+Consider process to resource binding\\
+\begin{enumerate}
+	\item binding by identifier, URL, ftp-server-name
+	\item binding by value, libraries for programming
+	\item binding by type, local device, monitor
+\end{enumerate}
+
+\textbf{Resource-machine-binding}
+\begin{enumerate}
+	\item unattached
+	\item fastend
+	\item fixed
+\end{enumerate}
+
+\begin{tabular}{l| l| l| l}
+pass tp resource binding&unattached&fastened&fixed\\
+\hline
+by identifier& MV&GR(or MV)& GR\\
+\hline
+by value& CP& GR(or CP)& GR\\
+\hline
+by type& RB&RB(or GR,CP)&RB(or GR)\\
+\end{tabular}
+MV:move, GR, global reference, CP: copy value, RB: rebind to locally available resource
+
+\section{Communication}
+we skip networking $\rightarrow$ Telematik\\
+
+Consider:\\
+\begin{itemize}
+	\item Remote procedure call
+	\item Message-oriented communication
+	\item Strem-oriented communication
+	\item Multicast communication
+\end{itemize}
+
+\subsection{RPC}
+%ordinary procedure call, e.g. count = read(fd,buf,nbytes)
+Remote procedure call uses stubs to pack parameters in message\\
+value parameters\\
+$\Rightarrow$ value packed in messages, transfer byte-by-byte$\Rightarrow$ problem can be little endian vs big endian systems\\
+reference parameters are: extremely difficult; create array and pass by value; how to handle graps, linked lists\ldots\\
+
+
+
+
 
 
 \end{document}
