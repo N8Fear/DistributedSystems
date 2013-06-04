@@ -608,4 +608,43 @@ reference parameters are: extremely difficult; create array and pass by value; h
 
 
 
+Remote procedure calls\\
+\subsection{Asynchronous RPC}
+% bild xD
+
+\begin{itemize}
+	\item hide communication, communication transparency
+\end{itemize}
+
+\subsection{Message oriented communication\\}
+\begin{itemize}
+	\item avoids synchronous communication which blocks sender\
+	Berkely sockets UNIX TCP/IP\\
+	server |socket|->|bind|->|listen|->|accept|->|read|<->|write|->|close|\\
+	client |socket|------------------->|connect|->|read|<->|write|->|close|\\
+
+\end{itemize}
+
+\subsection{Message-passing-interface (MPI)\\}
+\begin{itemize}
+	\item standad for communication
+	\item communication within group of processes
+	\item each group/member has identifier
+\end{itemize}
+
+\subsection{Message-queuing-system, Message-oriented-middleware (MoM)}
+
+\begin{itemize}
+	\item asynchronous persistent communication\\
+	\item store messages
+	\item transfer may take minutes, not milliseconds
+	\item applications communicate by inserting messages into queues
+	\item messages are inserted into local queue
+	\item message carries destination adress
+	\item queue manager may act as relays, router\\
+	%schickes Bild @ Höpster <- INSERT HERE PLX!!!
+	\item message broker transform type A into type B, using a set of rules
+	\item applications are email, workflow, batch processing, queries accross several databases
+\end{itemize}
+
 \end{document}
