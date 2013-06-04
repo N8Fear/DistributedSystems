@@ -9,6 +9,8 @@
 \usepackage{stmaryrd}
 \usepackage{color}
 \usepackage{floatflt}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{float}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -646,5 +648,76 @@ Remote procedure calls\\
 	\item message broker transform type A into type B, using a set of rules
 	\item applications are email, workflow, batch processing, queries accross several databases
 \end{itemize}
+
+\subsection{stream oriented communication}
+\begin{itemize}
+	\item temporal relationship between items important
+	\item multimedia data is compressed
+	\item QoS is important\\
+		\begin{itemize}
+			\item bit rate
+			\item max delay for session setup
+			\item max end-to-end delay
+			\item max delay variance (jitter)
+			\item max round trip delay\\
+				% next pic, tobi
+		\end{itemize}
+	\item networking solution such as differentiated services
+	\item synchronisation of streams
+\end{itemize}
+\subsection{Multicast communication}
+\begin{itemize}
+	\item application level multicast uses overlay
+	\item tree, unique path between each pair of nodes
+	\item mesh, more robust, fault-tolerant
+\end{itemize}
+\textbf{Example:} Construct overlay tree for chord
+\begin{itemize}
+	\item node that wants to start multicast generates key 128bit/160bit (nid) randomly
+	\item lookup of succ(nid) finds node responsible for key mid\\
+		$\Rightarrow$ succ(nid) becomes root of tree
+	\item join: lookup (nid) creates lookup message with join request routed from P to succ(nid)
+	\item request is forwarded Q (first time forward), Q becomes forwarder\\
+		$\Rightarrow$ P child of Q
+	\item request is first time forwarded by R, R becomes forwarder\\
+		$\Rightarrow$ Q becomes child of R
+	\item multicast: lookup(nid) sends message to the root\\
+		multicast from root
+\end{itemize}
+\textbf{Efficiency?}\\
+Quality of application level tree\\
+\begin{enumerate}
+	\item Link stress, number of traversals of same link per packet
+	\item stretch, relative delay penalty (RDP)\\
+		$\frac{\text{transmission time in overlay}}{\text{transmission time in delay/network}}$
+		$\Rightarrow$ minimize aggregated stretch, average RDP over all note pairs
+	\item tree cost, minimize aggregated link cost, link cost = cost between end points\\
+		$\Rightarrow$ find minimal spanning tree
+\end{enumerate}
+\subsection{Gossip-based-communication}
+\begin{itemize}
+	\item epidemic behaviour
+	\item a node does not have new data (susceptible), it has the data (infected) or is unwilling to spread (removed)\\
+	Anti-entropy-model\\
+	P chooses randomly Q\\
+	\begin{enumerate}
+		\item P pushes its data to Q
+		\item P pulls Q's data
+		\item P and Q exchange data
+	\end{enumerate}
+	\item if many nodes are infected probabiltry for selecting susceptible node  is low\\
+	$\Rightarrow$ low probability of data dissemination\\
+	\item pull works when many nodes are infected. Susceptible node determines spread. They have a high probability to contact infected nodes
+	\item if only one node is infected push/pull is best
+	\item Round is period in which each node at least once selects a neighbor\\
+		number of rounds needed to spread  $\approx \mathcal{O}(\log(N)), N$ is number of nodes\\
+\end{itemize}
+\textbf{Rumor spreading, gossiping}:\\
+%bild
+function of nodes that never obtain data: $s=e^{-(k+1)(1-s)}$\\
+e.g. $k=4, ln(s) = 4,97$\\
+$\Rightarrow s = 0,007$\\
+less than $0,7$ remain without data\\
+removing data is difficult : delete message is send via gossiping
 
 \end{document}
