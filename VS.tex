@@ -193,7 +193,7 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item computing systems
 \begin{itemize}
 \item cluster computing
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=200px]{gfx/cluster_computing.png}
 	\caption{cluster computing}
@@ -256,7 +256,7 @@ $\Rightarrow$ network stack, messages or data flow up and down\\
 \item event-based architecture\\
 \begin{itemize}
 \item publish-subscribe systems
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=200px]{gfx/pub_sub.png}
 	\caption{publish subsribe system}
@@ -269,7 +269,7 @@ $\Rightarrow$ scalability better than client-server, parallel processing, cachin
 \end{itemize}
 Event-based and data-based can be combined\\
 $\Rightarrow$ shared Data space \\
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=200px]{gfx/shared_data_space.png}
 	\caption{shared data space}
@@ -284,7 +284,7 @@ client - server\\
 \begin{itemize}
 \item[(i)] single point of failure
 \item[(ii)] performance (server is bottleneck)\\
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=200px]{gfx/cs_simple_wait.png}
 	\caption{client server simple waiting situation}
@@ -301,7 +301,7 @@ Layers:\begin{itemize}
 \item[1.)] User interface
 \item[2.)] processing
 \item[3.)] data level
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=200px]{gfx/cs_app_layer.png}
 	\caption{application layer}
@@ -408,6 +408,12 @@ increment age\\
 \begin{enumerate}
 \item scheduler activation, upcall to achieve process switch
 \item light-weight processes (LWP)\\
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/thread_lwp.png}
+	\caption{light-weight processes can run threads}
+	\label{img:lwp_threads}
+\end{figure}
 user level thread package\\
 execute scheduler and run thread of parent\\
 may block on systemcall, then other LWP may run\\
@@ -470,6 +476,12 @@ finite state machine& parallelism, non-blocking syscalls\\
 
 \subsection{Virtualisation}
 % Bild von Höpster
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/virtualisation_1.png}
+	\caption{virtualisation}
+	\label{img:virtualisation_1}
+\end{figure}
 
 V pretends there are more resources then available.\\
 
@@ -498,8 +510,19 @@ $\Rightarrow$ VMM such as VMware, Xen\\
 \subsection{Client-/Serverprocesses}
 \textbf{CLients:}\\
 %Bild von Tobi !!! :D
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/clienta.png}
+	\caption{app specific communication}
+	\label{img:clienta}
+\end{figure}
 %Mehr Bild!
-
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/clientb.png}
+	\caption{machine only communication}
+	\label{img:clientb}
+\end{figure}
 
 \begin{itemize}
 \item b) allows to store data at the server
@@ -519,14 +542,38 @@ $\Rightarrow$ VMM such as VMware, Xen\\
 			\item \textbf{concurrent server} passes requests to worker, e.g. multithreaded server
 		\end{itemize}
 	\item server listens to port, endpoint to the client; some ports are reserved for special services
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/server_deamon.png}
+	\caption{listener server}
+	\label{img:listener}
+\end{figure}
 	\item superserver listens to several ports, replacinf several (mostly idle) servers
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/superserver.png}
+	\caption{superserver}
+	\label{img:supserv}
+\end{figure}
 	\item stateless servers, keeps no information on state of client $\rightarrow$ change state without informing the client, e.g. web server
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/server3.png}
+	\caption{stateless server}
+	\label{img:statel_serv}
+\end{figure}
 	\item soft state server, maintains client state for limited time, e.g. servers informing about updates
 	\item stateful server keeps information about client (file server keeps (client, file) table), often better performance, fault-tolerance poorer
 	\item cookies allow to share information for server upon next visit client sends it'S cookies, allows state information for stateless server
 
 \end{itemize}
 \textbf{Distributed Servers}\\
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/distrb_server.png}
+	\caption{distributed server}
+	\label{img:distrb_serv}
+\end{figure}
 \begin{itemize}
 	\item servers in different locations that have different ip-adresses in DNS under the same name
 	\item MIPv6: mobility support for IPv6
