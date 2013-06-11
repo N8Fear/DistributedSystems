@@ -1,0 +1,18 @@
+je max. 6 Stichpunkte (max. 8 Wörter)
+1. Überblick
+-
+2. Struktur
+-
+3. Anwendungsbeispiele
+3.1 Verteilung
+-
+3.2 Partnerfindung
+-
+3.3 Topologiekonstruktion
+-
+3.4 Resourcenverwaltung
+-
+3.5 BerechnungSCHLONTZ* (*sprich: SCHLONTZ)
+-
+4. Fazit
+-
