@@ -1,8 +1,27 @@
 je max. 6 Stichpunkte (max. 8 Wörter)
 1. Überblick
--
+- probabilitischer Informationsaustausch
+- Wiederholung der einzelnen Arbeitsschritte (endlos)
+- analog zur Gerüchteverbreitung oder zu Krankheitsepidemien
+- historisch zur Sicherung der Konsistenz verteiler Datenbanken
 2. Struktur
--
+Begriffserklärung Peers:
+	- Prozesse
+	- haben Cache  mit Referenzen zu anderen Peers
+	- ggf. auch peer-spezifische Informationen im cache
+2.1 Peerauswahl
+- verschiedene Auswahlkriterien je nach Anwendung
+- Unterschiede bei Auswahl über kabellose oder kabelgebundene Verbindungen
+- Simulation eines anderen Verbindungstyps möglich, häufig teuer und unnötig
+- kaum Unterschiede auf Applikationsschicht zwischen synchron und asynchron
+- asynchron ist kein "richtiges" Gossiping
+2.2 Datenaustausch
+- peers entscheiden, welche Daten sie austauschen
+- entweder Applikationsdaten oder Referenzen zu anderen peers werden
+  ausgetauscht
+- stark anwendungsabhängig
+2.3 Datenverarbeitung
+- sehr stark anwendungsabhängig 
 3. Anwendungsbeispiele
 3.1 Verteilung
 -
