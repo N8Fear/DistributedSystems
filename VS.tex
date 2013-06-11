@@ -767,4 +767,118 @@ $\Rightarrow s = 0,007$\\
 less than $0,7$ remain without data\\
 removing data is difficult : delete message is send via gossiping
 
+\section{Naming}
+Flat naming\\
+\subsection{Distributed Hash Tables}
+%krasse büld von de hipster tobi
+\begin{itemize}
+\item m-bit identifier (128 or 160 Bit)
+\item entity with key k is under jurisdiction of node with smallest identifier id $\geq$ k\\
+$\Rightarrow$ succ(k)
+\item resolve key k to address of succ(k)
+\item option 1: each node p keeps succ(p), pred(p) node forwards request for key k to a neighbor\\
+if pred(p) $\leq$ k $\leq$ p, return(p)\\
+$\Rightarrow$ not scalable
+\item better solution: each Chord node maintains
+\underline{finger table} of lenght m\\
+FT[$i$]=succ($p+2^{i-1}$) = succ($p+1$) = succ($2$) (smallest id, sucht that id $\geq$ 2)\\
+i-th entry points to $2^{i-1}$ ahead of p
+\item to lookup k node p forwards request to p with index j in ps finger table:\\
+$q = FT_p[j] \leq k \leq FT_p[j+1]$
+\item example:\\
+resolve k = 26 from node 1 \\
+$k=26 > FT_1[5] \Rightarrow$ forward request to node\\
+$18 = FT_1[5]$
+\begin{itemize}
+\item node $18$ selects node $20 FT_{18}[2] \leq k < FT_{18}[3]$\\
+\item node $20$ selects node $21 \Rightarrow 28 $ which is responsible for key $26$\\
+\item lookup generally requires $O(log(N))$ steps, N nodes in system
+\item join/leave is rather simple
+\item keeeping figer table up to date is expensive
+\end{itemize} 
+\end{itemize}
+\section{Synchronistation}
+\subsection{Clock synchronisation algorithms}
+System model: each machine has timer that causes H interrupts per second
+\begin{itemize}
+	\item clock $C$ adds up ticks (interrupts)
+	\item $C_p(t)$ is clock time on machine $p$
+	\item perfect clock: $C_p(t) = t \forall p, t$ \\
+	$\Longleftrightarrow C_p'(t) = \frac{d C_p(t)}{dt} = 1$\\
+	$\mathrel{\widehat{=}}$ frequency of clock $C_p$ at time $t$
+% diagramm vom hipster
+	\item $C_p'(t) - 1 \mathrel{\widehat{=}}$ skew of p's clock, difference to perfect clock.
+	\item $C_p(t)-t \mathrel{\widehat{=}}$ offset
+	\item real timers do not interrupt H timespers maximum drift p such\\
+	$1-\rho \leq \frac {d(H)}{dt} \leq 1+p$
+	\item at time $\delta t$ two clocks that are drifting apart can be\\
+	$|C_2(\Delta t) - C_1(\Delta t) \leq 2 \rho \Delta t|$
+	\item if the difference should never exceed $\delta_i$ then synchronisation every $\frac {\delta}{2 \rho}$ seconds is needed
+	\item time allways moves forward.
+\end{itemize}
+
+
+\subsection{Network Time Protcol (NTP)}
+\begin{itemize}
+\item nodes contact time server that has an accurate clock
+\item time server pasive\\
+% hipsters GFX
+A estimates its offset to B as\\
+$\Theta = T_3 - \frac{(T-2 - T_1) + (T_4 - T_3)}{2}$\\
+assuming communication time is symmetric\\
+delay:\\
+$\delta = \frac{(T-2 - T_1) + (T_4 - T_3)}{2}$
+\item A probes B, B probes A
+\item NTP stores 8 pairs $(\Theta, \delta)$ per node pair using min($\delta$) for smallest delay
+\item either A or B can be more stable
+\item reference node has \underline{strattime  1} (clock has starttime 0)
+\item lower starttime level is better, will be used.
+\end{itemize}
+
+\subsection{Berkeley algorithm}
+\begin{itemize}
+\item assumes no node has 'good' time
+\item time server polls all nodes for their time
+%GFX vom hipster
+\item takes average and adjusts speed of nodes correspondingly
+\item all nodes agree on time, which may not be correct
+\end{itemize}
+
+\subsection{Logical Clocks - YEAH ALP5! -.-}
+\begin{itemize}
+\item logical time need not correct in real time.
+\item needs 'happens before' relation a $\rightarrow$ b
+\item happens before means:
+\begin{enumerate}
+\item if a,b are events in the same process and a happens before b, than a $\rightarrow$ b is true
+\item if a denotes the event of sending a message and b the event of receiving this message by another process then a $\rightarrow$ (Anmerk. von Tobi: is true?)
+\end{enumerate}
+\item happens before is transitive:\\
+$a \rightarrow b \land b \rightarrow c \Rightarrow a \rightarrow c$
+\item concurrency:\\
+if $x, y$ happen in different processes and neither $x \rightarrow y$ nor $y \rightarrow x$, then $x, y$ are concurrent\\
+(which means, it is not know who comes first)
+\item if $a \rightarrow b$ then $C(a) \rightarrow C(b)$
+\item 4 properties of logical time
+\begin{enumerate}
+\item No two events get assigned the same time.
+\item Logical times of events in each process are strictly increasing
+\item logical time of sendevent is strictly smaller than receive event for the same message
+\item for any $t \in T$ only finetely many events get assigned logical times smaller then  t.
+\end{enumerate}
+\item Examle:
+%GFX hipster
+
+\end{itemize}
+\textbf{Algorithm}
+\begin{enumerate}
+\item Before eacht event $P_1$ executes\\
+$C_i \leftarrow C_i + 1$
+\item When Process $P_i$ sends message $m$ to $P_j$ it sets the timestamp of $m, ts(m)$ to the current time $ts(m) \leftarrow C$.
+\item upon receipt of a message m process $P_j$ adjust its time to $C_j \leftarrow \max{C_j, ts(m)}$, then executes step 1 and delivers message
+\end{enumerate}
+Example
+
+Consider a bank with two data centers A and B, that need to be kept consistent. Each request uses the nearest copy.
+Assume a customer has \$1000,- in his bank account and decides to add \$100,- using copy A. At the same time 1\% interest is added to copy B. What happens? How can we solve the problem?
 \end{document}
