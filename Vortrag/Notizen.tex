@@ -1,0 +1,60 @@
+Application: disseminating data in large-scale distributed systems; data aggregation, overlay maintenance, resource allocation
+
+repeated probabilistic(key element)  exchange of information between two members 
+
+important: probabilitic, repetition, relates to spreading epidemics
+
+info can spread quickly, is persistent, good if membership andn/or relation in group changes
+
+gossiping solutions are often indifferent of changes in the group while exhibiting convergent behaviour
+
+Fig 1: general organization
+
+2 threads, one active(initiative, sends), one passive (accepting incoming requests9
+each peer has a cache for storing peer specific information
+
+
+================================00
+Peer selection: wired: assumption: selection works uniformly on the whole set of peers
+wireless: selection considers neighbours in range
+(in both cases not strict, wireless can emulate wired connections)
+
+synchronous/asynchronous
+
+data exchange: peers decide individually, instead of data "peerlists" can be exchanged
+
+data processing: highly application dependant
+==================================00
+
+gossiping is fast, generally O(log N) rounds to reach all nodes, may introduce much redundancy
+
+possibility of combining multicast and gossiping to get probabilitic reliable mulsticasting
+
+CREW system: info partitioned into chunks, list of chunks is broadcasted to all peers, each node pulls missing chunks from random peers
+--> downside: possible flooding (especially on nodes wit hhigh indegree), therefore reduce variance of indegree distribution
+
+3 main results: (1) simple, (2) scalable, (3) probabilistic guarantees of message delivery
+
+Peer sampling:
+
+gossip based membership algorithms: Lpbcast, Newscast, CYCLON
+
+scalable peer sampling service
+
+
+topology construction:
+
+each node maintains partial view -> result: overlay network
+connections are associated with a weight to get some kind of structure
+
+resource management:
+
+centralized approach creates bottlenecK - gossiping can be used to decentralize 
+
+Computations:
+
+efficient to compute aggregates (sum, averages, max or min)
+
+discussion:
+
+...
