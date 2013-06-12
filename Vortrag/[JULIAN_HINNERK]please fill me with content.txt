@@ -23,15 +23,48 @@ Begriffserklärung Peers:
 2.3 Datenverarbeitung
 - sehr stark anwendungsabhängig 
 3. Anwendungsbeispiele
+
 3.1 Verteilung
--
+- Nachrichten/Daten in einem Netzwerk (möglichst gleichmäßig) verteilen
+- Jeder Knoten hat lokalen Cache, in welchem die Nachrichten/Datensätze abgelegt werden
+Peerauswahl: Zufällige Auswahl einer bestimmten Anzahl von Kommunikationspartnern
+Datenaustausch: Eine Nachricht aus dem lokalen Cache eines Peers in den lokalen Cache eines anderen Peers kopiert
+Datenverarbeitung: Eventuell Weiterleitung neuer Nachrichten an höhere Schichten, Löschung veralteter Nachrichten
+- push/pull/hybrid Modus
+- Durchschnittliche Verbreitungsgeschwindigkeit: O(log N) mit N = Anzahl der Knoten
+
 3.2 Partnerfindung
--
+Peerauswahl: Austauschpartner werden zufällig aus einem lokalen Cache (Nachbarliste) ausgewählt
+Datenaustausch: Weitergabe der lokalen Liste
+Datenverarbeitung: Empfangene Nachbarlisten werden in lokale Liste eingefügt
+- Grundlage für viele andere Gossipingsysteme
+- Anzahl übernommener Nachrichten ausschlaggebend für Diversität des lokalen Cache
+- In dynamischen Netzwerken Mechanismus zur Löschung veralteter(inaktiver) Knoten notwendig
+- Annahme eines homogen strukturierten zugrundeliegenden Netzes
+
 3.3 Topologiekonstruktion
--
-3.4 Resourcenverwaltung
--
-3.5 BerechnungSCHLONTZ* (*sprich: SCHLONTZ)
--
+- Manchmal striktere Kontrolle über Overlay-Netzkonstruktion notwendig
+- Jeder Peer hat nur partielle Sicht auf das Gesamtsystem
+- Einführung einer Bewertungsfunktion für Nachbarn
+Peerauswahl: Zufällige Auswahl aus dem lokalen Cache
+Datenaustausch: Listen von Peers
+Datenverarbeitung: Einfügen der empfangenen Liste in den lokalen Cache und Bewertung der neuen Peers (evtl. Löschung von Peers)
+
+- Bewertungsfunktionen: Anbindungsgeschwindigkeit, Verfügbarkeit, ID-abhängige Kriterien (z.B. Ringkonstruktion)
+
+3.4 Ressourcenverwaltung
+Peerauswahl: Zufällige Auswahl aus dem lokalen Cache
+Datenaustausch: Statusinformationen über benachbarte Peers
+Datenverarbeitung: Updaten des lokalen Cache mit neuen Statusinformationen
+- Fehlererkennung
+- Verwerfen von Statusinformationen fehlerhafter Peers
+
+3.5 Berechnungen
+- Aggregationen wie Durchschnittsfindung, Extremwertbestimmung
+- Einsatz z.B. in Sensornetzen
+Peerauswahl: Zufällige Auswahl aus dem lokalen Cache
+Datenaustausch: Anwendungsabhängiges Datum wird kopiert
+Datenverarbeitung: Neues Datum wird aus dem empfangenen und dem lokalen Datum berechnet
+
 4. Fazit
 -
