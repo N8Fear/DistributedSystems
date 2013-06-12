@@ -19,9 +19,8 @@ Begriffserklärung Peers:
 - peers entscheiden, welche Daten sie austauschen
 - entweder Applikationsdaten oder Referenzen zu anderen peers werden
   ausgetauscht
-- stark anwendungsabhängig
 2.3 Datenverarbeitung
-- sehr stark anwendungsabhängig 
+- stark anwendungsabhängig 
 3. Anwendungsbeispiele
 
 3.1 Verteilung
