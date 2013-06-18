@@ -881,4 +881,113 @@ Example
 
 Consider a bank with two data centers A and B, that need to be kept consistent. Each request uses the nearest copy.
 Assume a customer has \$1000,- in his bank account and decides to add \$100,- using copy A. At the same time 1\% interest is added to copy B. What happens? How can we solve the problem?
+Totally ordered multicast
+%Bild 
+
+every message is sent to all receivers+itself with timestamp\\
+\begin{itemize}
+	\item messages are stored in queues  and acknowledged by timestamp
+	\item queues are Lamports logical clocks
+	\item eventually all queues are identical $\Rightarrow$ total order
+\end{itemize}
+%Bild!!! :D
+
+\section{Vector Clocks}
+\begin{itemize}
+	\item Lamport's logical clock causally order
+	\item $T_{sent}(m_i) < T_{recv} (m_i)$
+		does $T_{recv} (m_i) < T_{sent} (m_j)$
+		tell something about $m_i,m_j$\\
+		use \underline{Vector Clocks}
+	\item each process $P$ maintains VC
+		\begin{enumerate}
+			\item $VC_i[i]$ is I of events that occured so far at $P_i$
+				$VC$ in the logial clock of $P_i$
+			\item $VC_i[j]=k$, $P_i$ stores $k$ events at $P_j$.\\
+				useful for causally ordered multicast\\
+				%Bild
+		\end{enumerate}
+\end{itemize}
+\section{Mutual Exclusion}
+Access to shared resources\\
+2 types of algorithms: token-based and permission-based
+\begin{itemize}
+	\item token is simple, reliability problem (lost token)
+	\item permission difficult in distributed systems
+\end{itemize}
+
+\begin{enumerate}
+	\item Centralised algorithm\\
+		%Bild!!!
+		\begin{itemize}
+			\item one process is coordinator
+			\item coordinator alloes access onl to one process
+			\item fair, requests are processed in order of arrival
+			\item no starvation
+			\item easy to implement
+			\item coordinator is single point of failure
+			\item (handle message loss with ack)
+			\item dead coordinator looks like permission denied
+		\end{itemize}
+	\item Decentralised algorithm
+		\begin{itemize}
+			\item Each resource is replicated n times , rname\_i is the name of the replica\\
+			\item each replica has it's own controller, the name is a hash of the rname\_i
+			\item if rname is known, each process can generate the address of the controllers				
+			\item access to resource when $m>n/2$ controllers grant it
+			\item Let $p$ probability that a coordinator resets during $\Delta t$\\
+				$P[k]= prob\lbrace k \text{ out of } m \text{ coordinators reset during } \Delta t\rbrace = \left( \binom{m}{k}\right) p^k (1-p)^{m-k}$
+			\item at least $2m-n\geq n+2-n=2$ coordinators need to reset in order to violate the voting. This happens with probability $\sum\limits_{k=2m-n}^n P[k]$\\
+				e.g. $\Delta t = 10s, n=32, m=0,75n$\\
+				Probability of violation in $10^{-40}$
+			\item if a process gets less than $m$ votes access to the resource is denied
+			\item random backoff, retry\\
+				many requests, noone gets access
+			\item heavy load $\Rightarrow$ drop in utilisation
+		\end{itemize}
+	\item A distributed algorithm\\
+		\begin{itemize}
+			\item deterministic
+			\item uses total ordering of events
+			\item process that wants to access a resource sends out message containing (resourcename, process no, current localtime) to all other processes and itself
+			\item process receives a message. Either:\\
+				\begin{enumerate}
+					\item returns OK, if does not want a resource
+					\item queues request, if it has resource
+					\item compares timestamps, sends OK if timestamp is smallest, queues request and sends no reply else
+				\end{enumerate}
+			\item grants mutual exclusion without deadlocks or starvation
+		\end{itemize}
+		Problems: \begin{itemize}
+				
+			\item note failure $\Rightarrow$ dito
+			\item load, all processes take part in decisions (needs 2(n-1) messages for n processes
+			\item algorithm is slower, more complicated, more expensive, less robust than centralised alg.
+			\item not a good algorithm
+		\end{itemize}
+	\item Token Ring Algorithm\\
+		\begin{itemize}
+			\item processes form a logical ring
+			\item token circulates
+			\item ownerof token can access resource
+			\item simple and efficient
+			\item not fair under heavy load
+		\end{itemize}
+		Problems:\begin{itemize}
+			\item token loss
+			\item 
+		\end{itemize}
+	
+
+\end{enumerate}
+\textbf{Comparison}
+\begin{tabular} {l|l|l|l}
+Alogirithm&messages per entry/exit&Delay before access&Problems\\
+\hline
+Centralised& 3& 2&coordinator crash\\
+Decentralised&$3mk$&$2m$&starvation, low efficiency\\
+Distributed&$2(n-1)$&$2(n-1)$&crash of any process\\
+Token Ring& 1 to $\infty$&$0$ to $\infty$&lost token, process crash, fairness?
+\end{tabular}
+
 \end{document}
