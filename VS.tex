@@ -910,73 +910,70 @@ Access to shared resources\\
 	\item permission difficult in distributed systems
 \end{compactitem}
 
-\begin{compactenum}
-	\item Centralised algorithm\\
-		%Bild!!!
-		\begin{compactitem}
-			\item one process is coordinator
-			\item coordinator alloes access onl to one process
-			\item fair, requests are processed in order of arrival
-			\item no starvation
-			\item easy to implement
-			\item coordinator is single point of failure
-			\item (handle message loss with ack)
-			\item dead coordinator looks like permission denied
-		\end{compactitem}
-	\item Decentralised algorithm
-		\begin{compactitem}
-			\item Each resource is replicated n times , rname\_i is the name of the replica\\
-			\item each replica has it's own controller, the name is a hash of the rname\_i
-			\item if rname is known, each process can generate the address of the controllers				
-			\item access to resource when $m>n/2$ controllers grant it
-			\item Let $p$ probability that a coordinator resets during $\Delta t$\\
-				$P[k]= prob\lbrace k \text{ out of } m \text{ coordinators reset during } \Delta t\rbrace = \left( \binom{m}{k}\right) p^k (1-p)^{m-k}$
-			\item at least $2m-n\geq n+2-n=2$ coordinators need to reset in order to violate the voting. This happens with probability $\sum\limits_{k=2m-n}^n P[k]$\\
-				e.g. $\Delta t = 10s, n=32, m=0,75n$\\
-				Probability of violation in $10^{-40}$
-			\item if a process gets less than $m$ votes access to the resource is denied
-			\item random backoff, retry\\
-				many requests, noone gets access
-			\item heavy load $\Rightarrow$ drop in utilisation
-		\end{compactitem}
-	\item A distributed algorithm\\
-		\begin{compactitem}
-			\item deterministic
-			\item uses total ordering of events
-			\item process that wants to access a resource sends out message containing (resourcename, process no, current localtime) to all other processes and itself
-			\item process receives a message. Either:\\
-				\begin{compactenum}
-					\item returns OK, if does not want a resource
-					\item queues request, if it has resource
-					\item compares timestamps, sends OK if timestamp is smallest, queues request and sends no reply else
-				\end{compactenum}
-			\item grants mutual exclusion without deadlocks or starvation
-		\end{compactitem}
-		Problems: \begin{compactitem}
-				
-			\item note failure $\Rightarrow$ dito
-			\item load, all processes take part in decisions (needs 2(n-1) messages for n processes
-			\item algorithm is slower, more complicated, more expensive, less robust than centralised alg.
-			\item not a good algorithm
-		\end{compactitem}
-	\item Token Ring Algorithm\\
-		\begin{compactitem}
-			\item processes form a logical ring
-			\item token circulates
-			\item ownerof token can access resource
-			\item simple and efficient
-			\item not fair under heavy load
-		\end{compactitem}
-		Problems:\begin{compactitem}
-			\item token loss
-			\item 
-		\end{compactitem}
-	
+\section{Centralised algorithm}
+%Bild!!!
+\begin{compactitem}
+	\item one process is coordinator
+	\item coordinator alloes access onl to one process
+	\item fair, requests are processed in order of arrival
+	\item no starvation
+	\item easy to implement
+	\item coordinator is single point of failure
+	\item (handle message loss with ack)
+	\item dead coordinator looks like permission denied
+\end{compactitem}
+\section{Decentralised algorithm}
+\begin{compactitem}
+	\item Each resource is replicated n times , rname\_i is the name of the replica\\
+	\item each replica has it's own controller, the name is a hash of the rname\_i
+	\item if rname is known, each process can generate the address of the controllers				
+	\item access to resource when $m>n/2$ controllers grant it
+	\item Let $p$ probability that a coordinator resets during $\Delta t$\\
+		$P[k]= prob\lbrace k \text{ out of } m \text{ coordinators reset during } \Delta t\rbrace = \left( \binom{m}{k}\right) p^k (1-p)^{m-k}$
+	\item at least $2m-n\geq n+2-n=2$ coordinators need to reset in order to violate the voting. This happens with probability $\sum\limits_{k=2m-n}^n P[k]$\\
+		e.g. $\Delta t = 10s, n=32, m=0,75n$\\
+		Probability of violation in $10^{-40}$
+	\item if a process gets less than $m$ votes access to the resource is denied
+	\item random backoff, retry\\
+		many requests, noone gets access
+	\item heavy load $\Rightarrow$ drop in utilisation
+\end{compactitem}
+\section{A distributed algorithm}
+\begin{compactitem}
+	\item deterministic
+	\item uses total ordering of events
+	\item process that wants to access a resource sends out message containing (resourcename, process no, current localtime) to all other processes and itself
+	\item process receives a message. Either:\\
+		\begin{compactenum}
+			\item returns OK, if does not want a resource
+			\item queues request, if it has resource
+			\item compares timestamps, sends OK if timestamp is smallest, queues request and sends no reply else
+		\end{compactenum}
+	\item grants mutual exclusion without deadlocks or starvation
+\end{compactitem}
+Problems: \begin{compactitem}
+		
+	\item note failure $\Rightarrow$ dito
+	\item load, all processes take part in decisions (needs 2(n-1) messages for n processes
+	\item algorithm is slower, more complicated, more expensive, less robust than centralised alg.
+	\item not a good algorithm
+\end{compactitem}
+\section{Token Ring Algorithm}
+\begin{compactitem}
+	\item processes form a logical ring
+	\item token circulates
+	\item ownerof token can access resource
+	\item simple and efficient
+	\item not fair under heavy load
+\end{compactitem}
+Problems:\begin{compactitem}
+	\item token loss
+	\item 
+\end{compactitem}
 
-\end{compactenum}
-\textbf{Comparison}
+\section{Comparison}
 \begin{tabular} {l|l|l|l}
-Alogirithm&messages per entry/exit&Delay before access&Problems\\
+Algorithm&messages per entry/exit&Delay before access&Problems\\
 \hline
 Centralised& 3& 2&coordinator crash\\
 Decentralised&$3mk$&$2m$&starvation, low efficiency\\
