@@ -1,0 +1,29 @@
+[Introduction]
+
+This is the source code used to perform the experiments described here:
+
+Mark Jelasity, Alberto Montresor, and Ozalp Babaoglu. 
+T-Man: Gossip-based fast overlay topology construction. 
+Computer Networks, 53 (13):2321–2339, 2009.
+
+[Package organization]
+
+src/		sources
+classes/	compiled sources
+doc/		doc files; ridicously incomplete.
+lib/		jar files needed to compile; includes Peersim
+config/		config files
+
+[Brief Instructions]
+
+To compile: 
+
+make
+
+To execute the config file xxx.cfg located in directory config:
+
+make xxx.cfg
+
+To re-generate the documentation
+
+make doc
