@@ -1,17 +1,19 @@
 \documentclass[ngerman,a4paper]{report}
-\usepackage[ngerman]{babel}
+\usepackage[english,ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
+\usepackage{MyriadPro}
+\usepackage{MinionPro}
 \usepackage{graphicx}
-\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
+%\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
 \usepackage{listings}
 \usepackage{paralist}
 \usepackage{stmaryrd}
 \usepackage{color}
 \usepackage{floatflt}
 \usepackage{amsmath}
-\usepackage{amssymb}
+%\usepackage{amssymb}
 \usepackage{float}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -39,48 +41,39 @@ literate=%
 {ö}{{\"o}}1
 }
 
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\usepackage{lastpage}
-\makeatletter
-
-\lhead{\textbf{\@title} \\ \@author}
-\chead{}
-\rhead{\@date \\ \thepage \ von \pageref{LastPage}}
-\cfoot{}
-
-\renewcommand{\maketitle}{}
+\selectlanguage{english}
 
 \renewcommand{\familydefault}{\sfdefault}
 
  
-\author{Hinnerk van Bruinehsen}
-\title{Verteilte Systeme}
+\author{Hinnerk van Bruinehsen\\Tobias Höppner\\Tobias Famulla}
+\title{Lecture Notes\\\Huge{Distributed System}}
 \date{SoSe 2013}
 
 \begin{document}
 \maketitle
+\tableofcontents
 
-\section{Verteilte Systeme/Distributed Systems}
-\subsection{Orga}
+\chapter{Verteilte Systeme/Distributed Systems}
+\section{Orga}
 VL Di 10-12 (nicht am 23.04.)\\
 Ue Do 10-12\\
 
-\subsubsection{Elektisches}
+\subsection{Elektisches}
 \begin{compactitem}
 \item (kvv)
 \item Website AG
 \item Sakai
 \end{compactitem}
 
-\subsubsection{Übungen}
+\subsection{Übungen}
 
 \begin{compactitem}
 \item ca. 5 Übungsblätter, 14-tägig
 \item Vorträge in Gruppen über \glqq verteilte Systeme\grqq
 \end{compactitem}
 
-\subsubsection{Material/Inhalt}
+\subsection{Material/Inhalt}
 \begin{compactitem}
 \item[1. Hälfte] Distributed Systems (Tanenbaum, van Steen)
 	\begin{compactitem}
@@ -104,7 +97,7 @@ Ue Do 10-12\\
 	\end{compactitem}
 \end{compactitem}
 
-\section{Distributed Systems}
+\chapter{Distributed Systems}
 \textbf{Def:} A distributed System is a collection of independent computers that appears to it's users as a single coherent system.
 
 Characteristics:\\
@@ -222,7 +215,7 @@ home automation, health systems, sensor networks
 \item sharing resources
 \end{compactitem}
 
-\section{Architectures of distributed Systems}
+\chapter{Architectures of distributed Systems}
 
 \begin{compactitem}
 \item how to split software into components\\
@@ -278,7 +271,7 @@ $\Rightarrow$ shared Data space \\
 \end{figure}
 \end{compactitem}
 
-\subsection{System architectures}
+\section{System architectures}
 \begin{compactenum}
 \item centralized architectures\\
 client - server\\
@@ -391,9 +384,9 @@ increment age\\
 \end{compactenum}
 
 
-\section{PeerSim}
+\chapter{PeerSim}
 
-\section{Processes}
+\chapter{Processes}
 \begin{tabular}{p{7cm} p{7cm}}
 \textbf{processes}			&\textbf{threads}\\
 -execution of program			&-several threads share CPU\\
@@ -475,7 +468,7 @@ multi thread& parallelism, blocking syscalls\\
 finite state machine& parallelism, non-blocking syscalls\\
 \end{tabular}
 
-\subsection{Virtualisation}
+\section{Virtualisation}
 % Bild von Höpster
 \begin{figure}[h]
 	\centering
@@ -508,7 +501,7 @@ $\Rightarrow$ VMM such as VMware, Xen\\
 \end{compactenum}
 
 
-\subsection{Client-/Serverprocesses}
+\section{Client-/Serverprocesses}
 \textbf{CLients:}\\
 %Bild von Tobi !!! :D
 \begin{figure}[h]
@@ -584,7 +577,7 @@ $\Rightarrow$ VMM such as VMware, Xen\\
 	\item route optimisation avoids routing through home agent
 \end{compactitem}
 
-\subsection{Code Migration}
+\section{Code Migration}
 \begin{compactitem}
 	\item Code migration on (running) process - Why?
 	\item service placement in distributed system $\Rightarrow$ minimize communication cost
@@ -635,7 +628,7 @@ by type& RB&RB(or GR,CP)&RB(or GR)\\
 \end{tabular}
 MV:move, GR, global reference, CP: copy value, RB: rebind to locally available resource
 
-\section{Communication}
+\chapter{Communication}
 we skip networking $\rightarrow$ Telematik\\
 
 Consider:\\
@@ -646,7 +639,7 @@ Consider:\\
 	\item Multicast communication
 \end{compactitem}
 
-\subsection{RPC}
+\section{RPC}
 %ordinary procedure call, e.g. count = read(fd,buf,nbytes)
 Remote procedure call uses stubs to pack parameters in message\\
 value parameters\\
@@ -659,14 +652,14 @@ reference parameters are: extremely difficult; create array and pass by value; h
 
 
 Remote procedure calls\\
-\subsection{Asynchronous RPC}
+\section{Asynchronous RPC}
 % bild xD
 
 \begin{compactitem}
 	\item hide communication, communication transparency
 \end{compactitem}
 
-\subsection{Message oriented communication\\}
+\section{Message oriented communication\\}
 \begin{compactitem}
 	\item avoids synchronous communication which blocks sender\
 	Berkely sockets UNIX TCP/IP\\
@@ -675,14 +668,14 @@ Remote procedure calls\\
 
 \end{compactitem}
 
-\subsection{Message-passing-interface (MPI)\\}
+\section{Message-passing-interface (MPI)\\}
 \begin{compactitem}
 	\item standad for communication
 	\item communication within group of processes
 	\item each group/member has identifier
 \end{compactitem}
 
-\subsection{Message-queuing-system, Message-oriented-middleware (MoM)}
+\section{Message-queuing-system, Message-oriented-middleware (MoM)}
 
 \begin{compactitem}
 	\item asynchronous persistent communication\\
@@ -697,7 +690,7 @@ Remote procedure calls\\
 	\item applications are email, workflow, batch processing, queries accross several databases
 \end{compactitem}
 
-\subsection{stream oriented communication}
+\section{stream oriented communication}
 \begin{compactitem}
 	\item temporal relationship between items important
 	\item multimedia data is compressed
@@ -713,7 +706,7 @@ Remote procedure calls\\
 	\item networking solution such as differentiated services
 	\item synchronisation of streams
 \end{compactitem}
-\subsection{Multicast communication}
+\section{Multicast communication}
 \begin{compactitem}
 	\item application level multicast uses overlay
 	\item tree, unique path between each pair of nodes
@@ -742,7 +735,7 @@ Quality of application level tree\\
 	\item tree cost, minimize aggregated link cost, link cost = cost between end points\\
 		$\Rightarrow$ find minimal spanning tree
 \end{compactenum}
-\subsection{Gossip-based-communication}
+\section{Gossip-based-communication}
 \begin{compactitem}
 	\item epidemic behaviour
 	\item a node does not have new data (susceptible), it has the data (infected) or is unwilling to spread (removed)\\
@@ -768,9 +761,9 @@ $\Rightarrow s = 0,007$\\
 less than $0,7$ remain without data\\
 removing data is difficult : delete message is send via gossiping
 
-\section{Naming}
+\chapter{Naming}
 Flat naming\\
-\subsection{Distributed Hash Tables}
+\section{Distributed Hash Tables}
 %krasse büld von de hipster tobi
 \begin{compactitem}
 \item m-bit identifier (128 or 160 Bit)
@@ -798,8 +791,8 @@ $18 = FT_1[5]$
 \item keeeping figer table up to date is expensive
 \end{compactitem} 
 \end{compactitem}
-\section{Synchronistation}
-\subsection{Clock synchronisation algorithms}
+\chapter{Synchronistation}
+\section{Clock synchronisation algorithms}
 System model: each machine has timer that causes H interrupts per second
 \begin{compactitem}
 	\item clock $C$ adds up ticks (interrupts)
@@ -819,7 +812,7 @@ System model: each machine has timer that causes H interrupts per second
 \end{compactitem}
 
 
-\subsection{Network Time Protcol (NTP)}
+\section{Network Time Protcol (NTP)}
 \begin{compactitem}
 \item nodes contact time server that has an accurate clock
 \item time server pasive\\
@@ -836,7 +829,7 @@ $\delta = \frac{(T-2 - T_1) + (T_4 - T_3)}{2}$
 \item lower starttime level is better, will be used.
 \end{compactitem}
 
-\subsection{Berkeley algorithm}
+\section{Berkeley algorithm}
 \begin{compactitem}
 \item assumes no node has 'good' time
 \item time server polls all nodes for their time
@@ -845,7 +838,7 @@ $\delta = \frac{(T-2 - T_1) + (T_4 - T_3)}{2}$
 \item all nodes agree on time, which may not be correct
 \end{compactitem}
 
-\subsection{Logical Clocks - YEAH ALP5! -.-}
+\section{Logical Clocks - YEAH ALP5! -.-}
 \begin{compactitem}
 \item logical time need not correct in real time.
 \item needs 'happens before' relation a $\rightarrow$ b
@@ -893,7 +886,7 @@ every message is sent to all receivers+itself with timestamp\\
 \end{compactitem}
 %Bild!!! :D
 
-\section{Vector Clocks}
+\chapter{Vector Clocks}
 \begin{compactitem}
 	\item Lamport's logical clock causally order
 	\item $T_{sent}(m_i) < T_{recv} (m_i)$
@@ -909,7 +902,7 @@ every message is sent to all receivers+itself with timestamp\\
 				%Bild
 		\end{compactenum}
 \end{compactitem}
-\section{Mutual Exclusion}
+\chapter{Mutual Exclusion}
 Access to shared resources\\
 2 types of algorithms: token-based and permission-based
 \begin{compactitem}
@@ -991,15 +984,15 @@ Distributed&$2(n-1)$&$2(n-1)$&crash of any process\\
 Token Ring& 1 to $\infty$&$0$ to $\infty$&lost token, process crash, fairness?
 \end{tabular}
 
-\section{Leader Election algorithms}
-\subsection{leader election in a synchronnous ring}
+\chapter{Leader Election algorithms}
+\section{leader election in a synchronnous ring}
 Network is a graph $G$ consisting of $n$ nodes connected by unidirectional links. Use $\mod n$ for labels\\
 \begin{compactitem}
 \item elected node is ``leader''
 \item leader election is not possible for identical processes/nodes
 \end{compactitem}
 
-\subsubsection{LCR algorithm}
+\subsection{LCR algorithm}
 (Lelan, Chang, Roberts)\\
 
 \begin{compactitem}
@@ -1056,7 +1049,7 @@ then (iii)\\
 
 \end{compactitem}
 
-\subsubsection{Algorithm of Hirschberg and Sinclair (HS-Alg)}
+\subsection{Algorithm of Hirschberg and Sinclair (HS-Alg)}
 - reduces number of messages to $\mathcal{O}(n \log n)$\\
 
 \begin{lstlisting}
@@ -1095,7 +1088,7 @@ Total number of phases is at most $1+\lceil\log(n)\rceil$\\
 the total number of messages is at mostin $(1+\lceil(\log(n))\rceil\ \approx \mathcal{O}(n\log n)$\\
 Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 
-\subsubsection{Time slice algorithm}
+\subsection{Time slice algorithm}
 \begin{compactitem}
 \item ring size $n$ is known
 \item unidirectional
@@ -1112,7 +1105,7 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 \end{lstlisting}
 \textbf{Complexity}: number of messages is n, time complexity $n\cdot u_{min}$
 
-\subsubsection{Variable speeds algorithm}
+\subsection{Variable speeds algorithm}
 \begin{compactitem}
 \item each process $i$ creates a token to tracel around the ring, carrying UID u of origin
 \item tokens travel at diffeneed speed
@@ -1128,7 +1121,7 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 How many messages in total? $\sum\limits_{k=1}^n \frac{1}{2^{k-1}} (<2n)$\\
 Time complexity: $n\cdot 2^{u_{min}}$
 
-\subsection{Leader election in a wireless environment}
+\section{Leader election in a wireless environment}
 \begin{compactitem}
 \item consider time needed for communication
 \item nodes sest up a tree
@@ -1138,7 +1131,7 @@ Time complexity: $n\cdot 2^{u_{min}}$
 \end{compactitem}
 %BILD!!!! TÄTÄRÄTÄTÄ!!!!
 
-\subsection{The Bully Algorithm(flooding) (Garcia-Mdina, 1982)}
+\section{The Bully Algorithm(flooding) (Garcia-Mdina, 1982)}
 - process P holds election
 \begin{compactenum}
 \item P sends ELECT message to all processes
