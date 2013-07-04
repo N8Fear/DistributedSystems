@@ -4,7 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{MyriadPro}
-\usepackage{MinionPro}
+%\usepackage{MinionPro}
 \usepackage{graphicx}
 %\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
 \usepackage{listings}
@@ -1137,4 +1137,107 @@ Time complexity: $n\cdot 2^{u_{min}}$
 \end{compactenum}
 
 %BILD DINGDINGDING
+
+\chapter{Consitency and Consensus}
+\begin{compactitem}
+	\item Distributed Systems use replication of data to improve performance and/or reliability
+	\item replication for scalability\\
+	How to keep replicas consistent?\\
+	Many types of consistency\\
+	\begin{compactitem}
+		\item data-centric-constistency
+		\item client-centric-consistency
+	\item monotic reads: successive reads return the same or newer value
+	\item monitic write: a write op must be completed before the next write by the same process
+	\item read-your-own-write: write is always seen by read of same process
+	\item write-follows-read: write on previous read takes place on the same or more recent value
+	\end{compactitem}
+	\item Do not discuss replica placement
+\end{compactitem}
+\section{Reliable multicast protocols}
+\begin{compactitem}
+	\item atomic multicast requirement\\
+	all requests arrive at all servers in the same order
+\end{compactitem}
+\subsection{Distributed Commit}
+\begin{compactitem}
+	\item an operatio is performed by group or non of the nodes of the group
+	\item reliable multicast operation = delivery of message
+	\item distributed transaction: operation = execution of transaction
+	\item uses coordinator
+	\item one-phased commit\\
+	%Bild
+	\item two-phase commit (2PC) (Jim Gray, 1978)
+	\begin{compactitem}
+	\item distributed transaction involves several processors each on a different machine\\
+	2 phases with each 2 steps:\\
+	\begin{compactenum}
+		\item coordinator $\xrightarrow{vote\ request}$ all participants
+		\item participant $\xrightarrow[vote\ abort]{vote\ commit}$ coordinator
+		\item if all commit\\
+		coordinator $\xrightarrow{global-commit}$ all participants\\
+		else\\
+		coordinator $\xrightarrow{global-abort}$ all participants\\
+		\item if commit, then participants locally commit\\
+		else participants locally abort
+		%bild
+	\end{compactenum}
+	Problems if failures occur\\
+	\begin{compactitem}
+		\item coordinator blocks in: wait
+		\item participant blocks in: ready, init
+	\end{compactitem}
+	$\Rightarrow$ blocking commit protocol
+	\item use timeouts to unblock
+	\item repeat request
+	\item in state ready P con contact Q\\
+	if Q is in contact, then coordinator died after sending to Q\\
+	before sending to P $\Rightarrow$ P can commit\\
+	if Q is in abort $\Rightarrow$ abort\\
+	if Q is in init $\Rightarrow$ abort\\
+	if Q is in ready $\rightarrow$ abort or no decision contact R\\
+	\end{compactitem}
+	\item Three-phase commit (3PC) (Steen, 1981)\\
+	\begin{compactitem}
+		\item avoids blocking in the presence of fail-stop crashes
+		\item states satisfy the following conditions\\
+		\begin{compactenum}
+			\item there is no state from which directly follow commit or abort follows
+			\item there is no state in which it is not possible to make a final decision and from which a transaction to a commit state can be made
+		\end{compactenum}
+		$\Rightarrow$ necessary and sufficient conditions for non-blocking commit protocol
+		%Bild
+		\item abort branch as in 2PC
+		\item blocking states: paritcipant: init -> abort\\
+		coordinator: wait --> abort\\
+		precommit, knowing P voted for commit\\
+		$\Rightarrow$ global-commit+recovery of P\\
+		participant: ready\\
+			coordinator failed as in 2PC\\
+			precommit: contact other participants: if Q in precommit $\Rightarrow$ commit\\
+			if Q is in init $\Rightarrow$ abort
+		\item Q can be in INIT only if no participant is in precommit
+		\item participant can reach precommit only if coordinator was in precommit already
+		\item In 2PC a crashed participant could recover to commit, while all others are still in ready
+		\item if one process is in ready recovery can be only to states ready, init, abort, precommit\\
+		$\Rightarrow$ surviving processes can come to final solution
+	\end{compactitem}
+	\item Paxos (Leslie Lamport, late 80s)
+	\begin{compactitem}
+		\item does not block with at most n/2-1 failures\\
+		%Bild!!!! <- Tobi!!!!
+		Paxos adds to 2PC:
+		\begin{compactitem}
+			\item ordering of proposals
+			\item majority voting for acceptance
+		\end{compactitem}
+		Duelling proposer
+	\end{compactitem}
+\end{compactitem}
+
+
+1. Aufgabe: Terminiologie (wichtige Konzepte, erklären, vergleichen, bla,bla)
+dann durch die Themen des Semsters, übungszettel, gerne ausrechnen (Fingertable, Metriken von overlaynetzen, komplexität von protokollen (wie viele nachrichten braucht ein protokoll), logische uhren (stellen oder so)), erklären, Peersimaufgabe(n) (programm angucken, was macht das programm?, überblick, wie modifizieren für fkt x, cycle driven vs event driven (was wofür)), last auf dem netz, kein gnuplot programm auf papier!!!
+Hilfsmittel: mitbringen, was man will, außer internet, telefon, freunde usw...
+
 \end{document}
