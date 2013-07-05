@@ -818,15 +818,15 @@ System model: each machine has timer that causes H interrupts per second
 \item time server pasive\\
 % hipsters GFX
 A estimates its offset to B as\\
-$\Theta = T_3 - \frac{(T-2 - T_1) + (T_4 - T_3)}{2}$\\
+$\Theta =  \frac{(T_2 - T_1) + (T_4 - T_3)}{2}$\\
 assuming communication time is symmetric\\
 delay:\\
-$\delta = \frac{(T-2 - T_1) + (T_4 - T_3)}{2}$
+$\delta = \frac{(T_4 - T_1) + (T_2 - T_3)}$
 \item A probes B, B probes A
 \item NTP stores 8 pairs $(\Theta, \delta)$ per node pair using min($\delta$) for smallest delay
 \item either A or B can be more stable
-\item reference node has \underline{strattime  1} (clock has starttime 0)
-\item lower starttime level is better, will be used.
+\item reference node has \underline{stratum  1} (clock has stratum 0) (stratum = # Server to a reference clock)
+\item lower stratrum level is better, will be used.
 \end{compactitem}
 
 \section{Berkeley algorithm}
