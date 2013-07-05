@@ -629,65 +629,157 @@ by type& RB&RB(or GR,CP)&RB(or GR)\\
 MV:move, GR, global reference, CP: copy value, RB: rebind to locally available resource
 
 \chapter{Communication}
-we skip networking $\rightarrow$ Telematik\\
 
-Consider:\\
 \begin{compactitem}
-	\item Remote procedure call
-	\item Message-oriented communication
-	\item Strem-oriented communication
-	\item Multicast communication
+	\item Communication in distributed systems is always based on low-level message passing as offered by the underlying network
+	\item message passing is harder than using primitives based on shared memory, as in nondistributed systems
+	\item low-level communication facilities of computer networks are in many ways not suitable due to their lack of distribution transparency.
 \end{compactitem}
 
-\section{RPC}
+\section{RPC - Remote Procedure Call}
 %ordinary procedure call, e.g. count = read(fd,buf,nbytes)
-Remote procedure call uses stubs to pack parameters in message\\
-value parameters\\
-$\Rightarrow$ value packed in messages, transfer byte-by-byte$\Rightarrow$ problem can be little endian vs big endian systems\\
-reference parameters are: extremely difficult; create array and pass by value; how to handle graps, linked lists\ldots\\
+
+\begin{compactitem}
+	\item allow programs to call procedures located on other machines
+	\item When a process on machine A calls' a procedure on machine B, the calling process on A is suspended, and execution of the called procedure takes place on B.
+	\item Remote procedure call uses stubs to pack parameters in message
+	\item client stub: packs the parameters into a message and requests that message to be sent to the server
+	\item server stub: transforms requests coming in over the network into local procedure calls
+	\item No message passing at all is visible to the programmer
+	\item neither client nor server need to be aware of the intermediate steps or the existence of the network
+\end{compactitem}
+
+\subsection*{A remote procedure call occurs in the following steps:}
+
+\begin{enumerate}
+	\item The client procedure calls the client stub in the normal way. 
+	\item The client stub builds a message and calls the local operating system. 
+	\item The client's as sends the message to the remote as. 
+	\item The remote as gives the message to the server stub. 
+	\item The server stub unpacks the parameters and calls the server.
+	\item The server does the work and returns the result to the stub. 
+	\item The server stub packs it in a message and calls its local as. 
+	\item The server's as sends the message to the client's as. 
+	\item The client's as gives the message to the client stub. 
+	\item The stub unpacks the result and returns to the client.
+\end{enumerate}
+
+\subsection*{Parameter Marshaling}
+
+parameter marshaling: packing parameters into a message is called 
+
+
+\subsubsection*{Passing Value Parameters}
+
+\begin{compactitem}
+	\item values are packed into messages (client) and unpacked from messages (server)
+	\item transfered byte-by-byte
+	\item as long as the client and server machines are identical this model works fine
+	\item in a large distributed system, it is common that multiple machine types are present
+	\item $\Rightarrow$ problems because of different character encoding (EBCDIC vs ASCII), represetation of integers (one's complement vs two's complement) or endianness (little endian vs. big endian)
+\end{compactitem}
+
+\subsubsection*{Passing Reference Parameters}
+\begin{compactitem}
+	\item extremly difficult
+	\item pointers are meaningful only within the address space of the process in which it is being used
+	\item replace with copy/restore: copy the datastructure, send it to the server, work on it, send it back, restore at the client
+\end{compactitem}
 
 
 
-
-
-
-Remote procedure calls\\
 \section{Asynchronous RPC}
-% bild xD
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=400px]{gfx/rpc.png}
+	\caption{a: synchronous b: asynchronous RPC}
+	\label{img:rpc}
+\end{figure}
 
 \begin{compactitem}
-	\item hide communication, communication transparency
+	\item in conventional procedure calls, when a client calls a remote procedure, the client will block until a reply is returned
+	\item asynchronous RPCs: the server immediately sends a reply back to the client the moment the RPC request is received. Reply acts as an acknowledgment.
+	\item client will continue without further blocking as soon as it has received the server's acknowledgment
+	\item Examples: transferring money from one account to another, adding entries into a database, starting remote services, batch processing...
+	\item Asynchronous RPCs can also be useful when a reply will be returned but the client doesn't need to wait for it and can do nothing in the meantime
+	\item One-Way RPCs: the client does not wait for an acknowledgment from the server
+	\item deferred synchronous RPC: organize the communication between the client and server through two asynchronous RPCs
 \end{compactitem}
 
-\section{Message oriented communication\\}
 \begin{compactitem}
-	\item avoids synchronous communication which blocks sender\
-	Berkely sockets UNIX TCP/IP\\
-	server |socket|->|bind|->|listen|->|accept|->|read|<->|write|->|close|\\
-	client |socket|------------------->|connect|->|read|<->|write|->|close|\\
-
+	\item foo
 \end{compactitem}
 
-\section{Message-passing-interface (MPI)\\}
+\section{Message oriented communication}
+
+General Idea: avoid synchronous communication which blocks sender (RPC)
+
+\subsection{Message-Oriented Transient Communication}
+
+transient: flüchtig, vorrübergehend
+
+\subsubsection{Berkeley Sockets}
+
+A socket is a communication end point to which an application can write data that are to be sent out over the underlying network, and from which incoming data can be read. A socket forms an abstraction over the actual communication end point that is used by the local operating system for a specific transport protocol.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=400px]{gfx/sockets.png}
+	\caption{Connection-oriented communication pattern using sockets}
+	\label{img:sockets}
+\end{figure}
+
 \begin{compactitem}
-	\item standad for communication
-	\item communication within group of processes
-	\item each group/member has identifier
+	\item socket: create a new communication end point
+	\item bind: attach a local addres to a socket
+	\item listen: announce willingness to accept connections
+	\item accept: block caller until a connection request arrives
+	\item connect: actively attemt to establish a connection
+	\item send: send some data over the connection
+	\item receive: receive some data over the connection
+	\item close: release the connection
 \end{compactitem}
 
-\section{Message-queuing-system, Message-oriented-middleware (MoM)}
+\subsubsection{Message-passing-interface (MPI)}
+\begin{compactitem}
+	\item standad for message passing
+	\item designed for parallel applications
+	\item communication within groups of processes
+	\item A $(groupID, processID)$ pair uniquely identifies the source or destination of a message (used instead of a transport-level address)
+\end{compactitem}
+
+\subsection{Message-Oriented Persistent Communication}
+
+aka Message-queuing-system, Message-oriented-middleware (MoM) \\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=400px]{gfx/mom.png}
+	\caption{general organization of a message-queuing system with routers}
+	\label{img:mom}
+\end{figure}
 
 \begin{compactitem}
-	\item asynchronous persistent communication\\
-	\item store messages
+	\item asynchronous persistent communication
+	\item offer intermediate-term storage capacity for messages, without requiring either the sender or receiver to be active during message transmission
 	\item transfer may take minutes, not milliseconds
 	\item applications communicate by inserting messages into queues
-	\item messages are inserted into local queue
-	\item message carries destination adress
-	\item queue manager may act as relays, router\\
-	%schickes Bild @ Höpster <- INSERT HERE PLX!!!
-	\item message broker transform type A into type B, using a set of rules
-	\item applications are email, workflow, batch processing, queries accross several databases
+	\item messages are only put into and read from local queues
+	\item the message-queuing system takes care that messages are transferred from their source to their destination queue	
+	\item message carries destination address
+	\item queue managers
+	\begin{compactitem}
+		\item a queue manager interacts directly with the application that is sending or receiving a message
+		\item also special queue managers that operate as routers, or relays: they forward incoming messages to other queue managers
+	\end{compactitem}
+	\item message brokers transform type A into type B, using a set of rules
+		\begin{compactitem}
+		\item application-level gateway in a message-queuing system
+		\item convert incoming messages so that they can be understood by the destination application		
+		\item transform messages of type A into type B, using a set of rules
+	\end{compactitem}
+	\item Examples: Email, workflow, batch processing, queries accross several databases
 \end{compactitem}
 
 \section{stream oriented communication}
