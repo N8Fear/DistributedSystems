@@ -890,6 +890,9 @@ $18 = FT_1[5]$
 \end{compactitem} 
 \end{compactitem}
 
+Superpeers: $2^k$, therefore $2^{m-k}$ normal nodes.\\
+Probability that a node is a supernode: $n\cdot \frac{2^k}{2^m} = 2^{k-m} \cdot n$, with $m$ number of bits, $k$ is number of bits that mark superpeers, $n$ is number of nodes (not maximum possible but the actual number).\\
+Number of superpeers to be expected: $E(x)= n\cdot p$\\
 
 \chapter{Synchronistation}
 \section{Clock synchronisation algorithms}
