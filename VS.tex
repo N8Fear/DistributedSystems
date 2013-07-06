@@ -973,7 +973,7 @@ A estimates its offset to B as\\
 $\Theta = \frac{(T_2 - T_1) + (T_4 - T_3)}{2}$\\
 assuming communication time is symmetric\\
 delay:\\
-$\delta = (T_4 - T_1) + (T_3 - T_2)$
+$\delta = (T_4 - T_1) - (T_3 - T_2)$
 \item A probes B, B probes A
 \item NTP stores 8 pairs $(\Theta, \delta)$ per node pair using min($\delta$) for smallest delay
 \item either A or B can be more stable
