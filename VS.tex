@@ -821,6 +821,14 @@ aka Message-queuing-system, Message-oriented-middleware (MoM) \\
 \end{compactitem}
 \textbf{Efficiency?}\\
 Quality of application level tree\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=400px]{gfx/overlay_example.png}
+	\caption{example of a overlay network}
+	\label{img:ovrlnt}
+\end{figure}
+
 \begin{compactenum}
 	\item Link stress, number of traversals of same link per packet
 	\item stretch, relative delay penalty (RDP)\\
@@ -888,6 +896,31 @@ $18 = FT_1[5]$
 \item join/leave is rather simple
 \item keeeping figer table up to date is expensive
 \end{compactitem} 
+\item example2:\\
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/Chord_Fingertable.png}
+	\caption{Ring}
+	\label{img:ring}
+\end{figure}
+\begin{tabular}{|l|l|}
+\hline
+30 & \\
+\hline
+1 & 37\\
+\hline
+2 & 37\\
+\hline
+3 & 37\\
+\hline
+4 & 38\\
+\hline
+5 & 45\\
+\hline
+6 & 0\\
+\hline
+\end{tabular}
+
 \end{compactitem}
 
 
