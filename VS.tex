@@ -939,8 +939,8 @@ System model: each machine has timer that causes H interrupts per second
 	
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=400px]{gfx/clock-drift.png}
-	\caption{fast, slow \& perfect clock}
+	\includegraphics[width=200px]{gfx/clock-drift.png}
+	\caption{...}
 	\label{img:clock-drift}
 \end{figure}	
 	
@@ -956,11 +956,6 @@ System model: each machine has timer that causes H interrupts per second
 	\item time always moves forward.
 \end{compactitem}
 
-\textbf{example:} given values for $C_1$ and $C_2$:\\
-$C_1 = \rho = 0.001$\\
-$C_2 = \rho = 0.001$\\
-$\frac{dC}{dt} = \frac {1}{2 * 0.001} = \frac{1}{0.002} = \frac{1}{2} * 10^{3}$\\
-Clocks $C_1$ and $C_2$ need to be synchronized every $500s$ to keep time in the same second.\\
 
 \section{Network Time Protcol (NTP)}
 \begin{compactitem}
@@ -975,10 +970,10 @@ Clocks $C_1$ and $C_2$ need to be synchronized every $500s$ to keep time in the 
 \end{figure}
 
 A estimates its offset to B as\\
-$\Theta = T_3 - \frac{(T_2 - T_1) + (T_4 - T_3)}{2} =  \frac{(T_2 - T_1) + (T_3 - T_4)}{2}$\\
+$\Theta = \frac{(T_2 - T_1) + (T_4 - T_3)}{2}$\\
 assuming communication time is symmetric\\
 delay:\\
-$\delta = {(T_4 - T_1) + (T_2 - T_3)}$
+$\delta = (T_4 - T_1) + (T_3 - T_2)$
 \item A probes B, B probes A
 \item NTP stores 8 pairs $(\Theta, \delta)$ per node pair using min($\delta$) for smallest delay
 \item either A or B can be more stable
@@ -1077,7 +1072,7 @@ Assume a customer has \$1000,- in his bank account and decides to add \$100,- us
 
 \end{compactitem}
 
-\section{Vector Clocks}
+\chapter{Vector Clocks}
 \begin{compactitem}
 	\item Lamport's logical clock causally order
 	\item $T_{sent}(m_i) < T_{recv} (m_i)$
