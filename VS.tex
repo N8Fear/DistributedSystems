@@ -956,6 +956,11 @@ System model: each machine has timer that causes H interrupts per second
 	\item time always moves forward.
 \end{compactitem}
 
+\textbf{example:} given values for $C_1$ and $C_2$:\\
+$C_1 = \rho = 0.001$\\
+$C_2 = \rho = 0.001$\\
+$\frac{dC}{dt} = \frac {1}{2 * 0.001} = \frac{1}{0.002} = \frac{1}{2} * 10^{3}$\\
+Clocks $C_1$ and $C_2$ need to be synchronized every $500s$ to keep time in the same second.\\
 
 \section{Network Time Protcol (NTP)}
 \begin{compactitem}
