@@ -121,18 +121,18 @@ $\Rightarrow$ connect users and resources
 
 \end{compactitem}
 
-Transparency:\\
+\section{Transparency}
 hide the fact that processes and resources are physically distributed.
 
 Types of transparancy:\\
 \begin{compactitem}
-\item[access] hide differences in representation and how a resource is accessed
-\item[location]
-\item[migration] move ressources
-\item[relocation] move ressources while using
-\item[replication]
-\item[concurrency]
-\item[failure]
+\item[\textbf{access}] hide differences in data representation and how a resource is accessed
+\item[\textbf{location}] hide where a resource is located
+\item[\textbf{migration}] hide that a resource may move to another location
+\item[\textbf{relocation}] hide that a resource may be moved to another location while in use
+\item[\textbf{replication}] hide that a resource is replicated
+\item[\textbf{concurrency}] hide that a resource may be shared by serveral competitive users
+\item[\textbf{failure}] hide the failure and recovery of a resource 
 \end{compactitem}
 
 transparancy is desireable, but not always perfectly possible
@@ -1079,20 +1079,57 @@ Assume a customer has \$1000,- in his bank account and decides to add \$100,- us
 
 \section{Vector Clocks}
 \begin{compactitem}
-	\item Lamport's logical clock causally order
-	\item $T_{sent}(m_i) < T_{recv} (m_i)$
-		does $T_{recv} (m_i) < T_{sent} (m_j)$
-		tell something about $m_i,m_j$\\
-		use \underline{Vector Clocks}
-	\item each process $P$ maintains VC
+	\item Problem with Lamport: does not capture casuality
+	\item $T_{sent}(m_i) < T_{recv} (m_i) \overset{?}{\Rightarrow} T_{recv} (m_i) < T_{sent} (m_j)$ 
+	
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=300px]{gfx/lamport-concurrent.png}
+	\caption{...}
+	\label{img:lamport-concurrent}
+\end{figure}
+
+	\item 
+		In the case $m_i=m_1$ and $m_j = m_3$ we know at $P_2$  that $m_j$ was sent after $m_i$ was received. This \emph{may} indicate that sending of $m_j$ has something to do with the receiving of $m_i$ 
+
+	\item Vector Clocks: \\
+		$VC(a) < VC(b)$ means, that event a is known to causally precede event b.
+	\item Each process $P_i$ maintains a Vector $VC_i$ with the following properties:
 		\begin{compactenum}
-			\item $VC_i[i]$ is I of events that occured so far at $P_i$
-				$VC$ in the logial clock of $P_i$
-			\item $VC_i[j]=k$, $P_i$ stores $k$ events at $P_j$.\\
-				useful for causally ordered multicast\\
+			\item $VC_i[i]$ is the number of events that occured so far at $P_i$ \\
+				$VC_i[i]$ is the logial clock at $P_i$
+			\item if $VC_i[j]=k$ then $P_i$ knows, that $k$ events have occured at $P_j$. It is thus $P_i$'s knowledge of the local time at $P_j$
 				%Bild
+		\end{compactenum}		
+ 	\item To maintain properties:
+ 			\begin{compactenum}
+ 			\item Before executing an event (i.e., sending a message over the network, delivering a message to an application, or some other internal event), $P_i$ executes $VC_i[i] = VC_i[i] + 1$
+ 			\item When process $P_i$ sends a message m to $P_j$, it sets m's (vector) timestamp $ts(m)$ equal to $VC_i$ after having executed the previous step
+ 			\item Upon the receipt of a message m, process $P_j$ adjusts its own vector by setting $VC_j[k] = max(VC_j[k], ts(m)[k])$ for each k, after which it executes the first step and delivers the message to the application. 			
 		\end{compactenum}
+		\item timestamp $ts (m)$ tells the receiver how many events in other processes have preceded the sending of m, and on which m may causally depend.
+		\item casually-ordered multicast is weaker than totally ordered multicast
+		\item delivery of message m from $P_i$ to $P_j$ to application layer will be delayed until:
+ 		\begin{compactenum}
+ 			\item $ts(m)[i] = VC_j[i]+1$ \\
+ 			= m is the next message that $P_j$ was expecting from process $P_i$
+
+ 			\item $ts(m)[k] \leq VC_j[k] \ \ \forall \ k \neq i$ \\
+ 			= $P_j$ has seen all the messages that have been seen by $P_i$ when it sent message m
+
+		\end{compactenum}
+		\item Better to be implemented on application layer, because the app knows which messages are causally related.
+
+ 	
 \end{compactitem}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=300px]{gfx/vector-clock.png}
+	\caption{...}
+	\label{img:vector-clock}
+\end{figure}
 
 
 \chapter{Mutual Exclusion}
@@ -1103,8 +1140,14 @@ Access to shared resources\\
 	\item permission difficult in distributed systems
 \end{compactitem}
 
-\section{Centralised algorithm}
-%Bild!!!
+\section{Centralized algorithm}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=300px]{gfx/mutex-centralized.png}
+	\caption{...}
+	\label{img:mutex-centralized}
+\end{figure}
+
 \begin{compactitem}
 	\item one process is coordinator
 	\item coordinator alloes access onl to one process
@@ -1116,7 +1159,7 @@ Access to shared resources\\
 	\item dead coordinator looks like permission denied
 \end{compactitem}
 
-\section{Decentralised algorithm}
+\section{Decentralized algorithm}
 \begin{compactitem}
 	\item Each resource is replicated n times , rname\_i is the name of the replica\\
 	\item each replica has it's own controller, the name is a hash of the rname\_i
@@ -1132,6 +1175,7 @@ Access to shared resources\\
 		many requests, noone gets access
 	\item heavy load $\Rightarrow$ drop in utilisation
 \end{compactitem}
+
 \section{A distributed algorithm}
 \begin{compactitem}
 	\item deterministic
@@ -1145,6 +1189,17 @@ Access to shared resources\\
 		\end{compactenum}
 	\item grants mutual exclusion without deadlocks or starvation
 \end{compactitem}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=300px]{gfx/mutex-distributed.png}
+	\caption{...}
+	\label{img:mutex-distributed}
+\end{figure}
+
+
+
+
 Problems: \begin{compactitem}
 		
 	\item note failure $\Rightarrow$ dito
@@ -1152,7 +1207,18 @@ Problems: \begin{compactitem}
 	\item algorithm is slower, more complicated, more expensive, less robust than centralised alg.
 	\item not a good algorithm
 \end{compactitem}
+
 \section{Token Ring Algorithm}
+
+\section{Centralized algorithm}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=300px]{gfx/mutex-token.png}
+	\caption{...}
+	\label{img:mutex-token}
+\end{figure}
+
+
 \begin{compactitem}
 	\item processes form a logical ring
 	\item token circulates
@@ -1161,8 +1227,8 @@ Problems: \begin{compactitem}
 	\item not fair under heavy load
 \end{compactitem}
 Problems:\begin{compactitem}
-	\item token loss
-	\item 
+	\item token loss -> regenerating?
+	\item crashing nodes
 \end{compactitem}
 
 \section{Comparison}
