@@ -1,0 +1,47 @@
+\BOOKMARK [0][-]{chapter.1}{Verteilte Systeme/Distributed Systems}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Orga}{chapter.1}% 2
+\BOOKMARK [2][-]{subsection.1.1.1}{Elektisches}{section.1.1}% 3
+\BOOKMARK [2][-]{subsection.1.1.2}{\334bungen}{section.1.1}% 4
+\BOOKMARK [2][-]{subsection.1.1.3}{Material/Inhalt}{section.1.1}% 5
+\BOOKMARK [0][-]{chapter.2}{Distributed Systems}{}% 6
+\BOOKMARK [0][-]{chapter.3}{Architectures of distributed Systems}{}% 7
+\BOOKMARK [1][-]{section.3.1}{System architectures}{chapter.3}% 8
+\BOOKMARK [0][-]{chapter.4}{PeerSim}{}% 9
+\BOOKMARK [0][-]{chapter.5}{Processes}{}% 10
+\BOOKMARK [1][-]{section.5.1}{Virtualisation}{chapter.5}% 11
+\BOOKMARK [1][-]{section.5.2}{Client-/Serverprocesses}{chapter.5}% 12
+\BOOKMARK [1][-]{section.5.3}{Code Migration}{chapter.5}% 13
+\BOOKMARK [0][-]{chapter.6}{Communication}{}% 14
+\BOOKMARK [1][-]{section.6.1}{RPC - Remote Procedure Call}{chapter.6}% 15
+\BOOKMARK [1][-]{section.6.2}{Asynchronous RPC}{chapter.6}% 16
+\BOOKMARK [1][-]{section.6.3}{Message oriented communication}{chapter.6}% 17
+\BOOKMARK [2][-]{subsection.6.3.1}{Message-Oriented Transient Communication}{section.6.3}% 18
+\BOOKMARK [2][-]{subsection.6.3.2}{Message-Oriented Persistent Communication}{section.6.3}% 19
+\BOOKMARK [1][-]{section.6.4}{stream oriented communication}{chapter.6}% 20
+\BOOKMARK [1][-]{section.6.5}{Multicast communication}{chapter.6}% 21
+\BOOKMARK [1][-]{section.6.6}{Gossip-based-communication}{chapter.6}% 22
+\BOOKMARK [0][-]{chapter.7}{Naming}{}% 23
+\BOOKMARK [1][-]{section.7.1}{Distributed Hash Tables}{chapter.7}% 24
+\BOOKMARK [0][-]{chapter.8}{Synchronistation}{}% 25
+\BOOKMARK [1][-]{section.8.1}{Clock synchronisation algorithms}{chapter.8}% 26
+\BOOKMARK [1][-]{section.8.2}{Network Time Protcol \(NTP\)}{chapter.8}% 27
+\BOOKMARK [1][-]{section.8.3}{Berkeley algorithm}{chapter.8}% 28
+\BOOKMARK [1][-]{section.8.4}{Logical Clocks - YEAH ALP5! -.-}{chapter.8}% 29
+\BOOKMARK [0][-]{chapter.9}{Vector Clocks}{}% 30
+\BOOKMARK [0][-]{chapter.10}{Mutual Exclusion}{}% 31
+\BOOKMARK [1][-]{section.10.1}{Centralised algorithm}{chapter.10}% 32
+\BOOKMARK [1][-]{section.10.2}{Decentralised algorithm}{chapter.10}% 33
+\BOOKMARK [1][-]{section.10.3}{A distributed algorithm}{chapter.10}% 34
+\BOOKMARK [1][-]{section.10.4}{Token Ring Algorithm}{chapter.10}% 35
+\BOOKMARK [1][-]{section.10.5}{Comparison}{chapter.10}% 36
+\BOOKMARK [0][-]{chapter.11}{Leader Election algorithms}{}% 37
+\BOOKMARK [1][-]{section.11.1}{leader election in a synchronnous ring}{chapter.11}% 38
+\BOOKMARK [2][-]{subsection.11.1.1}{LCR algorithm}{section.11.1}% 39
+\BOOKMARK [2][-]{subsection.11.1.2}{Algorithm of Hirschberg and Sinclair \(HS-Alg\)}{section.11.1}% 40
+\BOOKMARK [2][-]{subsection.11.1.3}{Time slice algorithm}{section.11.1}% 41
+\BOOKMARK [2][-]{subsection.11.1.4}{Variable speeds algorithm}{section.11.1}% 42
+\BOOKMARK [1][-]{section.11.2}{Leader election in a wireless environment}{chapter.11}% 43
+\BOOKMARK [1][-]{section.11.3}{The Bully Algorithm\(flooding\) \(Garcia-Mdina, 1982\)}{chapter.11}% 44
+\BOOKMARK [0][-]{chapter.12}{Consitency and Consensus}{}% 45
+\BOOKMARK [1][-]{section.12.1}{Reliable multicast protocols}{chapter.12}% 46
+\BOOKMARK [2][-]{subsection.12.1.1}{Distributed Commit}{section.12.1}% 47

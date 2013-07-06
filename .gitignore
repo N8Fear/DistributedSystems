@@ -15,6 +15,7 @@ Desktop.ini
 *.gz
 *.log
 *.toc
+*.out
 *.aux
 #### vim ####
 *.un~

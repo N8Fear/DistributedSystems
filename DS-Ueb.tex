@@ -2,6 +2,7 @@
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{MyriadPro}
 \usepackage{geometry}
 \geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
 \usepackage{listings}
@@ -63,23 +64,23 @@ literate=%
 \renewcommand{\familydefault}{\sfdefault}
 
  
-\author{Tobias Höppner, Hinnerk van Bruinehsen, Tobias Famulla}
-\title{Distributed Systems - Ueb1}
+\author{Hinnerk van Bruinehsen}
+\title{Distributed Systems\\Übungen}
 \date{SoSe 2013}
 
 \begin{document}
 \maketitle
-
+\chapter{Ueb1}
 \section*{Assignment 1. Client-Server}
-The 
+The main problem is that the time a client waits for a response from a server increases since each Server waits for a response from the next server itself.\\
+This isn't inherently a problem of the client-server model but concerns every architecture that works over multiple nodes (chain ... ).
 i
 
 \section*{Assignment 2. Unstructured Overlay}
-Wahrscheinlichkeit: $P = \frac{c-1}{n-1}$
+1. Wahrscheinlichkeit: $P = \frac{c-1}{n-2}+\frac{c-1}{n-2}$: R ist ein Nachbar, daher $c-1$, R und der knoten selbst können keine Nachbarn mehr sein, also $n-2$. Wir haben 2 Fälle (P mit Q verbunden und Q mit P verbunden)
 
-
+2. Wenn L Anzahl der erreichbaren Knoten ist, $C \leq L \leq C^2$  
 \section*{Assignment 3. Structured Overlay}
-i
 Wenn nach der Topologie des Overlaynetworks geroutet wird, kann es sein, dass die Verbindungen im darüber liegenden Netz sehr ungünstig sind und es eigentlich bessere Verbindungen gäbe.
 
 \end{document}
