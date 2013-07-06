@@ -936,13 +936,21 @@ System model: each machine has timer that causes H interrupts per second
 	\item perfect clock: $\forall \  p, t : C_p(t) = t $ \\
 	$\Longleftrightarrow C_p'(t) = \frac{d C_p(t)}{dt} = 1$\\
 	$\mathrel{\widehat{=}}$ frequency of clock $C_p$ at time $t$
-% diagramm vom hipster
+	
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/clock-drift.png}
+	\caption{...}
+	\label{img:clock-drift}
+\end{figure}	
+	
 	\item $C_p'(t) - 1 \mathrel{\widehat{=}}$ skew of p's clock, difference to perfect clock.
 	\item $C_p(t)-t \mathrel{\widehat{=}}$ offset
-	\item real timers do not interrupt H timespers maximum drift p such\\
-	$1-\rho \leq \frac{d C_p(t)}{dt} \leq 1 + \rho$ \\
-	$\rho$ is a constant guaranteed/specified by the vendor
-	\item at time $\Delta t$ two clocks that are drifting apart can be\\
+	\item real timers do not interrupt exactly H times per second 
+	\item maximum drift $\rho$ is a constant guaranteed/specified by the vendor \\
+	$1-\rho \leq \frac{d C_p(t)}{dt} \leq 1 + \rho$
+	
+	\item at time $\Delta t$ after two clocks were synchronized the drift can be max: \\
 	$|C_2(\Delta t) - C_1(\Delta t) | \leq 2 \rho \Delta t$
 	\item if the difference should never exceed $\delta$ then synchronisation every $\frac {\delta}{2 \rho}$ seconds is needed
 	\item time always moves forward.
