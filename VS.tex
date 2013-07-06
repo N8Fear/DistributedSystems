@@ -4,7 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{hyperref}
-\usepackage{MyriadPro}
+%\usepackage{MyriadPro}
 %\usepackage{MinionPro}
 \usepackage{graphicx}
 %\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
@@ -126,13 +126,13 @@ hide the fact that processes and resources are physically distributed.
 
 Types of transparancy:\\
 \begin{compactitem}
-\item[access] hide differences in representation and how a resource is accessed
-\item[location]
-\item[migration] move ressources
-\item[relocation] move ressources while using
-\item[replication]
-\item[concurrency]
-\item[failure]
+\item[access] hide differences in data representation and how a resource is accessed
+\item[location] hide where a resource is located
+\item[migration] hide that a resource may move to another location
+\item[relocation] hide that a resource may be moved to another location while in use
+\item[replication] hide that a resource is replicated
+\item[concurrency] hide that a resource may be shared by serveral competitive users
+\item[failure] hide the failure and recovery of a resource 
 \end{compactitem}
 
 transparancy is desireable, but not always perfectly possible
