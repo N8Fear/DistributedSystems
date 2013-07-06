@@ -897,35 +897,43 @@ System model: each machine has timer that causes H interrupts per second
 \begin{compactitem}
 	\item clock $C$ adds up ticks (interrupts)
 	\item $C_p(t)$ is clock time on machine $p$
-	\item perfect clock: $C_p(t) = t \forall p, t$ \\
+	\item perfect clock: $\forall \  p, t : C_p(t) = t $ \\
 	$\Longleftrightarrow C_p'(t) = \frac{d C_p(t)}{dt} = 1$\\
 	$\mathrel{\widehat{=}}$ frequency of clock $C_p$ at time $t$
 % diagramm vom hipster
 	\item $C_p'(t) - 1 \mathrel{\widehat{=}}$ skew of p's clock, difference to perfect clock.
 	\item $C_p(t)-t \mathrel{\widehat{=}}$ offset
 	\item real timers do not interrupt H timespers maximum drift p such\\
-	$1-\rho \leq \frac {d(H)}{dt} \leq 1+p$
-	\item at time $\delta t$ two clocks that are drifting apart can be\\
-	$|C_2(\Delta t) - C_1(\Delta t) \leq 2 \rho \Delta t|$
-	\item if the difference should never exceed $\delta_i$ then synchronisation every $\frac {\delta}{2 \rho}$ seconds is needed
-	\item time allways moves forward.
+	$1-\rho \leq \frac{•}{•}{d C_p(t)}{dt} \leq 1 + \rho$ \\
+	$\rho$ is a constant guaranteed/specified by the vendor
+	\item at time $\Delta t$ two clocks that are drifting apart can be\\
+	$|C_2(\Delta t) - C_1(\Delta t) | \leq 2 \rho \Delta t$
+	\item if the difference should never exceed $\delta$ then synchronisation every $\frac {\delta}{2 \rho}$ seconds is needed
+	\item time always moves forward.
 \end{compactitem}
 
 
 \section{Network Time Protcol (NTP)}
 \begin{compactitem}
 \item nodes contact time server that has an accurate clock
-\item time server pasive\\
-% hipsters GFX
+\item time server passive\\
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/ntp.png}
+	\caption{ntp}
+	\label{img:ntp}
+\end{figure}
+
 A estimates its offset to B as\\
-$\Theta =  \frac{(T_2 - T_1) + (T_4 - T_3)}{2}$\\
+$\Theta = T_3 - \frac{(T_2 - T_1) + (T_4 - T_3)}{2} =  \frac{(T_2 - T_1) + (T_3 - T_4)}{2}$\\
 assuming communication time is symmetric\\
 delay:\\
 $\delta = {(T_4 - T_1) + (T_2 - T_3)}$
 \item A probes B, B probes A
 \item NTP stores 8 pairs $(\Theta, \delta)$ per node pair using min($\delta$) for smallest delay
 \item either A or B can be more stable
-\item reference node has \underline{stratum  1} (clock has stratum 0) (stratum = \# Server to a reference clock)
+\item reference node has \underline{stratum  1} (clock has stratum 0) (stratum = \# Servers to a reference clock)
 \item lower stratrum level is better, will be used.
 \end{compactitem}
 
@@ -933,7 +941,15 @@ $\delta = {(T_4 - T_1) + (T_2 - T_3)}$
 \begin{compactitem}
 \item assumes no node has 'good' time
 \item time server polls all nodes for their time
-%GFX vom hipster
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/berkeley.png}
+	\caption{(a) The time daemon asks all the other machines for their clock values (b) The machines anwer.  (c) The time daemon tells everyone how to adjust their clock.}
+	\label{img:berkeley}
+\end{figure}
+
+
 \item takes average and adjusts speed of nodes correspondingly
 \item all nodes agree on time, which may not be correct
 \end{compactitem}
@@ -1002,6 +1018,8 @@ every message is sent to all receivers+itself with timestamp\\
 				%Bild
 		\end{compactenum}
 \end{compactitem}
+
+
 \chapter{Mutual Exclusion}
 Access to shared resources\\
 2 types of algorithms: token-based and permission-based
