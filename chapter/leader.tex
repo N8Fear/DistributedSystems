@@ -4,10 +4,11 @@ Network is a graph $G$ consisting of $n$ nodes connected by unidirectional links
 \begin{compactitem}
 \item elected node is ``leader''
 \item leader election is not possible for identical processes/nodes
+\item $\rightarrow$ processes have unique id (UID)
 \end{compactitem}
 
 \subsection{LCR algorithm}
-(Lelan, Chang, Roberts)\\
+(Le Lann, Chang, Roberts)\\
 
 \begin{compactitem}
 \item unidirectional communication
@@ -114,7 +115,7 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 	phases with n rounds
 	in phase r consisting of rounds (v-1)n+1,\dots,vn
 	only a token carrying UID v is permitted
-	if a process  with UID v exists, thenit elects itself leader and sends a token wit it's UID
+	if a process  with UID v exists, then it elects itself leader and sends a token wit it's UID
 
 \end{lstlisting}
 \textbf{Complexity}: number of messages is n, time complexity $n\cdot u_{min}$
