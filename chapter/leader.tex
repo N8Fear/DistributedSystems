@@ -34,6 +34,13 @@ state transitions
 		v<u: 	do nothing
 \end{lstlisting}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=400px]{gfx/lcr.png}
+	\caption{LCR algorithm}
+	\label{img:lcr}
+\end{figure}
+
 \textbf{Correctness}\\
 Let max index of process with $max(UID)$ let $u_{max}$ is its UID\\
 Show:\\
@@ -108,7 +115,7 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 \item ring size $n$ is known
 \item unidirectional
 \item elects minimum
-\end{compactitem}*
+\end{compactitem}
 
 
 \begin{lstlisting}
@@ -116,8 +123,15 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 	in phase r consisting of rounds (v-1)n+1,\dots,vn
 	only a token carrying UID v is permitted
 	if a process  with UID v exists, then it elects itself leader and sends a token wit it's UID
-
 \end{lstlisting}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=200px]{gfx/timeslice.png}
+	\caption{Timeslice algorithm}
+	\label{img:timeslice}
+\end{figure}
+
 \textbf{Complexity}: number of messages is n, time complexity $n\cdot u_{min}$
 
 \subsection{Variable speeds algorithm}
