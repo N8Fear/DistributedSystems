@@ -138,11 +138,25 @@ Time complexity: $n\cdot 2^{u_{min}}$
 \section{Leader election in a wireless environment}
 \begin{compactitem}
 \item consider time needed for communication
-\item nodes sest up a tree
-\item select based on information like battery lifetime
-\item node issues leader request to all it's neighbours
-\item becomes parent if there is none yet
+\item every node can initiate an election
+\item the select is based on information like battery lifetime or processing power
+\item the nodes only participate in one election, also there are more than one initiating nodes
 \end{compactitem}
+
+\textbf{Process to choose a leader:}
+
+Look at figure \ref{img:Leader_adhoc}
+
+\begin{compactenum}
+\item one node starts the election and sends ELECT to its neighbours
+\item the node, which sended the ELECT message becomes the parent of the node
+\item the node sends the request to all neighbours except the parent node
+\item the node acknowledges the parent after all the children acknowledged the election
+\item if a node recieves an ELECT message, but has already a parent, it acknowledges immediately
+\item if a the node has only neighbours, which are the parent or have other parents, the node becomes a leaf and sends back its value
+\item the waiting nodes send the node id and the highest value of the childs to the parent, after all acknowledged
+\item in the end, the initiating node knows the node with the highest value and broadcast to all nodes, that this is the leader
+\end{compactenum}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=400px]{gfx/Leader_adhoc.png}
