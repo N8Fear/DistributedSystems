@@ -1140,8 +1140,14 @@ Access to shared resources\\
 	\item permission difficult in distributed systems
 \end{compactitem}
 
-\section{Centralised algorithm}
-%Bild!!!
+\section{Centralized algorithm}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=300px]{gfx/mutex-centralized.png}
+	\caption{...}
+	\label{img:mutex-centralized}
+\end{figure}
+
 \begin{compactitem}
 	\item one process is coordinator
 	\item coordinator alloes access onl to one process
@@ -1153,7 +1159,7 @@ Access to shared resources\\
 	\item dead coordinator looks like permission denied
 \end{compactitem}
 
-\section{Decentralised algorithm}
+\section{Decentralized algorithm}
 \begin{compactitem}
 	\item Each resource is replicated n times , rname\_i is the name of the replica\\
 	\item each replica has it's own controller, the name is a hash of the rname\_i
@@ -1169,6 +1175,7 @@ Access to shared resources\\
 		many requests, noone gets access
 	\item heavy load $\Rightarrow$ drop in utilisation
 \end{compactitem}
+
 \section{A distributed algorithm}
 \begin{compactitem}
 	\item deterministic
@@ -1182,6 +1189,17 @@ Access to shared resources\\
 		\end{compactenum}
 	\item grants mutual exclusion without deadlocks or starvation
 \end{compactitem}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=300px]{gfx/mutex-distributed.png}
+	\caption{...}
+	\label{img:mutex-distributed}
+\end{figure}
+
+
+
+
 Problems: \begin{compactitem}
 		
 	\item note failure $\Rightarrow$ dito
@@ -1189,7 +1207,18 @@ Problems: \begin{compactitem}
 	\item algorithm is slower, more complicated, more expensive, less robust than centralised alg.
 	\item not a good algorithm
 \end{compactitem}
+
 \section{Token Ring Algorithm}
+
+\section{Centralized algorithm}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=300px]{gfx/mutex-token.png}
+	\caption{...}
+	\label{img:mutex-token}
+\end{figure}
+
+
 \begin{compactitem}
 	\item processes form a logical ring
 	\item token circulates
@@ -1198,8 +1227,8 @@ Problems: \begin{compactitem}
 	\item not fair under heavy load
 \end{compactitem}
 Problems:\begin{compactitem}
-	\item token loss
-	\item 
+	\item token loss -> regenerating?
+	\item crashing nodes
 \end{compactitem}
 
 \section{Comparison}
