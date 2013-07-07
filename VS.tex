@@ -866,19 +866,19 @@ Assume a customer has \$1000,- in his bank account and decides to add \$100,- us
  			\item Upon the receipt of a message m, process $P_j$ adjusts its own vector by setting $VC_j[k] = max(VC_j[k], ts(m)[k])$ for each k, after which it executes the first step and delivers the message to the application.
 		\end{compactenum}
 		\item timestamp $ts (m)$ tells the receiver how many events in other processes have preceded the sending of m, and on which m may causally depend.
-		\item casually-ordered multicast is weaker than totally ordered multicast
-		\item delivery of message m from $P_i$ to $P_j$ to application layer will be delayed until:
- 		\begin{compactenum}
- 			\item $ts(m)[j] = VC_j[j]+1$ \\
- 			= m is the next message that $P_j$ was expecting from process $P_i$
+\end{compactitem}
+\subsection{Casually-ordered multicast}
+\begin{compactitem}
+    \item Casually-ordered mulsticast is weaker than totally ordered multicast
+    \item delivery of message m from $P_i$ to $P_j$ to application layer will be delayed until:
+	\begin{compactenum}
+		\item $ts(m)[i] = VC_j[i]+1$ \\
+		= m is the next message that $P_j$ was expecting from process $P_i$
+		\item $ts(m)[k] \leq VC_j[k] \ \ \forall \ k \neq i$ \\
+		= $P_j$ has seen all the messages that have been seen by $P_i$ when it sent message m
 
- 			\item $ts(m)[k] \leq VC_j[k] \ \ \forall \ k \neq i$ \\
- 			= $P_j$ has seen all the messages that have been seen by $P_i$ when it sent message m
-
-		\end{compactenum}
-		\item Better to be implemented on application layer, because the app knows which messages are causally related.
-
-
+	\end{compactenum}
+	\item Better to be implemented on application layer, because the app knows which messages are causally related.
 \end{compactitem}
 
 \begin{figure}[h]
