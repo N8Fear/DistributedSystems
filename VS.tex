@@ -140,37 +140,45 @@ transparancy is desireable, but not always perfectly possible
 tradeoff between transparancy and complexity, maintainablility and performance
 
 \section{Open System}
-
 \begin{compactitem}
 \item service interfaces specified using Interface Definition Language (IDL)
 \item service specification as text
 \end{compactitem}
 
-\section{Scalability} is an important property
-
+\section{Scalability} 
+is an important property, distributed systems should be scalable in
 \begin{compactitem}
-\item scalable in size (number of nodes)
-\item scalable in geographic spread
-\item scalable in administration
+\item [\textbf{size}] number of nodes, users, resoruces
+\item [\textbf{geographic spread}]
+\item [\textbf{administration}]
 \end{compactitem}
 
 \section{Problems}
-
+\subsection{Scalability Limitations}
 \begin{compactitem}
-\item centralized services
-\item centralized data
-\item centralized algorithms
+\item [\textbf{centralized services}] A single server for all users
+\item [\textbf{centralized data}] A single on-line telephone book
+\item [\textbf{centralized algorithms}] Doing routing based on complete information
+\end{compactitem}
+\subsection{Geographical Scalability}
+\begin{compactitem}
+\item [\textbf{design}] existing distributed systems were designed for LANs
+\item [\textbf{communication}] LAN-based systems often use synchronous communication and is inherently unreliable (virtually always p2p)
+\end{compactitem}
+\subsection{Security Problems}
+\begin{compactitem}
+\item [\textbf{selfprotection}] from malicious attacks from the new domain
+\item [\textbf{domainprotection}] the domain protects itself from attacks from a new distrb. sys.
 \end{compactitem}
 
-\textbf{Scaling techiques}
-
+\section{Scaling techiques}
 \begin{compactitem}
-\item use only asynchronous communication
-\item distribution, split components
-\item replication of components
+\item [\textbf{hiding communication latencies}] use only asynchronous communication
+\item [\textbf{distribution}] split components into smaller parts :)
+\item [\textbf{replication}] of components, chaching, enables load balancing
 \end{compactitem}
 
-\textbf{pitfalls}
+\section{pitfalls}
 
 \begin{compactenum}
 \item reliable network
@@ -183,7 +191,7 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item one administrator!
 \end{compactenum}
 
-\textbf{Types of distributed systems}
+\section{Types of distributed systems}
 \begin{compactitem}
 \item computing systems
 \begin{compactitem}
@@ -199,7 +207,7 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item distributed inforamtion systems
 \begin{compactitem}
 \item transaction processing systems (database) \\
-ACID (atomicity, consistency, isolated, durable)
+\textbf{ACID} (atomicity, consistency, isolation, durability)
 \item enterprise systems
 \end{compactitem}
 \item Distributed pervasive systems\\
