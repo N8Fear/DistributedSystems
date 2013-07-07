@@ -47,7 +47,7 @@ literate=%
 \renewcommand{\familydefault}{\sfdefault}
 
 
-\author{Hinnerk van Bruinehsen\\Tobias Höppner\\Tobias Famulla\\Lord Pimmelgurke\\Los Jufflos\\Jens(tm)}
+\author{Hinnerk van Bruinehsen\\Tobias Höppner\\Tobias Famulla\\Lord Pimmelgurke\\Los Jufflos\\Jens\texttrademark}
 \title{Lecture Notes\\\Huge{Distributed System}}
 \date{SoSe 2013}
 
@@ -208,6 +208,12 @@ is an important property, distributed systems should be scalable in
 \begin{compactitem}
 \item transaction processing systems (database) \\
 \textbf{ACID} (atomicity, consistency, isolation, durability)
+\begin{compactitem}
+\item[Atomic] To the outside world, the transaction, happens indivisibly
+\item[Consistens] The transaction does not violate system invariants
+\item[Isolated] Concurrent transactions do not interfere with each other
+\item[Duarble] Once a transaction commits, the changes are permanent
+\end{compactitem}
 \item enterprise systems
 \end{compactitem}
 \item Distributed pervasive systems\\
