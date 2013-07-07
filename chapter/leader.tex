@@ -139,6 +139,14 @@ Total time complexity is at most $3n$ if $n$ power of $2$ otherwise is $5n$\\
 	\label{img:hs_p4}
 \end{figure}
 
+\textbf{Show that the number of messages sent by the HS is at most $8n(1+\left\lceil logn\right\rceil )$, which means it is $O(nlog(n))$.}\\ 
+In Phase $k$ können maximal $4\cdot2^{k}$ Nachrichten (in und out) für einen Kandidaten (Knoten, der in seiner Nachbarschaft keinen größeren Knoten hat) existieren.\\
+In Phase $k=0$ gibt es $n$ Kandidaten $\Rightarrow$ $2n$ out Nachrichten und maximal $\frac{n}{2}\cdot2$ in Nachrichten $=3n$\\
+In Phase $k\geq1$ gibt es maximal noch $\left\lfloor \frac{n}{2^{k-1}+1}\right\rfloor $ Kandidaten. $2^{k-1}+1$ ist der minimale Abstand zwischen zwei Gewinnern aus Phase $k-1$\\ $\Rightarrow$ die Anzahl der Nachrichten, die in Phase $k$ gesendet werden ist $4\cdot2^{k}\cdot\left\lfloor \frac{n}{2^{k-1}+1}\right\rfloor =8n\cdot\left\lfloor \frac{2^{k-1}}{2^{k-1}+1}\right\rfloor $\\ 
+Offensichtlich ist die maximale Anzahl der Phasen ist $\left\lceil logn\right\rceil +1$\\
+Offensichtlich werden in der letzten Phase $2n$ Nachrichten gesendet\\
+$3n+\sum\limits _{k=1}^{\left\lceil logn\right\rceil -1}\left(8n\cdot\left\lfloor \frac{2^{k-1}}{2^{k-1}+1}\right\rfloor \right)+2n\leq5n+8n\cdot\left(\left\lceil logn\right\rceil -1\right)$ 
+
 
 \subsection{Time slice algorithm}
 \begin{compactitem}
