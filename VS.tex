@@ -47,7 +47,7 @@ literate=%
 \renewcommand{\familydefault}{\sfdefault}
 
 
-\author{Hinnerk van Bruinehsen\\Tobias Höppner\\Tobias Famulla}
+\author{Hinnerk van Bruinehsen\\Tobias Höppner\\Tobias Famulla\\Lord Pimmelgurke\\Los Jufflos\\Jens(tm)}
 \title{Lecture Notes\\\Huge{Distributed System}}
 \date{SoSe 2013}
 
@@ -924,6 +924,7 @@ Access to shared resources\\
 
 \section{Decentralized algorithm}
 \begin{compactitem}
+    \item Let $m$ be the count of the coordinators, that answered and allowd entry to the critical section
 	\item Each resource is replicated n times , rname\_i is the name of the replica\\
 	\item each replica has it's own controller, the name is a hash of the rname\_i
 	\item if rname is known, each process can generate the address of the controllers
@@ -962,26 +963,23 @@ Access to shared resources\\
 
 Problems:
 \begin{compactitem}
-	\item note failure $\Rightarrow$ dito
-	\item load, all processes take part in decisions (needs 2(n-1) messages for n processes
+	\item node failure $\Rightarrow$ dito
+    \item load, all processes take part in decisions (needs 2(n-1) messages for n processes)
 	\item algorithm is slower, more complicated, more expensive, less robust than centralised alg.
 	\item not a good algorithm
 \end{compactitem}
 
 \section{Token Ring Algorithm}
 
-\section{Centralized algorithm}
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=300px]{gfx/mutex-token.png}
-	\label{img:mutex-token}
-\end{figure}
-
-
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=300px]{gfx/mutex-token.png}
+%	\label{img:mutex-token}
+%\end{figure}
 \begin{compactitem}
 	\item processes form a logical ring
 	\item token circulates
-	\item ownerof token can access resource
+	\item owner of token can access resource
 	\item simple and efficient
 	\item not fair under heavy load
 \end{compactitem}
