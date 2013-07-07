@@ -109,7 +109,7 @@ state transitions
 \textbf{Complexity}\\
 Total number of phases is at most $1+\lceil\log(n)\rceil$\\
 the total number of messages is at mostin $(1+\lceil(\log(n))\rceil\ \approx \mathcal{O}(n\log n)$\\
-Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
+Total time complexity is at most $3n$ if $n$ power of $2$ otherwise is $5n$\\
 
 \subsection{Time slice algorithm}
 \begin{compactitem}
@@ -121,7 +121,7 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 
 \begin{lstlisting}[mathescape, language=VHDL]
 	phases with n rounds
-	in phase r consisting of rounds $(v-1) \cdots n+1$, $\dots$,vn
+	in phase r consisting of rounds $(v-1) \cdot n+1$, $\dots$,vn
 	only a token carrying UID v is permitted
 	if a process  with UID v exists, then it elects itself the leader and sends a token with it's UID
 \end{lstlisting}
