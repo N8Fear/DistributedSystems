@@ -107,7 +107,7 @@ state transitions
 		send-=(u,out, $2^{phase}$)
 \end{lstlisting}
 \textbf{Complexity}\\
-Total number of phases is at most $1+\lceil\log(n)\rceil$\\
+Total number of phases is at most $8n(1+\lceil\log(n)\rceil)$\\
 the total number of messages is at most in $(1+\lceil(\log(n))\rceil\ \approx \mathcal{O}(n\log n)$\\
 Total time complexity is at most $3n$ if $n$ power of $2$ otherwise is $5n$\\
 
@@ -193,7 +193,7 @@ Time complexity: $n\cdot 2^{{uid}_{min}}$
 
 \textbf{Process to choose a leader:}
 
-Look at minipage \ref{img:Leader_adhoc}
+Look at figure \ref{img:Leader_adhoc}
 
 \begin{compactenum}
 \item one node starts the election and sends ELECT to its neighbours
@@ -219,7 +219,7 @@ Look at minipage \ref{img:Leader_adhoc}
 \item if Q (with higher number) answers with OK, Q takes over and sends ELECT to all higher nodes again.
 \end{compactenum}
 
-Look at minipage \ref{img:leader1}
+Look at figure \ref{img:leader1}
 \begin{minipage}{\linewidth}
 	\centering\includegraphics[width=310px]{gfx/leader1.png}
 	\captionof{figure}{The bully election algorithm}
