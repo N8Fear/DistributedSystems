@@ -4,8 +4,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{hyperref}
-\usepackage{MyriadPro}
-\usepackage{MinionPro}
+%\usepackage{MyriadPro}
+%\usepackage{MinionPro}
 \usepackage{graphicx}
 %\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
 \usepackage{listings}
@@ -1015,9 +1015,12 @@ $\delta = (T_4 - T_1) - (T_3 - T_2) =  (T_2 - T_1) + (T_4 - T_3)$
 $a \rightarrow b \land b \rightarrow c \Rightarrow a \rightarrow c$
 \item concurrency:\\
 if $x, y$ happen in different processes and neither $x \rightarrow y$ nor $y \rightarrow x$, then $x, y$ are concurrent\\
-(which means, it is not know who comes first)
+(which means, it is not known which one comes first)
 \item $\forall$ events a, we can assign it a time $C(a)$ on which all processes aggree.
-\item if $a \rightarrow b$ then $C(a) < C(b)$ 
+\item if $a \rightarrow b$ then $C(a) < C(b)$ \\
+    if $C(a) < C(b)$ then not $a \xrightarrow{?} b$\\
+    if $C(a) \not < C(b)$ then $ a \not \rightarrow b$\\
+
 \item 4 properties of logical time
 \begin{compactenum}
 \item No two events get assigned the same time.
@@ -1046,13 +1049,13 @@ $C_i \leftarrow C_i + 1$
 \item upon receipt of a message $m$ process $P_j$ adjust its time to $C_j \leftarrow \max{C_j, ts(m)}$, then executes step 1 and delivers message
 \end{compactenum}
 
+\subsection{Totally ordered multicast}
 Examples
 \begin{compactitem}
 \item Consider a bank with two data centers A and B, that need to be kept consistent. Each request uses the nearest copy. \\
 Assume a customer has \$1000,- in his bank account and decides to add \$100,- using copy A. At the same time 1\% interest is added to copy B. What happens? How can we solve the problem?
 
 
-\item Totally ordered multicast
 %Bild 
 
 \begin{compactitem}
@@ -1079,7 +1082,7 @@ Assume a customer has \$1000,- in his bank account and decides to add \$100,- us
 
 \section{Vector Clocks}
 \begin{compactitem}
-	\item Problem with Lamport: does not capture casuality
+	\item Problem with Lamport: does not capture causality
 	\item $T_{sent}(m_i) < T_{recv} (m_i) \overset{?}{\Rightarrow} T_{recv} (m_i) < T_{sent} (m_j)$ 
 	
 
