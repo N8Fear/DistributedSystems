@@ -35,12 +35,12 @@ state transitions
 		v<u: 	do nothing
 \end{lstlisting}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=400px]{gfx/lcr.png}
-	\caption{LCR algorithm}
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=310px]{gfx/lcr.png}
+	\captionof{figure}{LCR algorithm}
 	\label{img:lcr}
-\end{figure}
+\end{minipage}
+
 
 \textbf{Correctness}\\
 Let max index of process with $max(UID)$ let $u_{max}$ is its UID\\
@@ -111,33 +111,29 @@ Total number of phases is at most $1+\lceil\log(n)\rceil$\\
 the total number of messages is at most in $(1+\lceil(\log(n))\rceil\ \approx \mathcal{O}(n\log n)$\\
 Total time complexity is at most $3n$ if $n$ power of $2$ otherwise is $5n$\\
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=350px]{gfx/HS_p1.png}
-	\caption{HS Phase 1}
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=310px]{gfx/HS_p1.png}
+	\captionof{figure}{HS Phase 1}
 	\label{img:hs_p1}
-\end{figure}
+\end{minipage}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=350px]{gfx/HS_p2.png}
-	\caption{HS Phase 2}
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=310px]{gfx/HS_p2.png}
+	\captionof{figure}{HS Phase 2}
 	\label{img:hs_p2}
-\end{figure}
+\end{minipage}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=350px]{gfx/HS_p3.png}
-    \caption{HS Phase 3}
+\begin{minipage}{\linewidth}
+    \centering\includegraphics[width=310px]{gfx/HS_p3.png}
+    \captionof{figure}{HS Phase 3}
     \label{img:hs_p3}
-\end{figure}
+\end{minipage}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=350px]{gfx/HS_p4.png}
-	\caption{HS Phase 4}
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=310px]{gfx/HS_p4.png}
+	\captionof{figure}{HS Phase 4}
 	\label{img:hs_p4}
-\end{figure}
+\end{minipage}
 
 \textbf{Show that the number of messages sent by the HS is at most $8n(1+\left\lceil logn\right\rceil )$, which means it is $O(nlog(n))$.}\\ 
 In Phase $k$ können maximal $4\cdot2^{k}$ Nachrichten (in und out) für einen Kandidaten (Knoten, der in seiner Nachbarschaft keinen größeren Knoten hat) existieren.\\
@@ -163,12 +159,11 @@ $3n+\sum\limits _{k=1}^{\left\lceil logn\right\rceil -1}\left(8n\cdot\left\lfloo
 	if a process  with UID v exists, then it elects itself the leader and sends a token with it's UID
 \end{lstlisting}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=150px]{gfx/timeslice.png}
-	\caption{Timeslice algorithm}
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=150px]{gfx/timeslice.png}
+	\captionof{figure}{Timeslice algorithm}
 	\label{img:timeslice}
-\end{figure}
+\end{minipage}
 
 \textbf{Complexity}: number of messages is n, time complexity $n\cdot u_{min}$
 
@@ -198,7 +193,7 @@ Time complexity: $n\cdot 2^{{uid}_{min}}$
 
 \textbf{Process to choose a leader:}
 
-Look at figure \ref{img:Leader_adhoc}
+Look at minipage \ref{img:Leader_adhoc}
 
 \begin{compactenum}
 \item one node starts the election and sends ELECT to its neighbours
@@ -210,12 +205,11 @@ Look at figure \ref{img:Leader_adhoc}
 \item the waiting nodes send the node id and the highest value of the childs to the parent, after all acknowledged
 \item in the end, the initiating node knows the node with the highest value and broadcast to all nodes, that this is the leader
 \end{compactenum}
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=400px]{gfx/Leader_adhoc.png}
-	\caption{Election in wireless networks}
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=310px]{gfx/Leader_adhoc.png}
+	\captionof{figure}{Election in wireless networks}
 	\label{img:Leader_adhoc}
-\end{figure}
+\end{minipage}
 
 \section{The Bully Algorithm(flooding) (Garcia-Mdina, 1982)}
 - process P holds election
@@ -225,13 +219,12 @@ Look at figure \ref{img:Leader_adhoc}
 \item if Q (with higher number) answers with OK, Q takes over and sends ELECT to all higher nodes again.
 \end{compactenum}
 
-Look at figure \ref{img:leader1}
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=400px]{gfx/leader1.png}
-	\caption{The bully election algorithm}
+Look at minipage \ref{img:leader1}
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=310px]{gfx/leader1.png}
+	\captionof{figure}{The bully election algorithm}
 	\label{img:leader1}
-\end{figure}
+\end{minipage}
 
 %BILD DINGDINGDING
 
