@@ -182,10 +182,12 @@ Look at figure \ref{img:Leader_adhoc}
 \section{The Bully Algorithm(flooding) (Garcia-Mdina, 1982)}
 - process P holds election
 \begin{compactenum}
-\item P sends ELECT message to all processes
-\item P wins if there is no response $\Rightarrow$ P is leader and sends COORDINATOR message to all available nodes.
-\item if Q answers with OK, Q takes over and sends ELECT again.
+\item P sends ELECT message to all processes with higher number
+\item P wins if there is no one responses $\Rightarrow$ P is leader and sends COORDINATOR message to all available nodes.
+\item if Q (with higher number) answers with OK, Q takes over and sends ELECT to all higher nodes again.
 \end{compactenum}
+
+Look at figure \ref{img:leader1}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=400px]{gfx/leader1.png}
