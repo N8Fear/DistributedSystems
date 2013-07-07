@@ -146,12 +146,12 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item service specification as text
 \end{compactitem}
 
-\section{Scalability} is an important property
-
+\section{Scalability} 
+is an important property, distributed systems should be scalable in
 \begin{compactitem}
-\item scalable in size (number of nodes, users, resoruces)
-\item scalable in geographic spread
-\item scalable in administration
+\item [\textbf{size}] number of nodes, users, resoruces
+\item [\textbf{geographic spread}]
+\item [\textbf{administration}]
 \end{compactitem}
 
 \section{Problems}
@@ -165,16 +165,18 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \begin{compactitem}
 \item [\textbf{design}] existing distributed systems were designed for LANs
 \item [\textbf{communication}] LAN-based systems often use synchronous communication and is inherently unreliable (virtually always p2p)
-
+\end{compactitem}
+\subsection{Security Problems}
+\begin{compactitem}
+\item [\textbf{selfprotection}] from malicious attacks from the new domain
+\item [\textbf{domainprotection}] the domain protects itself from attacks from a new distrb. sys.
 \end{compactitem}
 
-
 \section{Scaling techiques}
-
 \begin{compactitem}
-\item use only asynchronous communication
-\item distribution, split components
-\item replication of components
+\item [\textbf{hiding communication latencies}] use only asynchronous communication
+\item [\textbf{distribution}] split components into smaller parts :)
+\item [\textbf{replication}] of components, chaching, enables load balancing
 \end{compactitem}
 
 \section{pitfalls}
@@ -190,7 +192,7 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item one administrator!
 \end{compactenum}
 
-\textbf{Types of distributed systems}
+\section{Types of distributed systems}
 \begin{compactitem}
 \item computing systems
 \begin{compactitem}
