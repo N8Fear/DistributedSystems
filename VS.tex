@@ -4,8 +4,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{hyperref}
-\usepackage{MyriadPro}
-\usepackage{MinionPro}
+%\usepackage{MyriadPro}
+%\usepackage{MinionPro}
 \usepackage{graphicx}
 %\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
 \usepackage{listings}
@@ -149,20 +149,27 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \section{Scalability} is an important property
 
 \begin{compactitem}
-\item scalable in size (number of nodes)
+\item scalable in size (number of nodes, users, resoruces)
 \item scalable in geographic spread
 \item scalable in administration
 \end{compactitem}
 
 \section{Problems}
-
+\subsection{Scalability Limitations}
 \begin{compactitem}
-\item centralized services
-\item centralized data
-\item centralized algorithms
+\item [\textbf{centralized services}] A single server for all users
+\item [\textbf{centralized data}] A single on-line telephone book
+\item [\textbf{centralized algorithms}] Doing routing based on complete information
+\end{compactitem}
+\subsection{Geographical Scalability}
+\begin{compactitem}
+\item [\textbf{design}] existing distributed systems were designed for LANs
+\item [\textbf{communication}] LAN-based systems often use synchronous communication and is inherently unreliable (virtually always p2p)
+
 \end{compactitem}
 
-\textbf{Scaling techiques}
+
+\section{Scaling techiques}
 
 \begin{compactitem}
 \item use only asynchronous communication
@@ -170,7 +177,7 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item replication of components
 \end{compactitem}
 
-\textbf{pitfalls}
+\section{pitfalls}
 
 \begin{compactenum}
 \item reliable network
