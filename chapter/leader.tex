@@ -127,7 +127,7 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=200px]{gfx/timeslice.png}
+	\includegraphics[width=150px]{gfx/timeslice.png}
 	\caption{Timeslice algorithm}
 	\label{img:timeslice}
 \end{figure}
@@ -136,10 +136,10 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 
 \subsection{Variable speeds algorithm}
 \begin{compactitem}
-\item each process $i$ creates a token to tracel around the ring, carrying UID u of origin
-\item tokens travel at diffeneed speed
+\item each process $i$ creates a token to travel around the ring, carrying UID u of origin
+\item tokens travel at differrent speed
 \item token carrying UID v travels  1 messages every $2^{v}$ rounds
-\item each process memorises smallestUID
+\item each process memorises smallest UID
 \item return to origin elects UID
 \end{compactitem}
 
@@ -148,7 +148,7 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 
 
 How many messages in total? $\sum\limits_{k=1}^n \frac{1}{2^{k-1}} (<2n)$\\
-Time complexity: $n\cdot 2^{u_{min}}$
+Time complexity: $n\cdot 2^{{uid}_{min}}$
 
 \section{Leader election in a wireless environment}
 \begin{compactitem}
@@ -167,7 +167,7 @@ Look at figure \ref{img:Leader_adhoc}
 \item the node, which sended the ELECT message becomes the parent of the node
 \item the node sends the request to all neighbours except the parent node
 \item the node acknowledges the parent after all the children acknowledged the election
-\item if a node recieves an ELECT message, but has already a parent, it acknowledges immediately
+\item if a node recieves an ELECT message, but has already a parent, it responses immediately, that another node is its parent
 \item if a the node has only neighbours, which are the parent or have other parents, the node becomes a leaf and sends back its value
 \item the waiting nodes send the node id and the highest value of the childs to the parent, after all acknowledged
 \item in the end, the initiating node knows the node with the highest value and broadcast to all nodes, that this is the leader
