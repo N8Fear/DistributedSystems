@@ -46,7 +46,7 @@ literate=%
 
 \renewcommand{\familydefault}{\sfdefault}
 
- 
+
 \author{Hinnerk van Bruinehsen\\Tobias Höppner\\Tobias Famulla}
 \title{Lecture Notes\\\Huge{Distributed System}}
 \date{SoSe 2013}
@@ -115,7 +115,7 @@ Objectives:\\
 \item provide resources (printer, storage, computing)
 \begin{compactitem}
 \item share in a controlled, efficient way
-\item grant access\\
+\item grant access
 $\Rightarrow$ connect users and resources
 \end{compactitem}
 
@@ -132,21 +132,21 @@ Types of transparancy:\\
 \item[\textbf{relocation}] hide that a resource may be moved to another location while in use
 \item[\textbf{replication}] hide that a resource is replicated
 \item[\textbf{concurrency}] hide that a resource may be shared by serveral competitive users
-\item[\textbf{failure}] hide the failure and recovery of a resource 
+\item[\textbf{failure}] hide the failure and recovery of a resource
 \end{compactitem}
 
 transparancy is desireable, but not always perfectly possible
 
 tradeoff between transparancy and complexity, maintainablility and performance
 
-\textbf{Open System}
+\section{Open System}
 
 \begin{compactitem}
 \item service interfaces specified using Interface Definition Language (IDL)
 \item service specification as text
 \end{compactitem}
 
-\textbf{Scalability} is an important property
+\section{Scalability} is an important property
 
 \begin{compactitem}
 \item scalable in size (number of nodes)
@@ -154,7 +154,7 @@ tradeoff between transparancy and complexity, maintainablility and performance
 \item scalable in administration
 \end{compactitem}
 
-\textbf{Problems}
+\section{Problems}
 
 \begin{compactitem}
 \item centralized services
@@ -319,7 +319,7 @@ Structured P2P architectures\\
 \begin{compactitem}
 \item most popular technique is distributed hashtables (DHT)\\
 \item randomly 128 bit or 160 bit ke for data and nodes. Two or more keys are very unlikely\\
-\item Chord system arranges items in a ring 
+\item Chord system arranges items in a ring
 \item data item k is assigened to node with smallest identifier id $\geq$ k
 \end{compactitem}
 ie item 1 belongs to node 1\\
@@ -388,248 +388,7 @@ increment age\\
 \chapter{PeerSim}
 
 \input{chapter/proc.tex}
-%\chapter{Processes}
-%\begin{tabular}{p{7cm} p{7cm}}
-%\textbf{processes}			&\textbf{threads}\\
-%-execution of program			&-several threads share CPU\\
-%-processor creates virtual processor	&-thread context has little memory information, perhaps mutex lock\\
-%-for each program everyting is stored in process table	&-threads avoid blocking application (e.g. spreadsheet,computation of dependent cells, intermediate backup)\\
-%-transparent sharing of resources,(processor, memory) separation&-thread switch is fast\\
-%-each virtual processor has it's own independent adress space&-user level threads allow parallel computation of program sections\\
-%-process switch is expensive, (save cpu context, pointers, translation lookaside buffer (TLB), memory management unit (MMU))&I/O or other blocking system calls block all threads, but thread creation/deletion is kernel task = expensive \\
-%-perhaps even swaps to disk, if memory exhausted& advantages of threads over processes vanishes\\
-%\end{tabular}
-%
-%2 possible solutions:\\
-%\begin{compactenum}
-%\item scheduler activation, upcall to achieve process switch
-%\item light-weight processes (LWP)\\
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=200px]{gfx/thread_lwp.png}
-%	\caption{light-weight processes can run threads}
-%	\label{img:lwp_threads}
-%\end{figure}
-%user level thread package\\
-%execute scheduler and run thread of parent\\
-%may block on systemcall, then other LWP may run\\
-%triggered from userspace\\
-%\end{compactenum}
-%Advantages of LWP and user-level thread package:\\
-%\begin{compactenum}
-%\item creation, deletion etc is easy, no kernel intervention
-%\item blocking syscall does not suspend process if enough LWPs are available
-%\item applications do not see LWP. They only see user-level threads
-%\item LWP can run on different processors in multiprocessor systems
-%\end{compactenum}
-%
-%Disadvantages:\\
-%\begin{compactenum}
-%\item LWP creation as expensive as creation of kernel-level thread
-%\end{compactenum}
-%
-%Advantages:\\
-%- a blocking systemcall blocks only thread, not process
-%$\Rightarrow$ system call for communication in distributed systems
-%
-%Multiple threads in clients and servers\\
-%
-%\textbf{Clients:}\\
-%\begin{compactitem}
-%\item multiple thread may hide communication delay (distribution transparency)
-%\item web browser opens several connections to load parts of a document/page
-%\item web server may be replicated in same or different location\\
-%$\Rightarrow$ truly parallel access to items and parallel download
-%\end{compactitem}
-%
-%\textbf{Servers:}\\
-%\begin{compactitem}
-%\item single threaded, e.g. file server\\
-%thread serves incoming request, waits for disk, returns file\\
-%serves next
-%\item multithreaded\\
-%dispatcher thread recieves request\\
-%hands over to worker thread\\
-%waits for disk etc.\\
-%dispatcher takes next request
-%\item finite state machine\\
-%only one thread\\
-%examines request, either read from \ldots or from disk\\
-%during wait stores requests in table\\
-%serves next request\\
-%manage control either new request or reply from disk\\
-%act accordingly\\
-%process acts as finite state machine that receives messages and acts/changes state
-%\end{compactitem}
-%
-%\textbf{summary:}\\
-%\begin{tabular}{l l}
-%model&characteristics\\
-%single thread& no parallelism, blocking syscalls\\
-%multi thread& parallelism, blocking syscalls\\
-%finite state machine& parallelism, non-blocking syscalls\\
-%\end{tabular}
-%
-%\section{Virtualisation}
-%% Bild von Höpster
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=200px]{gfx/virtualisation_1.png}
-%	\caption{virtualisation}
-%	\label{img:virtualisation_1}
-%\end{figure}
-%
-%V pretends there are more resources then available.\\
-%
-%Reasons for the need for V.\\
-%-hardware changes much faster then SW\\
-%$\Rightarrow$ improves portability\\
-%-networks consist of different hardware\\
-%$\Rightarrow$ enables portability of programs for all\\
-%usage (distributed applications, network protocols)\\
-%
-%2 Types of Architectures for Virtualisation:\\
-%\begin{compactenum}
-%\item Runtime system providing instruction set\\
-%	\begin{compactitem}
-%	\item interpreted as Java
-%	\item emulated as for Windows applications on UNIX-platform processes VM
-%	\end{compactitem}
-%\item Virtualisation shields hardware and offers instruction set of the same or other hardware\\
-%- can host different OS that run simultaneosly\\
-%$\Rightarrow$ VMM such as VMware, Xen\\
-%
-%
-%\end{compactenum}
-%
-%
-%\section{Client-/Serverprocesses}
-%\textbf{CLients:}\\
-%%Bild von Tobi !!! :D
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=200px]{gfx/clienta.png}
-%	\caption{app specific communication}
-%	\label{img:clienta}
-%\end{figure}
-%%Mehr Bild!
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=200px]{gfx/clientb.png}
-%	\caption{machine only communication}
-%	\label{img:clientb}
-%\end{figure}
-%
-%\begin{compactitem}
-%\item b) allows to store data at the server
-%\item \textbf{thin client} e.g. X-windows
-%\item thin client should separate application logic from user interaction
-%\item ooften not implemented $\Rightarrow$ poor performance
-%\item compression of interaction commands as solution
-%\item compound documents where user interaction triggers several processing steps on the server. must be implemented (e.g. rotation of picture changes placement in texts)
-%\end{compactitem}
-%
-%\textbf{Servers:}\\
-%\begin{compactitem}
-%	\item serves requests on behalf of the client
-%	\item Types of servers\\
-%		\begin{compactitem}
-%			\item \textbf{iterative Server} handles requests itself
-%			\item \textbf{concurrent server} passes requests to worker, e.g. multithreaded server
-%		\end{compactitem}
-%	\item server listens to port, endpoint to the client; some ports are reserved for special services
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=200px]{gfx/server_deamon.png}
-%	\caption{listener server}
-%	\label{img:listener}
-%\end{figure}
-%	\item superserver listens to several ports, replacinf several (mostly idle) servers
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=200px]{gfx/superserver.png}
-%	\caption{superserver}
-%	\label{img:supserv}
-%\end{figure}
-%	\item stateless servers, keeps no information on state of client $\rightarrow$ change state without informing the client, e.g. web server
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=200px]{gfx/server3.png}
-%	\caption{stateless server}
-%	\label{img:statel_serv}
-%\end{figure}
-%	\item soft state server, maintains client state for limited time, e.g. servers informing about updates
-%	\item stateful server keeps information about client (file server keeps (client, file) table), often better performance, fault-tolerance poorer
-%	\item cookies allow to share information for server upon next visit client sends it'S cookies, allows state information for stateless server
-%
-%\end{compactitem}
-%\textbf{Distributed Servers}\\
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[width=200px]{gfx/distrb_server.png}
-%	\caption{distributed server}
-%	\label{img:distrb_serv}
-%\end{figure}
-%\begin{compactitem}
-%	\item servers in different locations that have different ip-adresses in DNS under the same name
-%	\item MIPv6: mobility support for IPv6
-%	\item mobile node has home network with stable home adress (HoA)
-%	\item special router is home agent and takes care of traffic to the mobile node
-%	\item mobile node receives care-of-adress (CoA), never seen by client
-%	\item route optimisation avoids routing through home agent
-%\end{compactitem}
-%
-%\section{Code Migration}
-%\begin{compactitem}
-%	\item Code migration on (running) process - Why?
-%	\item service placement in distributed system $\Rightarrow$ minimize communication cost
-%	\item load balancing in multiprocessor machine or cluster $\Rightarrow$ performace
-%	\item (security)
-%
-%\end{compactitem}
-%
-%\textbf{Models of Migration}
-%\begin{compactitem}
-%	\item or process model\begin{compactenum}
-%		\item code segment, instructions
-%		\item resource segement, references to external resources, ie.e. file, printer, devices
-%		\item execution segement, execution state process, stack, private data, programm counter
-%
-%	\end{compactenum}
-%	\item \textbf{Migration types}\begin{compactitem}
-%		\item weak mobility, transfer code, (1), mabe 3)), which executes from beginning (i.e. java applets)
-%		\item strong mobility, transfer 1)3), stop executions, transfer, resume
-%	\end{compactitem}
-%\end{compactitem}
-%
-%%bild
-%
-%Migrating resource segment 2) is difficult\\
-%Consider process to resource binding\\
-%\begin{compactenum}
-%	\item binding by identifier, URL, ftp-server-name
-%	\item binding by value, libraries for programming
-%	\item binding by type, local device, monitor
-%\end{compactenum}
-%
-%\textbf{Resource-machine-binding}
-%\begin{compactenum}
-%	\item unattached
-%	\item fastend
-%	\item fixed
-%\end{compactenum}
-%
-%\begin{tabular}{l| l| l| l}
-%pass tp resource binding&unattached&fastened&fixed\\
-%\hline
-%by identifier& MV&GR(or MV)& GR\\
-%\hline
-%by value& CP& GR(or CP)& GR\\
-%\hline
-%by type& RB&RB(or GR,CP)&RB(or GR)\\
-%\end{tabular}
-%MV:move, GR, global reference, CP: copy value, RB: rebind to locally available resource
-%
+
 \chapter{Communication}
 
 \begin{compactitem}
@@ -654,21 +413,21 @@ increment age\\
 \subsection*{A remote procedure call occurs in the following steps:}
 
 \begin{enumerate}
-	\item The client procedure calls the client stub in the normal way. 
-	\item The client stub builds a message and calls the local operating system. 
-	\item The client's as sends the message to the remote as. 
-	\item The remote as gives the message to the server stub. 
+	\item The client procedure calls the client stub in the normal way.
+	\item The client stub builds a message and calls the local operating system.
+	\item The client's as sends the message to the remote as.
+	\item The remote as gives the message to the server stub.
 	\item The server stub unpacks the parameters and calls the server.
-	\item The server does the work and returns the result to the stub. 
-	\item The server stub packs it in a message and calls its local as. 
-	\item The server's as sends the message to the client's as. 
-	\item The client's as gives the message to the client stub. 
+	\item The server does the work and returns the result to the stub.
+	\item The server stub packs it in a message and calls its local as.
+	\item The server's as sends the message to the client's as.
+	\item The client's as gives the message to the client stub.
 	\item The stub unpacks the result and returns to the client.
 \end{enumerate}
 
 \subsection*{Parameter Marshaling}
 
-parameter marshaling: packing parameters into a message is called 
+parameter marshaling: packing parameters into a message is called
 
 
 \subsubsection*{Passing Value Parameters}
@@ -768,7 +527,7 @@ aka Message-queuing-system, Message-oriented-middleware (MoM) \\
 	\item transfer may take minutes, not milliseconds
 	\item applications communicate by inserting messages into queues
 	\item messages are only put into and read from local queues
-	\item the message-queuing system takes care that messages are transferred from their source to their destination queue	
+	\item the message-queuing system takes care that messages are transferred from their source to their destination queue
 	\item message carries destination address
 	\item queue managers
 	\begin{compactitem}
@@ -778,7 +537,7 @@ aka Message-queuing-system, Message-oriented-middleware (MoM) \\
 	\item message brokers transform type A into type B, using a set of rules
 		\begin{compactitem}
 		\item application-level gateway in a message-queuing system
-		\item convert incoming messages so that they can be understood by the destination application		
+		\item convert incoming messages so that they can be understood by the destination application
 		\item transform messages of type A into type B, using a set of rules
 	\end{compactitem}
 	\item Examples: Email, workflow, batch processing, queries accross several databases
@@ -895,7 +654,7 @@ $18 = FT_1[5]$
 \item lookup generally requires $O(log(N))$ steps, N nodes in system
 \item join/leave is rather simple
 \item keeeping figer table up to date is expensive
-\end{compactitem} 
+\end{compactitem}
 \item example2:\\
 \begin{figure}[h]
 	\centering
@@ -936,20 +695,20 @@ System model: each machine has timer that causes H interrupts per second
 	\item perfect clock: $\forall \  p, t : C_p(t) = t $ \\
 	$\Longleftrightarrow C_p'(t) = \frac{d C_p(t)}{dt} = 1$\\
 	$\mathrel{\widehat{=}}$ frequency of clock $C_p$ at time $t$
-	
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=400px]{gfx/clock-drift.png}
 	\caption{fast, slow \& perfect clock}
 	\label{img:clock-drift}
-\end{figure}	
-	
+\end{figure}
+
 	\item $C_p'(t) - 1 \mathrel{\widehat{=}}$ skew of p's clock, difference to perfect clock.
 	\item $C_p(t)-t \mathrel{\widehat{=}}$ offset
-	\item real timers do not interrupt exactly H times per second 
+	\item real timers do not interrupt exactly H times per second
 	\item maximum drift $\rho$ is a constant guaranteed/specified by the vendor \\
 	$1-\rho \leq \frac{d C_p(t)}{dt} \leq 1 + \rho$
-	
+
 	\item at time $\Delta t$ after two clocks were synchronized the drift can be max: \\
 	$|C_2(\Delta t) - C_1(\Delta t) | \leq 2 \rho \Delta t$
 	\item if the difference should never exceed $\delta$ then synchronisation every $\frac {\delta}{2 \rho}$ seconds is needed
@@ -1008,16 +767,19 @@ $\delta = (T_4 - T_1) - (T_3 - T_2) =  (T_2 - T_1) + (T_4 - T_3)$
 
 \begin{compactenum}
 \item if a,b are events in the same process and a happens before b, than a $\rightarrow$ b is true
-\item if a denotes the event of sending a message and b the event of receiving this message by another process then a $\rightarrow$ b is true 
+\item if a denotes the event of sending a message and b the event of receiving this message by another process then a $\rightarrow$ b is true
 \end{compactenum}
 
 \item happens before is transitive:\\
 $a \rightarrow b \land b \rightarrow c \Rightarrow a \rightarrow c$
 \item concurrency:\\
 if $x, y$ happen in different processes and neither $x \rightarrow y$ nor $y \rightarrow x$, then $x, y$ are concurrent\\
-(which means, it is not know who comes first)
+(which means, it is not known which one comes first)
 \item $\forall$ events a, we can assign it a time $C(a)$ on which all processes aggree.
-\item if $a \rightarrow b$ then $C(a) < C(b)$ 
+\item if $a \rightarrow b$ then $C(a) < C(b)$ \\
+    if $C(a) < C(b)$ then not $a \xrightarrow{?} b$\\
+    if $C(a) \not < C(b)$ then $ a \not \rightarrow b$\\
+
 \item 4 properties of logical time
 \begin{compactenum}
 \item No two events get assigned the same time.
@@ -1038,7 +800,7 @@ if $x, y$ happen in different processes and neither $x \rightarrow y$ nor $y \ri
 
 \textbf{Algorithm} \\
  $C_i =$ local counter of process $P_i$
- 
+
 \begin{compactenum}
 \item Before executing an event (sending a msg over the network, delivering a msg to an app, some internal events) $P_i$ executes\\
 $C_i \leftarrow C_i + 1$
@@ -1046,30 +808,27 @@ $C_i \leftarrow C_i + 1$
 \item upon receipt of a message $m$ process $P_j$ adjust its time to $C_j \leftarrow \max{C_j, ts(m)}$, then executes step 1 and delivers message
 \end{compactenum}
 
+\subsection{Totally ordered multicast}
 Examples
 \begin{compactitem}
 \item Consider a bank with two data centers A and B, that need to be kept consistent. Each request uses the nearest copy. \\
 Assume a customer has \$1000,- in his bank account and decides to add \$100,- using copy A. At the same time 1\% interest is added to copy B. What happens? How can we solve the problem?
-
-
-\item Totally ordered multicast
-%Bild 
+%Bild
 
 \begin{compactitem}
 	\item  every message is sent to all receivers+itself with timestamp
 	\item Assumption 1: messages from the same sender are received in the order they were sent, and that no messages are lost
 	\item Assumption 2: no two events get assigned the same time
-	\item When msg is received 
+	\item When msg is received
 	\begin{compactenum}
 		\item put it into a local priority queue ordered to the msgs timestamp
 		\item multicast an acknowledgment to all other processes ( following Lamport $\Rightarrow ts(msg) < ts(ack)$ )
 	\end{compactenum}
-	
 	\item eventually all queues are identical $\Rightarrow$ total order
 	\item Process delivers a queued msg to the app only when
 	\begin{compactenum}
 		\item msg is at head of queue
-		\item ack received by every process
+		\item ack received from every process
 	\end{compactenum}
 
 \end{compactitem}
@@ -1079,19 +838,17 @@ Assume a customer has \$1000,- in his bank account and decides to add \$100,- us
 
 \section{Vector Clocks}
 \begin{compactitem}
-	\item Problem with Lamport: does not capture casuality
-	\item $T_{sent}(m_i) < T_{recv} (m_i) \overset{?}{\Rightarrow} T_{recv} (m_i) < T_{sent} (m_j)$ 
-	
+	\item Problem with Lamport: does not capture causality
+	\item By construction, we know that for each message $T_{sent}(m_i) < T_{recv} (m_i)$. But what can we conclude in general from$ T_{recv} (m_i) < T_{sent} (m_j)$ [Lamport]
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=300px]{gfx/lamport-concurrent.png}
-	\caption{...}
 	\label{img:lamport-concurrent}
 \end{figure}
 
-	\item 
-		In the case $m_i=m_1$ and $m_j = m_3$ we know at $P_2$  that $m_j$ was sent after $m_i$ was received. This \emph{may} indicate that sending of $m_j$ has something to do with the receiving of $m_i$ 
+	\item
+		In the case $m_i=m_1$ and $m_j = m_3$ we know at $P_2$  that $m_j$ was sent after $m_i$ was received. This \emph{may} indicate that sending of $m_j$ has something to do with the receiving of $m_i$
 
 	\item Vector Clocks: \\
 		$VC(a) < VC(b)$ means, that event a is known to causally precede event b.
@@ -1101,18 +858,18 @@ Assume a customer has \$1000,- in his bank account and decides to add \$100,- us
 				$VC_i[i]$ is the logial clock at $P_i$
 			\item if $VC_i[j]=k$ then $P_i$ knows, that $k$ events have occured at $P_j$. It is thus $P_i$'s knowledge of the local time at $P_j$
 				%Bild
-		\end{compactenum}		
+		\end{compactenum}
  	\item To maintain properties:
  			\begin{compactenum}
  			\item Before executing an event (i.e., sending a message over the network, delivering a message to an application, or some other internal event), $P_i$ executes $VC_i[i] = VC_i[i] + 1$
  			\item When process $P_i$ sends a message m to $P_j$, it sets m's (vector) timestamp $ts(m)$ equal to $VC_i$ after having executed the previous step
- 			\item Upon the receipt of a message m, process $P_j$ adjusts its own vector by setting $VC_j[k] = max(VC_j[k], ts(m)[k])$ for each k, after which it executes the first step and delivers the message to the application. 			
+ 			\item Upon the receipt of a message m, process $P_j$ adjusts its own vector by setting $VC_j[k] = max(VC_j[k], ts(m)[k])$ for each k, after which it executes the first step and delivers the message to the application.
 		\end{compactenum}
 		\item timestamp $ts (m)$ tells the receiver how many events in other processes have preceded the sending of m, and on which m may causally depend.
 		\item casually-ordered multicast is weaker than totally ordered multicast
 		\item delivery of message m from $P_i$ to $P_j$ to application layer will be delayed until:
  		\begin{compactenum}
- 			\item $ts(m)[i] = VC_j[i]+1$ \\
+ 			\item $ts(m)[j] = VC_j[j]+1$ \\
  			= m is the next message that $P_j$ was expecting from process $P_i$
 
  			\item $ts(m)[k] \leq VC_j[k] \ \ \forall \ k \neq i$ \\
@@ -1121,13 +878,12 @@ Assume a customer has \$1000,- in his bank account and decides to add \$100,- us
 		\end{compactenum}
 		\item Better to be implemented on application layer, because the app knows which messages are causally related.
 
- 	
+
 \end{compactitem}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=300px]{gfx/vector-clock.png}
-	\caption{...}
 	\label{img:vector-clock}
 \end{figure}
 
@@ -1144,7 +900,6 @@ Access to shared resources\\
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=300px]{gfx/mutex-centralized.png}
-	\caption{...}
 	\label{img:mutex-centralized}
 \end{figure}
 
@@ -1163,7 +918,7 @@ Access to shared resources\\
 \begin{compactitem}
 	\item Each resource is replicated n times , rname\_i is the name of the replica\\
 	\item each replica has it's own controller, the name is a hash of the rname\_i
-	\item if rname is known, each process can generate the address of the controllers				
+	\item if rname is known, each process can generate the address of the controllers
 	\item access to resource when $m>n/2$ controllers grant it
 	\item Let $p$ probability that a coordinator resets during $\Delta t$\\
 		$P[k]= prob\lbrace k \text{ out of } m \text{ coordinators reset during } \Delta t\rbrace = \left( \binom{m}{k}\right) p^k (1-p)^{m-k}$
@@ -1193,15 +948,12 @@ Access to shared resources\\
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=300px]{gfx/mutex-distributed.png}
-	\caption{...}
 	\label{img:mutex-distributed}
 \end{figure}
 
 
-
-
-Problems: \begin{compactitem}
-		
+Problems:
+\begin{compactitem}
 	\item note failure $\Rightarrow$ dito
 	\item load, all processes take part in decisions (needs 2(n-1) messages for n processes
 	\item algorithm is slower, more complicated, more expensive, less robust than centralised alg.
@@ -1214,7 +966,6 @@ Problems: \begin{compactitem}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=300px]{gfx/mutex-token.png}
-	\caption{...}
 	\label{img:mutex-token}
 \end{figure}
 
