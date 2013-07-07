@@ -1,5 +1,5 @@
 \chapter{Leader Election algorithms}
-\section{leader election in a synchronnous ring}
+\section{leader election in a synchronous ring}
 Network is a graph $G$ consisting of $n$ nodes connected by unidirectional links. Use $\mod n$ for labels\\
 \begin{compactitem}
 \item elected node is ``leader''
@@ -15,11 +15,12 @@ Network is a graph $G$ consisting of $n$ nodes connected by unidirectional links
 \item ring size unknown
 \item only leader produces output
 \item algorithm compares UID
+\item One or more $p_i$s can take the initiative and start an election, by sending an election message containing their id to $p_{i+1}$
 \end{compactitem}
 
 \begin{lstlisting}[mathescape, language=VHDL]
 For each node
-	a = a UID, initially i's UID
+	u = a UID, initially i's UID
 	send = a UID or NULL, initially i's UID
 	status = {unknown, leader} initially unknown
 
@@ -58,16 +59,16 @@ and\\
 \item[(iv)] For $0\leq r\leq n-1$ after $r$ rounds\\
 	$send_{max}=u_{max}$
 \end{compactitem}
-find UID at distance $r$ from $i_{max}$ as it has t og once around.\\
+find UID at distance $r$ from $i_{max}$ as it has to go once around.\\
 
 Show $(iv)$ for all r: Induction\\
 then (iii)\\
 
 \textbf{Complexity}\\
 \begin{compactitem}
-\item time complexity id $n$ rounds
+\item time complexity is $n$ rounds
 \item communocation complexity $\mathcal{O}(n^2)$
-\item not very expensive in time many messages
+\item not very expensive in time, but many messages
 
 \end{compactitem}
 
@@ -120,9 +121,9 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 
 \begin{lstlisting}[mathescape, language=VHDL]
 	phases with n rounds
-	in phase r consisting of rounds (v-1)n+1,\dots,vn
+	in phase r consisting of rounds $(v-1) \cdots n+1$, $\dots$,vn
 	only a token carrying UID v is permitted
-	if a process  with UID v exists, then it elects itself leader and sends a token wit it's UID
+	if a process  with UID v exists, then it elects itself the leader and sends a token with it's UID
 \end{lstlisting}
 
 \begin{figure}[h]
