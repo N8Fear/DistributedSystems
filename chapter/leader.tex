@@ -17,7 +17,7 @@ Network is a graph $G$ consisting of $n$ nodes connected by unidirectional links
 \item algorithm compares UID
 \end{compactitem}
 
-\begin{lstlisting}
+\begin{lstlisting}[mathescape, language=VHDL]
 For each node
 	a = a UID, initially i's UID
 	send = a UID or NULL, initially i's UID
@@ -74,12 +74,12 @@ then (iii)\\
 \subsection{Algorithm of Hirschberg and Sinclair (HS-Alg)}
 - reduces number of messages to $\mathcal{O}(n \log n)$\\
 
-\begin{lstlisting}
+\begin{lstlisting}[mathescape, language=VHDL]
 each process has states with components
 	u, UID: initially i's UID
 	send+ containing NULL or (UID, flag{in, out}, hopcount): initially (i's UID, out, 1)
 	send- as send+
-	status $\in$E{unknown, leader} initailly unknown phase $\in \mathbb{N}$: initially 0
+	status $\in$E{unknown, leader} initailly unknown phase $\in N$: initially 0
 
 message generation
 	send current send+ to process i+1
@@ -118,7 +118,7 @@ Total time complexity is at most $3n$ if $n$ power of $2$ other wise is $5n$\\
 \end{compactitem}
 
 
-\begin{lstlisting}
+\begin{lstlisting}[mathescape, language=VHDL]
 	phases with n rounds
 	in phase r consisting of rounds (v-1)n+1,\dots,vn
 	only a token carrying UID v is permitted
