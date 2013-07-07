@@ -135,7 +135,29 @@ Two additional procedures are added \emph{acquire(..)} and \emph{release(..)}.
 Similar to release-consistency, but synchronisation variables (and procedures acq(..), rel(..)) are responsible for a designated set of variables, not for all variables in the global scope.
 
 \section{Client-centric consistency}
+In contrast to the data-centric consistency models client-centric consistency models do not try to maintain a system wide consistent view, but rather try to hide inconsitencies on client level.
+
 \subsection{Eventual consistency}
+(popular example: Domain Name Service)
+Usually big, distributed, replicated databases, which tolerate a high amount of incostency, but eventually become consistent when there are no updates to the database.
+It is important that clients access the system via fixed nodes, otherwise client updates may take a while, until they are visible for the client itself which is a clear violation of local consistency (read your writes).
+Remember that in this section the consistency view is only local/client-specific!
+
+\subsection{Monotone read-consistency}
+\emph{When a datum x is read by a process, then every following read of x results in the same value, or in newer value.}
+
+\subsection{Monotone write-consistency}
+\emph{When a process writes to a datum x, then all previous write operations have to be finished/applied.}
+
+\subsection{Read your writes}
+\emph{The result of a previous write operation of a process on a datum x is always visible in a following read of the same process}
+
+\subsection{Writes follow reads}
+\emph{A write by a process to a datum x, which follows a previous read of x, is performed on this read value, or a newer one.}
+
+\subsection{Implementing client-side consistency}
+The idea here is to monitor the client's reads and writes and add an ID to each operation. When reading/writing to a server the current status of the client (a list of the reads/writes) is added to the query and the server checks, wether the local storage of the client has to be updatet before executing the query.
+
 \section{Reliable multicast protocols}
 \begin{compactitem}
 	\item atomic multicast requirement\\
