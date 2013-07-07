@@ -169,9 +169,8 @@ The idea here is to monitor the client's reads and writes and add an ID to each 
 	\item reliable multicast operation = delivery of message
 	\item distributed transaction: operation = execution of transaction
 	\item uses coordinator
-	\item one-phased commit\\
-	%Bild
-	\item two-phase commit (2PC) (Jim Gray, 1978)
+	\item one-phased commit
+	%bild?
 	\begin{compactitem}
 	\item distributed transaction involves several processors each on a different machine\\
 	2 phases with each 2 steps:\\
@@ -183,8 +182,13 @@ The idea here is to monitor the client's reads and writes and add an ID to each 
 		else\\
 		coordinator $\xrightarrow{global-abort}$ all participants\\
 		\item if commit, then participants locally commit\\
-		else participants locally abort
-		%bild
+		else participants locally abort\\
+			\begin{minipage}{\linewidth}
+			\centering\includegraphics[width=310px]{gfx/2pc.png}
+			\captionof{figure}{2PC}
+			\label{img:2pc}
+			\end{minipage}
+		\item two-phase commit (2PC) (Jim Gray, 1978)
 	\end{compactenum}
 	Problems if failures occur\\
 	\begin{compactitem}
@@ -209,8 +213,12 @@ The idea here is to monitor the client's reads and writes and add an ID to each 
 			\item there is no state from which directly follow commit or abort follows
 			\item there is no state in which it is not possible to make a final decision and from which a transaction to a commit state can be made
 		\end{compactenum}
-		$\Rightarrow$ necessary and sufficient conditions for non-blocking commit protocol
-		%Bild
+		$\Rightarrow$ necessary and sufficient conditions for non-blocking commit protocol\\
+			\begin{minipage}{\linewidth}
+			\centering\includegraphics[width=310px]{gfx/3pc.png}
+			\captionof{figure}{3PC}
+			\label{img:3pc}
+			\end{minipage}
 		\item abort branch as in 2PC
 		\item blocking states: paritcipant: init -> abort\\
 		coordinator: wait --> abort\\
