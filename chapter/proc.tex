@@ -10,7 +10,14 @@
 -perhaps even swaps to disk, if memory exhausted& advantages of threads over processes vanishes\\
 \end{tabular}
 
-2 possible solutions:\\
+\textbf{Summary:}\\
+\begin{compactitem}
+\item Serveral threads share one process.
+\item Processes have own address space, threads don't.
+\item Processes and threads each have userland and kernel implementations
+\end{compactitem}
+
+\textbf{2 possible solutions:}\\
 \begin{compactenum}
 \item scheduler activation, upcall to achieve process switch
 \item light-weight processes (LWP)\\
