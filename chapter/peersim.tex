@@ -1,2 +1,32 @@
 \chapter{Peersim}
+\section{Kinds of simulation}
+\textbf{cycledriven}\\
+\begin{compactitem}
+    \item fixed cycles; every cycle the part in ``next\_cycle'' is run
+    \item \textbf{Observer:} after every cycle
+\end{compactitem}
 
+\textbf{eventdriven}\\
+\begin{compactitem}
+    \item exchange of messages, the part in ``processevent'' is run (e.g. message delays)
+    \item \textbf{Observer:} at specified point of time
+\end{compactitem}
+
+\section{Configuration}
+Specified are controls:\\
+\begin{compactitem}
+    \item protocols
+    \item \textbf{Initializer:} run at the beginning of the simulation
+    \item \textbf{Observer:} run during simulation, change nothing, at least one needed
+\end{compactitem}
+
+experiments (number of repetitions), range (simulation is repeated with different parameters)
+\section{Initializer}
+\begin{compactitem}
+    \item \textbf{wirekout} parameter k (number of nodes, normally random), creates a ``wireplan'' for the simulation
+    \item \textbf{peekdistributioninitializer} creates one maximum and sets everything else to zero
+    \item \textbf{lineardistributioninitializer} creates linear distribution from start to end value
+\end{compactitem}
+
+\section{Stats, order of parameters}
+\texttt{obs\_name time min max n avg variance ct\_min ct\_max}
