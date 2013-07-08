@@ -108,10 +108,10 @@ usage (distributed applications, network protocols)\\
 
 2 Types of Architectures for Virtualisation:\\
 \begin{compactenum}
-\item Runtime system providing instruction set\\
+\item Runtime system providing syscall API/ABI\\
     Virtualization of processes (e.g. Wine)\\
 	\begin{compactitem}
-	\item interpreted as Java
+    \item syscalls are interpreted (like Java)
 	\item emulated as for Windows applications on UNIX-platform processes VM
 	\end{compactitem}
 \item Virtualisation shields hardware and offers instruction set of the same or other hardware\\
@@ -128,14 +128,14 @@ $\Rightarrow$ VMM such as VMware, Xen\\
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=200px]{gfx/clienta.png}
-	\caption{app specific communication}
+    \caption{a) app specific communication}
 	\label{img:clienta}
 \end{figure}
 %Mehr Bild!
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=200px]{gfx/clientb.png}
-	\caption{machine only communication}
+    \caption{b) machine only communication}
 	\label{img:clientb}
 \end{figure}
 
