@@ -182,25 +182,31 @@ $\Rightarrow$ VMM such as VMware, Xen\\
       \end{minipage}
 \end{minipage}
 
-
-\begin{figure}[h]
-	\centering
+\begin{minipage}{\linewidth}
+      \centering
+      \begin{minipage}{0.45\linewidth}
+          \begin{figure}[H]
 	\includegraphics[width=200px]{gfx/server3.png}
 	\caption{stateless server}
 	\label{img:statel_serv}
-\end{figure}
+          \end{figure}
+      \end{minipage}
+      \hspace{0.05\linewidth}
+      \begin{minipage}{0.45\linewidth}
+          \begin{figure}[H]
+	\includegraphics[width=200px]{gfx/distrb_server.png}
+	\caption{distributed server}
+	\label{img:distrb_serv}
+          \end{figure}
+      \end{minipage}
+\end{minipage}
+
 	\item soft state server, maintains client state for limited time, e.g. servers informing about updates
 	\item stateful server keeps information about client (file server keeps (client, file) table), often better performance, fault-tolerance poorer
 	\item cookies allow to share information for server upon next visit client sends it'S cookies, allows state information for stateless server
 
 \end{compactitem}
 \textbf{Distributed Servers}\\
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=200px]{gfx/distrb_server.png}
-	\caption{distributed server}
-	\label{img:distrb_serv}
-\end{figure}
 \begin{compactitem}
 	\item servers in different locations that have different ip-adresses in DNS under the same name
 	\item MIPv6: mobility support for IPv6
