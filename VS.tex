@@ -558,84 +558,171 @@ aka Message-queuing-system, Message-oriented-middleware (MoM) \\
 	\item Examples: Email, workflow, batch processing, queries accross several databases
 \end{compactitem}
 
-\section{stream oriented communication}
-\begin{compactitem}
-	\item temporal relationship between items important
-	\item multimedia data is compressed
-	\item QoS is important\\
-		\begin{compactitem}
-			\item bit rate
-			\item max delay for session setup
-			\item max end-to-end delay
-			\item max delay variance (jitter)
-			\item max round trip delay\\
-				% next pic, tobi
-		\end{compactitem}
-	\item networking solution such as differentiated services
-	\item synchronisation of streams
-\end{compactitem}
-\section{Multicast communication}
-\begin{compactitem}
-	\item application level multicast uses overlay
-	\item tree, unique path between each pair of nodes
-	\item mesh, more robust, fault-tolerant
-\end{compactitem}
-\textbf{Example:} Construct overlay tree for chord
-\begin{compactitem}
-	\item node that wants to start multicast generates key 128bit/160bit (nid) randomly
-	\item lookup of succ(nid) finds node responsible for key mid\\
-		$\Rightarrow$ succ(nid) becomes root of tree
-	\item join: lookup (nid) creates lookup message with join request routed from P to succ(nid)
-	\item request is forwarded Q (first time forward), Q becomes forwarder\\
-		$\Rightarrow$ P child of Q
-	\item request is first time forwarded by R, R becomes forwarder\\
-		$\Rightarrow$ Q becomes child of R
-	\item multicast: lookup(nid) sends message to the root\\
-		multicast from root
-\end{compactitem}
-\textbf{Efficiency?}\\
-Quality of application level tree\\
+\section{Stream Oriented Communication}
 
 \begin{figure}[h]
 	\centering
+	\includegraphics[width=400px]{gfx/streams.png}
+	\caption{A general architecture for streaming stored multimedia data over a network}
+	\label{img:streams}
+\end{figure}
+
+\begin{compactitem}
+	\item form of communication in which timing plays a crucial role
+	\item in continuous media, the temporal relationships between different data items are fundamental to correctly interpreting what the data actually means
+	\item multimedia data will need to be compressed substantially in order to reduce the required network capacity
+	\item simple stream: consists of only a single sequence of data
+	\item complex stream: consists of several related (often time dependent) simple streams (substreams)
+	\item QoS
+		\begin{enumerate}
+			\item The required bit rate at which data should be transported. 
+			\item The maximum delay until a session has been set up (i.e., when an application can start sending data). 
+			\item The maximum end-to-end delay (i.e., how long it will take until a data unit makes it to a recipient). 
+			\item The maximum delay variance, or jitter. 
+			\item The maximum round-trip delay.		
+		\end{enumerate}
+
+	\item synchronisation of streams
+	\begin{compactitem}
+		\item Synchronization of streams deals with maintaining temporal relations between streams
+		\item Synchronization takes place at the level of the data units of which a stream is made up
+		\item In other words, we can synchronize two streams only between data units
+		\item Example: Playing a movie in which the video stream needs to be synchronized with the audio
+	\end{compactitem}
+	
+\end{compactitem}
+
+
+\section{Multicast communication}
+
+\subsection{Application Level Multicasting}
+
+\begin{compactitem}
+	\item sending data to multiple receivers
+	\item For many years, this topic has belonged to the domain of network protocol
+	\item With the advent of peer-to-peer technology various application-level multicasting techniques have been introduced
+	\item The basic idea in application-level multicasting is that nodes organize into an overlay network, which is then used to disseminate information to its members
+	\item connections between nodes in the overlay network may cross several physical links, and as such, routing messages within the overlay may not be optimal in comparison to what could have been achieved by network-level routing
+\end{compactitem} 
+
+
+\subsubsection*{Approaches to building the overlay}
+\begin{compactitem}
+	\item tree: nodes may organize themselves directly into a tree, meaning that there is a unique (overlay) path between every pair of nodes
+	\item mesh network: nodes organize into a mesh network in which every node will have multiple neighbors and, in general, there exist multiple paths between every pair of nodes
+	\item mesh network generally provides higher robustness
+\end{compactitem}
+
+\
+
+\subsubsection*{Example: Construct overlay tree for chord}  
+\begin{compactitem}
+	\item node that wants to start multicast generates key 128bit/160bit (mid) randomly
+	\item lookup of succ(mid) finds node responsible for key mid\\
+		$\Rightarrow$ succ(mid) becomes root of tree
+	\item join multicast: lookup (mid) creates lookup message with join request routed from P to succ(mid)
+	\item request is forwarded by Q (first time forward), Q becomes forwarder\\
+		$\Rightarrow$ P child of Q
+	\item request is then forwarded by R, R becomes forwarder\\
+		$\Rightarrow$ Q becomes child of R
+	\item if Q or R is already forwarder: no forward\\
+		$\Rightarrow$ Q becomes child of R	
+	\item multicast: lookup(mid) sends message to the root\\
+		multicast from root
+\end{compactitem}
+
+\begin{figure}[h]
+	\centering
+<<<<<<< HEAD
 	\includegraphics[width=300px]{gfx/overlay_example.png}
 	\caption{example of a overlay network}
+=======
+	\includegraphics[width=250px]{gfx/overlay_example.png}
+	\caption{The relation between links in an overlay and actual network-level routes}
+>>>>>>> 007ae035683d50d88d3e0002fa90e8489c4df337
 	\label{img:ovrlnt}
 \end{figure}
 
-\begin{compactenum}
-	\item Link stress, number of traversals of same link per packet
-	\item stretch, relative delay penalty (RDP)\\
-		$\frac{\text{transmission time in overlay}}{\text{transmission time in delay/network}}$
-		$\Rightarrow$ minimize aggregated stretch, average RDP over all note pairs
-	\item tree cost, minimize aggregated link cost, link cost = cost between end points\\
-		$\Rightarrow$ find minimal spanning tree
-\end{compactenum}
-\section{Gossip-based-communication}
+
+\subsubsection*{Efficiency}
+
+\begin{itemize}
+	\item building a tree is not difficult once we have organized the nodes into an overlay
+	\item building an efficient tree may be difficult
+	\item The quality of an application-level multicast tree is generally measured by three different metrics
+	\begin{enumerate}
+		\item Link stress: defined per link and counts how often a packet crosses the same link
+		\item Stretch / Relative Delay Penalty (RDP)\\
+			ratio in the delay between two nodes in the overlay, and the delay that those two nodes would experience in the underlying network: 
+			$\frac{\text{transmission time in overlay}}{\text{transmission time in delay/network}}$ \\
+			$\Rightarrow$ minimize aggregated stretch, average RDP over all note pairs
+		\item tree cost: global metric, generally related to minimizing the aggregated link costs \\
+			link cost = cost between end points\\
+				$\Rightarrow$ find minimal spanning tree	
+	\end{enumerate}
+\end{itemize}
+
+\subsection{Gossip-based-communication}
 \begin{compactitem}
-	\item epidemic behaviour
-	\item a node does not have new data (susceptible), it has the data (infected) or is unwilling to spread (removed)\\
-	Anti-entropy-model\\
-	P chooses randomly Q\\
-	\begin{compactenum}
-		\item P pushes its data to Q
-		\item P pulls Q's data
-		\item P and Q exchange data
-	\end{compactenum}
-	\item if many nodes are infected probabiltry for selecting susceptible node  is low\\
-	$\Rightarrow$ low probability of data dissemination\\
-	\item pull works when many nodes are infected. Susceptible node determines spread. They have a high probability to contact infected nodes
-	\item if only one node is infected push/pull is best
-	\item Round is period in which each node at least once selects a neighbor\\
-		number of rounds needed to spread  $\approx \mathcal{O}(\log(N)), N$ is number of nodes\\
+	\item epidemic behaviour: model information dissemination in a (large) distributed system after the spreading of infectious diseases
+	\item infected node: a node that holds data that it is willing to spread 
+	\item susceptible: a node does not yet have the new data
+	\item removed: an updated node that is not willing or able to spread its data 
+	\item we assume we can distinguish old from new data, for example, because it has been timestamped or versioned
 \end{compactitem}
-\textbf{Rumor spreading, gossiping}:\\
-%bild
-function of nodes that never obtain data: $s=e^{-(k+1)(1-s)}$\\
-e.g. $k=4, ln(s) = 4,97$\\
-$\Rightarrow s = 0,007$\\
-less than $0,7$ remain without data\\
-removing data is difficult : delete message is send via gossiping
+
+\subsubsection*{Anti-entropy-model}
+
+A node P picks another node Q at random, and subsequently exchanges updates with Q.
+There are three approaches to exchanging updates:
+\begin{enumerate}
+
+	\item P only pushes its own updates to Q
+	\begin{itemize}
+		\item updates can be propagated only by infected nodes
+		\item if many nodes are infected, the probability of each one selecting a susceptible node is relatively small
+		\item $\Rightarrow$ chances are that a particular node remains susceptible for a long period simply because it is not selected by an infected node
+	\end{itemize}
+
+	\item P only pulls in new updates from Q
+	\begin{itemize}		
+		\item spreading updates is essentially triggered by susceptible nodes
+		\item high probability to to contact an infected node and pull in the updates
+		\item $\Rightarrow$ pull-based approach works much better when many nodes are infected
+	\end{itemize}
+
+	\item P and Q send updates to each other (i.e., a push-pull approach)
+	\begin{itemize}
+		\item if only one node is infected push/pull is best
+	\end{itemize}
+\end{enumerate}
+
+\
+
+\begin{compactitem}
+	\item Round is period in which each node at least once selects a neighbor
+	\item number of rounds needed to spread  $\approx \mathcal{O}(\log(N)), N$ is number of nodes
+\end{compactitem}
+
+\subsubsection*{Rumor spreading, gossiping}
+\begin{compactitem}
+	\item if node P has just been updated for data item x, it contacts an arbitrary other node Q and tries to push the update to Q
+	\item if Q was already updated by another node, P may lose (with some probability) interest in spreading the update any further
+	\item P then becomes removed\item
+	\item Fraction of nodes that never obtain data: $s=e^{-(k+1)(1-s)}$\\
+		e.g. $k=4, ln(s) = 4,97$\\
+		$\Rightarrow s = 0,007$\\
+		less than $0,7\%$ remain without data\\
+\end{compactitem}
+
+
+\subsubsection*{Removing Data}
+\begin{compactitem}
+	\item problem: deletion of a data item destroys all information on that item\\
+		$\Rightarrow$ when a data item is simply removed from a node, that node will eventually receive old copies of the data item and interpret those as updates on something it did not have before
+	\item $\Rightarrow$ record the deletion of a data item as just another update, and keep a record of that deletion
+\end{compactitem}
+
 
 \chapter{Naming}
 \section{Flat naming}
