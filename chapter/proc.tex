@@ -161,20 +161,28 @@ $\Rightarrow$ VMM such as VMware, Xen\\
 			\item \textbf{concurrent server} passes requests to worker, e.g. multithreaded server
 		\end{compactitem}
 	\item server listens to port, endpoint to the client; some ports are reserved for special services
-\begin{figure}[h]
-	\centering
+	\item stateless servers, keeps no information on state of client $\rightarrow$ change state without informing the client, e.g. web server
+
+\begin{minipage}{\linewidth}
+      \centering
+      \begin{minipage}{0.45\linewidth}
+          \begin{figure}[H]
 	\includegraphics[width=200px]{gfx/server_deamon.png}
 	\caption{listener server}
 	\label{img:listener}
-\end{figure}
-	\item superserver listens to several ports, replacinf several (mostly idle) servers
-\begin{figure}[h]
-	\centering
+          \end{figure}
+      \end{minipage}
+      \hspace{0.05\linewidth}
+      \begin{minipage}{0.45\linewidth}
+          \begin{figure}[H]
 	\includegraphics[width=200px]{gfx/superserver.png}
 	\caption{superserver}
 	\label{img:supserv}
-\end{figure}
-	\item stateless servers, keeps no information on state of client $\rightarrow$ change state without informing the client, e.g. web server
+          \end{figure}
+      \end{minipage}
+\end{minipage}
+
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=200px]{gfx/server3.png}
