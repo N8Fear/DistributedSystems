@@ -1,12 +1,12 @@
 \chapter{Peersim}
 \section{Kinds of simulation}
-\textbf{cycledriven}\\
+\textbf{cycle-based}\\
 \begin{compactitem}
     \item fixed cycles; every cycle the part in ``next\_cycle'' is run
     \item \textbf{Observer:} after every cycle
 \end{compactitem}
 
-\textbf{eventdriven}\\
+\textbf{event-based}\\
 \begin{compactitem}
     \item exchange of messages, the part in ``processevent'' is run (e.g. message delays)
     \item \textbf{Observer:} at specified point of time
@@ -30,3 +30,17 @@ experiments (number of repetitions), range (simulation is repeated with differen
 
 \section{Stats, order of parameters}
 \texttt{obs\_name time min max n avg variance ct\_min ct\_max}
+
+\section{PeerSim simulation life-cycle}
+
+PeerSim was designed to encourage modular programming based on objects (building blocks). Every block is easily replaceable by another component implementing the same interface (i.e., the same functionality). The general idea of the simulation model is:\\
+
+\begin{compactenum}
+\item choose a network size (number of nodes)
+\item choose one or more protocols to experiment with and initialize them
+\item choose one or more Control objects to monitor the properties you are interested in and to modify some parameters during the simulation (e.g., the size of the network, the internal state of the protocols, etc)
+\item run your simulation invoking the Simulator class with a configuration file, that contains the above information
+\end{compactenum}
+
+\section{Interfaces}
+Node, CDProtocol, Linkable, Control
