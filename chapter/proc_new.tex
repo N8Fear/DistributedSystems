@@ -1,0 +1,51 @@
+Other focus than in OS
+
+\section{Threads}
+Much more lightweight than processes
+only the bare minimum of management data (CPU context (registers) and thread management data)
+Safety is to be done by the designer/programmer
+
+Threads are often provided as Threadpackages 
+two approaches possible: 
+- user based (cheap creation and destruction but blocking syscall blocks whole process)
+- kernel threads (expensive due to context switches)
+- LWP (light weight processes, hybrid mode, creation and destroctino expensive but seödpom necessarys)
+
+Benefits for Distributed systems: blocking syscall blocks thread, not the entire pro cess
+
+Multithreaded Clients (webbrowsers, possible benefit: usage of several servers simultaneusly)
+
+Multithreaded Servers (one dispatcher, several workers, enables working even when a thread is blocked)
+
+Virtualization
+
+enabels hardware independence
+2 kinds: process virt: for a single process (e.g. wine), full system virt. :VMM (Virtual machine monitor (hypervisor, like vmware, xen...)
+
+Network user interfaces (e.g. X windows) 
+
+Thin clients
+
+Server 
+iterative: wait - serve -wait
+concurrent: dispatch request to other process/thread and immediatly wait for next request
+
+
+normal server vs. superserver
+superserver starts servers according to clientrequests (e.g. inetd)
+
+stateful vs stateless (vs. soft state)
+
+server cluster
+often organised in three tiers (Logical switch, application/compute servers, distributed file/database system)
+
+Managing Clusters:
+different approaches, e.g. every node individual or via an administration interface that replicates commands to different nodes
+
+
+distributed servers
+
+managing server clusters
+
+Code migration
+Move a process between machines (e.g. for load balancing)
