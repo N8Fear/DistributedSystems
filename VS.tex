@@ -400,7 +400,7 @@ increment age\\
 \end{compactenum}
 
 
-\chapter{PeerSim}
+\input{chapter/peersim.tex}
 
 \input{chapter/proc.tex}
 
@@ -427,7 +427,7 @@ increment age\\
 
 \subsection*{A remote procedure call occurs in the following steps:}
 
-\begin{enumerate}
+\begin{compactenum}
 	\item The client procedure calls the client stub in the normal way.
 	\item The client stub builds a message and calls the local operating system.
 	\item The client's as sends the message to the remote as.
@@ -438,7 +438,7 @@ increment age\\
 	\item The server's as sends the message to the client's as.
 	\item The client's as gives the message to the client stub.
 	\item The stub unpacks the result and returns to the client.
-\end{enumerate}
+\end{compactenum}
 
 \subsection*{Parameter Marshaling}
 
@@ -574,13 +574,13 @@ aka Message-queuing-system, Message-oriented-middleware (MoM) \\
 	\item simple stream: consists of only a single sequence of data
 	\item complex stream: consists of several related (often time dependent) simple streams (substreams)
 	\item QoS
-		\begin{enumerate}
+		\begin{compactenum}
 			\item The required bit rate at which data should be transported. 
 			\item The maximum delay until a session has been set up (i.e., when an application can start sending data). 
 			\item The maximum end-to-end delay (i.e., how long it will take until a data unit makes it to a recipient). 
 			\item The maximum delay variance, or jitter. 
 			\item The maximum round-trip delay.		
-		\end{enumerate}
+		\end{compactenum}
 
 	\item synchronisation of streams
 	\begin{compactitem}
@@ -641,11 +641,11 @@ aka Message-queuing-system, Message-oriented-middleware (MoM) \\
 
 \subsubsection*{Efficiency}
 
-\begin{itemize}
+\begin{compactitem}
 	\item building a tree is not difficult once we have organized the nodes into an overlay
 	\item building an efficient tree may be difficult
 	\item The quality of an application-level multicast tree is generally measured by three different metrics
-	\begin{enumerate}
+	\begin{compactenum}
 		\item Link stress: defined per link and counts how often a packet crosses the same link
 		\item Stretch / Relative Delay Penalty (RDP)\\
 			ratio in the delay between two nodes in the overlay, and the delay that those two nodes would experience in the underlying network: 
@@ -654,8 +654,8 @@ aka Message-queuing-system, Message-oriented-middleware (MoM) \\
 		\item tree cost: global metric, generally related to minimizing the aggregated link costs \\
 			link cost = cost between end points\\
 				$\Rightarrow$ find minimal spanning tree	
-	\end{enumerate}
-\end{itemize}
+	\end{compactenum}
+\end{compactitem}
 
 \subsection{Gossip-based-communication}
 \begin{compactitem}
@@ -670,27 +670,27 @@ aka Message-queuing-system, Message-oriented-middleware (MoM) \\
 
 A node P picks another node Q at random, and subsequently exchanges updates with Q.
 There are three approaches to exchanging updates:
-\begin{enumerate}
+\begin{compactenum}
 
 	\item P only pushes its own updates to Q
-	\begin{itemize}
+	\begin{compactitem}
 		\item updates can be propagated only by infected nodes
 		\item if many nodes are infected, the probability of each one selecting a susceptible node is relatively small
 		\item $\Rightarrow$ chances are that a particular node remains susceptible for a long period simply because it is not selected by an infected node
-	\end{itemize}
+	\end{compactitem}
 
 	\item P only pulls in new updates from Q
-	\begin{itemize}		
+	\begin{compactitem}		
 		\item spreading updates is essentially triggered by susceptible nodes
 		\item high probability to to contact an infected node and pull in the updates
 		\item $\Rightarrow$ pull-based approach works much better when many nodes are infected
-	\end{itemize}
+	\end{compactitem}
 
 	\item P and Q send updates to each other (i.e., a push-pull approach)
-	\begin{itemize}
+	\begin{compactitem}
 		\item if only one node is infected push/pull is best
-	\end{itemize}
-\end{enumerate}
+	\end{compactitem}
+\end{compactenum}
 
 \
 
