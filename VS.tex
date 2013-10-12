@@ -102,7 +102,7 @@ Ue Do 10-12\\
 \chapter{Distributed Systems}
 \textbf{Def:} A distributed System is a collection of independent computers that appears to it's users as a single coherent system.
 
-Characteristics:\\
+Characteristics:
 \begin{compactitem}
 \item autonomous components
 \item appears as single system
@@ -110,22 +110,32 @@ Characteristics:\\
 \item organisation is hidden \\(could be high-performance mainframe or sensor net)
 \item heterogenous system offers homogenous look/interface
 \end{compactitem}
+\ \\
+\ \\
+There are 4 goals of distributed systems:
+\begin{compactenum}
+\item Making Resources Accessible
+\item Distribution Transparency
+\item Openness
+\item Scalability
+\end{compactenum}
 
-Objectives:\\
+\section{Making Resources Accessible}
+
 \begin{compactitem}
-\item provide resources (printer, storage, computing)
-\begin{compactitem}
-\item share in a controlled, efficient way
-\item grant access
-$\Rightarrow$ connect users and resources
+\item provide users (and applications) access to remote resources (printer, storage, computing)
+\item share ressources in a controlled efficient way
 \end{compactitem}
 
+\section{Distribution Transparency}
+Hide the fact that processes and resources are physically distributed. A distributed system that is able to present itself to users and applications as if it were only a single computer system is said to be transparent.
+\begin{compactitem}
+\item transparancy is desireable, but not always perfectly possible
+\item tradeoff between transparancy and complexity, maintainablility and performance
 \end{compactitem}
 
-\section{Transparency}
-hide the fact that processes and resources are physically distributed.
-
-Types of transparancy:\\
+\pagebreak
+\textbf{Types of transparancy:}
 \begin{compactitem}
 \item[\textbf{access}] hide differences in data representation and how a resource is accessed
 \item[\textbf{location}] hide where a resource is located
@@ -136,99 +146,118 @@ Types of transparancy:\\
 \item[\textbf{failure}] hide the failure and recovery of a resource
 \end{compactitem}
 
-transparancy is desireable, but not always perfectly possible
-
-tradeoff between transparancy and complexity, maintainablility and performance
-
-\section{Open System}
+\section{Openness}
 \begin{compactitem}
-\item service interfaces specified using Interface Definition Language (IDL)
-\item service specification as text
+\item An open distributed system is a system that offers services according to standard rules that describe the syntax and semantics of those services
+\item service interfaces (syntax) specified using Interface Definition Language (IDL)
+\item service specification (semantics) as text
 \end{compactitem}
 
 \section{Scalability} 
-is an important property, distributed systems should be scalable in
+is an important property, distributed systems should be scalable in \\
 \begin{compactitem}
-\item [\textbf{size}] number of nodes, users, resoruces
-\item [\textbf{geographic spread}]
-\item [\textbf{administration}]
+\item[\textbf{size}] number of nodes, users, resources
+\item[\textbf{geographic spread}] geographical distribution of users and resources (may lie far apart)
+\item[\textbf{administration}] manageability, even if even if it spans many independent administrative organizations
 \end{compactitem}
 
-\section{Problems}
-\subsection{Scalability Limitations}
+\subsection{Scaling in size}
+If more users or resources need to be supported, we are often confronted with the limitations of centralized services, data, and algorithms. Scalability in size is limitated by:
 \begin{compactitem}
-\item [\textbf{centralized services}] A single server for all users
-\item [\textbf{centralized data}] A single on-line telephone book
-\item [\textbf{centralized algorithms}] Doing routing based on complete information
+\item [\textbf{centralized services}] A single server for all users (bottleneck)
+\item [\textbf{centralized data}] A single on-line telephone book or non-distributed DNS
+\item [\textbf{centralized algorithms}] Doing routing based on \emph{complete} information
 \end{compactitem}
 \subsection{Geographical Scalability}
 \begin{compactitem}
-\item [\textbf{design}] existing distributed systems were designed for LANs
-\item [\textbf{communication}] LAN-based systems often use synchronous communication and is inherently unreliable (virtually always p2p)
+\item existing distributed systems were designed for LANs
+\item $\rightarrow$ LAN-based systems often use synchronous communication 
+\item $\rightarrow$ LAN-based systems provide relatively reliable communication
+\item $\rightarrow$ in LAN-based systems broadcasting is possible
+\item all of this is not possible in WAN $\Rightarrow$ problems in geographical scalability
 \end{compactitem}
-\subsection{Security Problems}
+\subsection{Scalability in administration}
+how to scale a distributed system across multiple, independent administrative domains. Important security questions arise:
 \begin{compactitem}
 \item [\textbf{selfprotection}] from malicious attacks from the new domain
-\item [\textbf{domainprotection}] the domain protects itself from attacks from a new distrb. sys.
+\item [\textbf{domainprotection}] the domain protects itself from attacks from a new domain
 \end{compactitem}
 
-\section{Scaling techiques}
+\subsection{Scaling techiques}
 \begin{compactitem}
 \item [\textbf{hiding communication latencies}] use only asynchronous communication
 \item [\textbf{distribution}] split components into smaller parts :)
 \item [\textbf{replication}] of components, chaching, enables load balancing
 \end{compactitem}
 
-\section{pitfalls}
-
+\section{Pitfalls}
+False assumptions that everyone makes when developing a distributed application for the first time:
 \begin{compactenum}
-\item reliable network
-\item secure network
-\item homogenous network
-\item constant topologgy
-\item zero latency
-\item infinite bandwith
-\item zero transport cost
-\item one administrator!
+\item The network is reliable.
+\item The network is secure.
+\item The network is homogeneous.
+\item The topology does not change.
+\item Latency is zero.
+\item Bandwidth is infinite.
+\item Transport cost is zero.
+\item There is one administrator.
 \end{compactenum}
 
 \section{Types of distributed systems}
+
+\subsection{Distributed Computing Systems}
+
+\subsubsection{Cluster Computing Systems}
+
 \begin{compactitem}
-\item computing systems
-\begin{compactitem}
-\item cluster computing
+\item the underlying hardware consists of a collection of similar workstations or PCs
+\item these closely connected by means of a high speed local-area network
+\item each node runs the same operating system
+\item used for instance for the building of supercomputers using off-the-shelf technology by hooking up a collection of relatively simple computers in a high-speed network
+\end{compactitem}
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=200px]{gfx/cluster_computing.png}
 	\caption{cluster computing}
 	\label{img:cluster_comp}
 \end{figure}
-\item grid computing(virtual organisation, geographically distributed and heterogenous))
+
+\subsubsection{Grid Computing Systems}
+
+\begin{compactitem}
+\item grid computing systems have a high degree of heterogeneity: no assumptions are made concerning hardware, operating systems, networks, administrative domains, secu- rity policies, etc.
+\item virtual organization: resources from different organizations are brought together to allow the collaboration of a group of people or institutions
+\item geographically distributed
 \end{compactitem}
-\item distributed inforamtion systems
-\begin{compactitem}
-\item transaction processing systems (database) \\
-\textbf{ACID} (atomicity, consistency, isolation, durability)
-\begin{compactitem}
+
+\subsection{Distributed Information Systems}
+
+\subsubsection{Transaction Processing Systems}
+A distributed system for processing transactions, e.g. a (distributed) database. 
+Transactions are defined through fulfilling the \textbf{ACID} (atomicity, consistency, isolation, durability) properties:
+\begin{compactdesc}
 \item[Atomic] To the outside world, the transaction, happens indivisibly
 \item[Consistens] The transaction does not violate system invariants
 \item[Isolated] Concurrent transactions do not interfere with each other
 \item[Duarble] Once a transaction commits, the changes are permanent
-\end{compactitem}
-\item enterprise systems
-\end{compactitem}
-\item Distributed pervasive systems\\
-small, wireless, adhoc, no administration\\
-home automation, health systems, sensor networks
+\end{compactdesc}
+
+\subsubsection{Enterprise Application Integration}
+
+\begin{compactitem}
+\item the more applications became decoupled from the databases they were built upon, the more evident it became that facilities were needed to integrate applications independent from their databases
+\item application components should be able to communicate directly with each other and not mere- ly by means of the request/reply behavior that was supported by transaction processing systems
+\item main idea was that existing applications could directly exchange information via communication middleware
+\item see RPC
 \end{compactitem}
 
-\textbf{Why do we need distributed systems?}\\
+\subsubsection{Distributed Pervasive Systems}
 \begin{compactitem}
-\item performance
-\item distribution inherent
-\item reliability
-\item incremental growth (scalability)
-\item sharing resources
+\item The distributed systems we have been discussing so far are largely characterized by their stability: nodes are fixed and have a more or less permanent and high-quality connection to a network
+\item in distributed pervasive systems, instability is the default behavior
+\item often small, wireless, adhoc, no administration
+\item Examples: Home automation, Health systems, Sensor Networks
 \end{compactitem}
 
 \chapter{Architectures of distributed Systems}
@@ -239,7 +268,7 @@ $\Rightarrow$ Softwarearchiticture
 \item how to build a system out of the components\\
 $\Rightarrow$ Systemarchitecture
 \end{compactitem}
-
+\ \\
 Middleware can  help to create distribution transparency\\
 
 Architecturestyles:\\
@@ -430,13 +459,13 @@ increment age\\
 \begin{compactenum}
 	\item The client procedure calls the client stub in the normal way.
 	\item The client stub builds a message and calls the local operating system.
-	\item The client's as sends the message to the remote as.
-	\item The remote as gives the message to the server stub.
+	\item The client's operating system sends the message to the remote operating system.
+	\item The remote operating system gives the message to the server stub.
 	\item The server stub unpacks the parameters and calls the server.
 	\item The server does the work and returns the result to the stub.
-	\item The server stub packs it in a message and calls its local as.
-	\item The server's as sends the message to the client's as.
-	\item The client's as gives the message to the client stub.
+	\item The server stub packs it in a message and calls its local operating system.
+	\item The server's as sends the message to the client's operating system.
+	\item The client's operating system gives the message to the client stub.
 	\item The stub unpacks the result and returns to the client.
 \end{compactenum}
 
