@@ -675,12 +675,12 @@ aka Message-queuing-system, Message-oriented-middleware (MoM) \\
 	\item building an efficient tree may be difficult
 	\item The quality of an application-level multicast tree is generally measured by three different metrics
 	\begin{compactenum}
-		\item Link stress: defined per link and counts how often a packet crosses the same link
-		\item Stretch / Relative Delay Penalty (RDP)\\
+		\item \textbf{Link stress}: defined per link and counts how often a packet crosses the same link
+		\item \textbf{Stretch / Relative Delay Penalty (RDP)}:\\
 			ratio in the delay between two nodes in the overlay, and the delay that those two nodes would experience in the underlying network: 
 			$\frac{\text{transmission time in overlay}}{\text{transmission time in delay/network}}$ \\
 			$\Rightarrow$ minimize aggregated stretch, average RDP over all note pairs
-		\item tree cost: global metric, generally related to minimizing the aggregated link costs \\
+		\item {tree cost}: global metric, generally related to minimizing the aggregated link costs \\
 			link cost = cost between end points\\
 				$\Rightarrow$ find minimal spanning tree	
 	\end{compactenum}
