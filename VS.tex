@@ -1117,47 +1117,117 @@ Access to shared resources\\
 	\label{img:mutex-centralized}
 \end{figure}
 
+\subsection*{Algorithm}
 \begin{compactitem}
 	\item one process is coordinator
-	\item coordinator alloes access onl to one process
+	\item when process wants access, it sends request to the coordinator
+	\item coordinator allows access only to one process
+	\item blocks competing processes by not replying and stores request in queue
+	\item when process is finished, it sends a message to the coordinator
+	\item coordinator takes the first item off the queue of deferred requests and sends that process a grant message
+\end{compactitem}
+
+\subsection*{Properties}
+\begin{compactitem}
+	\item simple
 	\item fair, requests are processed in order of arrival
-	\item no starvation
+	\item no starvation: no process ever waits forever
+	\item efficient: requires only three mes- sages per use of resource (request, grant, release)
 	\item easy to implement
+\end{compactitem}
+
+\subsection*{Problems}
+
+\begin{compactitem}
 	\item coordinator is single point of failure
-	\item (handle message loss with ack)
-	\item dead coordinator looks like permission denied
+	\item processes cannot distinguish a dead coordinator from "permission denied" ($\rightarrow$ use non-blocking scheme with "permission denied" messages instead of blocking ungranted requests
+	\item handle message loss with ack
 \end{compactitem}
 
 \section{Decentralized algorithm}
 \begin{compactitem}
-    \item Let $m$ be the count of the coordinators, that answered and allowd entry to the critical section
-	\item Each resource is replicated n times , rname\_i is the name of the replica\\
-	\item each replica has it's own controller, the name is a hash of the rname\_i
-	\item if rname is known, each process can generate the address of the controllers
-	\item access to resource when $m>n/2$ controllers grant it
-	\item Let $p$ probability that a coordinator resets during $\Delta t$\\
-		$P[k]= prob\lbrace k \text{ out of } m \text{ coordinators reset during } \Delta t\rbrace = \left( \binom{m}{k}\right) p^k (1-p)^{m-k}$
-	\item at least $2m-n\geq n+2-n=2$ coordinators need to reset in order to violate the voting. This happens with probability $\sum\limits_{k=2m-n}^n P[k]$\\
-		e.g. $\Delta t = 10s, n=32, m=0,75n$\\
-		Probability of violation in $10^{-40}$
-	\item if a process gets less than $m$ votes access to the resource is denied
-	\item random backoff, retry\\
-		many requests, noone gets access
-	\item heavy load $\Rightarrow$ drop in utilisation
+	\item voting algorithm that can be executed using a DHT-based system
 \end{compactitem}
 
-\section{A distributed algorithm}
+
+%\subsection*{Algorithm: Highlevel view from Tanenbaum}
+%
+%\begin{compactitem}
+%	\item each resource is replicated $n$ times
+%	\item every replica has its own coordinator for controlling the access by concurrent processes
+%	\item whenever a process wants to access the resource, it will simply need to get a majority vote from $m>n/2$ coordinators
+%	\item when a coordinator does not give permission, it will tell the requester
+%\end{compactitem}
+%
+%\subsection*{Algorithm: From lecture}
+%\begin{compactitem}
+%	\item Let $m$ be the count of the coordinators, that answered and allowed entry to the critical section
+%	\item Each resource is replicated n times , rname\_i is the name of the replica
+%	\item each replica has it's own controller, the name is a hash of the rname\_i
+%	\item if rname is known, each process can generate the address of the controllers
+%	\item access to resource when $m>n/2$ controllers grant it
+%	\item If permission to the resource is denied (i.e., a process gets less than $m$ votes), it is assumed that it will back off for a randomly chosen time, and make a next attempt later.
+%\end{compactitem}
+
+
+\subsection*{Algorithm}
+
+\begin{compactitem}
+	\item resource is known under its unique name $rname$
+	\item each resource is assumed to be replicated $n$ times
+	\item $rname_i$ is the unique name of the i-th replication of $rname$
+	\item every replica has its own coordinator for controlling the access, reachable under $hash(rname_i)$
+	\item given a resource's name, a process can generate the necessary $n$ keys, lookup each coordinator and request permission
+	\item permission to access the resource is granted, when a majority vote is acquired, i.e. $m>n/2$ permission messages  from  coordinators are received
+	\item when a coordinator does not give permission, it will tell the requester
+	\item If permission to the resource is denied (i.e., a process gets less than $m$ votes), it is assumed that it will back off for a randomly chosen time, and make a next attempt later.	
+\end{compactitem}
+
+\subsection*{Properties}
+
+\begin{compactitem}
+	\item makes the original centralized solution less vulnerable to failures of a single coordinator
+	\item when a coordinator crashes, it recovers quickly but will have forgotten any vote it gave before it crashed
+	\item coordinator may reset itself (i.e. crash) at arbitrary moments
+	\item risk: reset will make the coordinator forget that it had previously granted permission to some process 
+	\item may incorrectly grant this permission again to another process after its recovery=
+	\item Let $p$ probability that a coordinator resets during $\Delta t$
+	\item the probability $P[k]$ that $k$ out of $m$ coordinators reset during this $\Delta t$ is:\\
+		$P[k]= \left( \binom{m}{k}\right) p^k (1-p)^{m-k}$
+	\item at least $2m-n\geq n+2-n=2$ coordinators need to reset in order to violate the voting. This happens with probability $\sum\limits_{k=2m-n}^n P[k]$\\
+	\item Example: \\  $\Delta t = 10s, n=32, m=0,75n$ \\ Probability of violation is $10^{-40}$
+\end{compactitem}
+	
+\subsection*{Problems}
+\begin{compactitem}
+	\item heavy load $\Rightarrow$ drop in utilization
+	\item there are so many nodes competing to get access that eventually no one is able to get enough votes leaving the resource unused 	\item according to Tanenbaum/van Steen solvable, but no solution given
+\end{compactitem}
+
+\section{A distributed algorithm aka Ricart and Agrawala's Algorithm}
+
 \begin{compactitem}
 	\item deterministic
 	\item uses total ordering of events
+	\item assumption: no message loss
+\end{compactitem}
+
+
+\begin{compactitem}
+	
 	\item process that wants to access a resource sends out message containing (resourcename, process no, current localtime) to all other processes and itself
-	\item process receives a message. Either:\\
+	\item process receives a message. Either:
 		\begin{compactenum}
-			\item returns OK, if does not want a resource
-			\item queues request, if it has resource
-			\item compares timestamps, sends OK if timestamp is smallest, queues request and sends no reply else
+			\item if receiver does not want the resource: reply OK 
+			\item if it has resource: no reply, queues request
+			\item if receiver wants resource too, compares time stamps
+			\begin{compactitem}
+				\item if time stamp from remote request < time stamp from own request $\rightarrow$ reply OK
+				\item else queue request, no reply
+			\end{compactitem}	
+			\item As soon as all the permissions are in, process can access resource 
+			\item When finished, process sends OK messages to all processes in queue and empties queue		
 		\end{compactenum}
-	\item grants mutual exclusion without deadlocks or starvation
 \end{compactitem}
 
 \begin{figure}[h]
@@ -1166,13 +1236,15 @@ Access to shared resources\\
 	\label{img:mutex-distributed}
 \end{figure}
 
-
-Problems:
+\subsection*{Properties}
 \begin{compactitem}
-	\item node failure $\Rightarrow$ dito
+	\item grants mutual exclusion without deadlocks or starvation
+\end{compactitem}
+\subsection*{Problems}
+\begin{compactitem}
+	\item node failure: single point of failure has been replaced by n points of failure. Any process crashes $\rightarrow$ no access granted
     \item load, all processes take part in decisions (needs 2(n-1) messages for n processes)
-	\item algorithm is slower, more complicated, more expensive, less robust than centralised alg.
-	\item not a good algorithm
+	\item algorithm is slower, more complicated, more expensive, less robust than centralized algorithm $\rightarrow$ not a good algorithm
 \end{compactitem}
 
 \section{Token Ring Algorithm}
@@ -1182,19 +1254,27 @@ Problems:
 %	\includegraphics[width=300px]{gfx/mutex-token.png}
 %	\label{img:mutex-token}
 %\end{figure}
+\subsection*{Algorithm}
 \begin{compactitem}
 	\item processes form a logical ring
-	\item token circulates
-	\item owner of token can access resource
-	\item simple and efficient
-	\item not fair under heavy load
+	\item token continuously circulates around the ring
+	\item owner of token can access resource, passes token when finished (not allowed to immediately enter resource again)
 \end{compactitem}
-Problems:\begin{compactitem}
-	\item token loss -> regenerating?
-	\item crashing nodes
+\subsection*{Properties}
+\begin{compactitem}
+	\item simple and efficient
+	\item no starvation (once a process needs resource, at worst it will have to wait for every other process to use the resource once).
+\end{compactitem}
+\subsection*{Problems}
+\begin{compactitem}
+	\item If the token is ever lost, it must be regenerated
+	\item detecting token loss is is difficult, since the amount of time between appearances of the token is unbounded
+	\item crashing nodes pose problem, but recovery is easier than in the other cases (dead node detection via acks of token delivery)
+	\item not fair under heavy load (according to Wolter, not Tanenbaum)
 \end{compactitem}
 
 \section{Comparison}
+
 \begin{tabular} {l|l|l|l}
 Algorithm&messages per entry/exit&Delay before access&Problems\\
 \hline
@@ -1203,7 +1283,17 @@ Decentralised&$3mk$&$2m$&starvation, low efficiency\\
 Distributed&$2(n-1)$&$2(n-1)$&crash of any process\\
 Token Ring& 1 to $\infty$&$0$ to $\infty$&lost token, process crash, fairness?
 \end{tabular}
+\ \\
+\begin{compactdesc}
+	\item[messages per entry/exit] the number of messages required for a process to access and release a shared resource
+	\item[Delay before access] the delay (in message times) before access can occur (assuming messages are passed sequentially over a network)
+\end{compactdesc}
 
+\begin{compactitem}
+	\item all algorithms except the decentralized one suffer badly in the event of crashes
+	\item the distributed algorithms are even more sensitive to crashes than the centralized one
+	\item The decentralized algorithm is less sensitive to crashes, but processes may suffer from starvation and special measures are needed to guarantee efficiency
+\end{compactitem}
 
 \input{chapter/leader.tex}
 
