@@ -1,6 +1,18 @@
 \chapter{Leader Election algorithms}
-\section{leader election in a synchronous ring}
-Network is a graph $G$ consisting of $n$ nodes connected by unidirectional links. Use $\mod n$ for labels\\
+
+\begin{compactitem}
+	\item many distributed algorithms require one process to act as coordinator, initiator, or otherwise perform some special role
+	\item usually, it does not matter which process takes on this responsibility
+	\item but one process has to be elected to take over the role 
+	\item In general, election algorithms attempt to locate the process with the highest process number and designate it as coordinator
+\end{compactitem}
+
+\section{Leader election in a synchronous ring}
+\begin{compactitem}
+	\item Network is a graph $G$ consisting of $n$ nodes connected by unidirectional links. Use $\mod n$ for labels
+	\item Synchronous time model: all processes operate in lock-step, i.e. messages are passed in synchronous rounds (needs notion of global time)
+\end{compactitem}
+
 \begin{compactitem}
 \item elected node is ``leader''
 \item leader election is not possible for identical processes/nodes
@@ -18,11 +30,19 @@ Network is a graph $G$ consisting of $n$ nodes connected by unidirectional links
 \item One or more $p_i$s can take the initiative and start an election, by sending an election message containing their id to $p_{i+1}$
 \end{compactitem}
 
-\begin{lstlisting}[mathescape, language=VHDL]
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=310px]{gfx/lcr.png}
+	\captionof{figure}{LCR algorithm}
+	\label{img:lcr}
+\end{minipage}
+
+\subsubsection*{Algorithm (from lecture) }
+
+\begin{lstlisting}[mathescape, language=VHDL, keywordstyle=\ttfamily]
 For each node
 	u = a UID, initially i's UID
 	send = a UID or NULL, initially i's UID
-	status = {unknown, leader} initially unknown
+	status $\in$ {unknown, leader} initially unknown
 
 message generation
 	send = current value of send to node i+1
@@ -30,19 +50,47 @@ message generation
 state transitions
 	send = NULL
 	if incoming message is v (a UID) then
-		v>u: 	send v
-		v=u: 	status=leader
-		v<u: 	do nothing
+		v > u: 	send v
+		v = u: 	status=leader
+		v < u: 	do nothing
+\end{lstlisting}
+\ \\
+
+\subsubsection*{Algorithm (alternative formulation)}
+\begin{lstlisting}[mathescape]
+upon receiving no message
+	send uid_$i$ to left (clockwise)
+
+upon receiving m from right
+	if m.uid > uid$_i$:
+		send m to left
+	if m.uid < uid$_i$:
+		discard m
+	if m.uid = uid$_i$:
+		leader := i
+		send <terminate, i> to left 12: terminate
+
+upon receiving <terminate, i> from right
+	leader := i
+	send <terminate, i> to left 
+	terminate
 \end{lstlisting}
 
-\begin{minipage}{\linewidth}
-	\centering\includegraphics[width=310px]{gfx/lcr.png}
-	\captionof{figure}{LCR algorithm}
-	\label{img:lcr}
-\end{minipage}
+\subsubsection*{Algorithm: Informal}
+
+\begin{compactitem}
+	\item One or more $p_i$'s can take the initiative and start an election, by sending an election message containing their id to $p_{i+1}$
+	\item When a process receives a UID, it compares this one to its own:
+	\begin{compactitem}
+		\item If the incoming UID is greater, then it passes this UID to the next process.
+		\item If the incoming UID is smaller, then it discards it
+		\item If it is equal, then the process declares itself the leader.
+	\end{compactitem}
+	\item (the received uid is not saved, even if it is greater than the own uid, i.e. received uids are always compared against the own uid)
+\end{compactitem}
 
 
-\textbf{Correctness}\\
+\subsubsection*{Correctness}
 Let max index of process with $max(UID)$ let $u_{max}$ is its UID\\
 Show:\\
 \begin{compactitem}
@@ -64,7 +112,7 @@ find UID at distance $r$ from $i_{max}$ as it has to go once around.\\
 Show $(iv)$ for all r: Induction\\
 then (iii)\\
 
-\textbf{Complexity}\\
+\subsubsection*{Complexity}
 \begin{compactitem}
 \item time complexity is $n$ rounds
 \item communication complexity $\mathcal{O}(n^2)$
@@ -73,14 +121,31 @@ then (iii)\\
 \end{compactitem}
 
 \subsection{Algorithm of Hirschberg and Sinclair (HS-Alg)}
-- reduces number of messages to $\mathcal{O}(n \log n)$\\
+\begin{compactitem}
+	\item election needs to be started at every node, e.g. by a broadcast to all nodes to start leader election
+\end{compactitem}
 
+\subsubsection*{Algorithm (informal)}
+\begin{compactitem}
+	\item ring is bidirectional
+	\item each process $p_i$ operates in phases
+	\item in each phase r, pi sends out “tokens” containing uidi in both direction
+	\item Tokens are intended to travel distance $2^r$ and return to $p_i$
+	\item however, tokens may not make it back
+	\item Token continues outbound only if greater than tokens on path
+	\item Otherwise discarded
+	\item All processes always forward tokens moving inbound
+	\item if $p_i$ receives its own token while it is going outbound, $p_i$ is the leader
+\end{compactitem}
+
+\subsubsection{Algorithm}
 \begin{lstlisting}[mathescape, language=VHDL]
 each process has states with components
 	u, UID: initially i's UID
 	send+ containing NULL or (UID, flag{in, out}, hopcount): initially (i's UID, out, 1)
 	send- as send+
-	status $\in$E{unknown, leader} initailly unknown phase $\in N$: initially 0
+	status $\in${unknown, leader} initailly unknown 
+	phase $\in N$: initially 0
 
 message generation
 	send current send+ to process i+1
@@ -106,10 +171,24 @@ state transitions
 		send+=(u,out, $2^{phase}$)
 		send-=(u,out, $2^{phase}$)
 \end{lstlisting}
-\textbf{Complexity}\\
-Total number of phases is at most $8n(1+\lceil\log(n)\rceil)$\\
-the total number of messages is at most in $(1+\lceil(\log(n))\rceil\ \approx \mathcal{O}(n\log n)$\\
-Total time complexity is at most $3n$ if $n$ power of $2$ otherwise is $5n$\\
+\ \\
+
+\subsubsection{Complexity}
+\begin{compactitem}
+	\item \textbf{Communication complexity}
+	\begin{compactitem}
+		\item Total number of phases is at most $8n(1+\lceil\log(n)\rceil)$
+		\item the total number of messages is at most in $(1+\lceil(\log(n))\rceil$	
+		\item $\Rightarrow \mathcal{O}(n\log n)$
+	\end{compactitem}
+	\item \textbf{Total time complexity}
+	\begin{compactitem}
+		\item is at most $3n$ if $n$ power of $2$ otherwise is $5n$	
+	\end{compactitem}
+\end{compactitem}
+
+
+
 
 \begin{minipage}{\linewidth}
 	\centering\includegraphics[width=310px]{gfx/HS_p1.png}
@@ -146,17 +225,21 @@ $3n+\sum\limits _{k=1}^{\left\lceil logn\right\rceil -1}\left(8n\cdot\left\lfloo
 
 \subsection{Time slice algorithm}
 \begin{compactitem}
-\item ring size $n$ is known
-\item unidirectional
-\item elects minimum
+	\item ring size $n$ is known
+	\item unidirectional
+	\item elects smallest UID
+	\item Counter-example algorithm: impractical, but useful as lower bound
+	\item TimeSlice is much more strongly based on synchronization than LCR
+	\begin{compactitem}
+		\item The fact that a node did not receive a message in a certain round provides information
+	\end{compactitem}
 \end{compactitem}
 
 
 \begin{lstlisting}[mathescape, language=VHDL]
 	phases with n rounds
-	in phase r consisting of rounds $(v-1) \cdot n+1$, $\dots$,vn
-	only a token carrying UID v is permitted
-	if a process  with UID v exists, then it elects itself the leader and sends a token with it's UID
+	in phase v consisting of rounds $(v-1) \cdot n+1$,$\dots$,v$\cdot$n only a token carrying UID v is permitted
+	if a process with UID v exists and round $(v-1)\cdot n+1$ is reached without having received any messages, then it elects itself the leader and sends a token with it's UID
 \end{lstlisting}
 
 \begin{minipage}{\linewidth}
@@ -165,46 +248,51 @@ $3n+\sum\limits _{k=1}^{\left\lceil logn\right\rceil -1}\left(8n\cdot\left\lfloo
 	\label{img:timeslice}
 \end{minipage}
 
-\textbf{Complexity}: number of messages is n, time complexity $n\cdot u_{min}$
+
+\subsubsection{Complexity}
+\begin{compactdesc}
+	\item[Communication complexity] number of messages is $\mathcal{O}(n)$
+	\item[Time complexity] $n\cdot uid_{min}$
+\end{compactdesc}
 
 \subsection{Variable speeds algorithm}
+
+\subsubsection*{Algorithm}
 \begin{compactitem}
 \item each process $i$ creates a token to travel around the ring, carrying UID u of origin
 \item tokens travel at differrent speed
-\item token carrying UID v travels  1 messages every $2^{v}$ rounds
+\item token carrying UID v travels  1 messages every $2^{v}$ rounds (slow down)
 \item each process memorises smallest UID
-\item return to origin elects UID
+\item return to origin elects UID (smallest UID is selected as leader)
 \end{compactitem}
 
-\textbf{Complexity}\\
-\dots
+\subsubsection*{Complexity}
 
-
-How many messages in total? $\sum\limits_{k=1}^n \frac{1}{2^{k-1}} (<2n)$\\
-Time complexity: $n\cdot 2^{{uid}_{min}}$
+\begin{compactdesc}
+	\item[Communication complexity] $\sum\limits_{k=1}^n \frac{1}{2^{k-1}} (<2n) \Rightarrow \mathcal{O}(n)$
+	\item[Time complexity] $n\cdot uid_{min}$ (i.e. slow)
+\end{compactdesc}
 
 \section{Leader election in a wireless environment}
 \begin{compactitem}
 \item consider time needed for communication
 \item every node can initiate an election
-\item the select is based on information like battery lifetime or processing power
+\item the select is based on information like battery lifetime or processing power (that is the value sent back in step 7/8)
 \item the nodes only participate in one election, also there are more than one initiating nodes
 \end{compactitem}
 
-\textbf{Process to choose a leader:}
-
-Look at figure \ref{img:Leader_adhoc}
-
+\subsubsection*{Algorithm}
 \begin{compactenum}
 \item one node starts the election and sends ELECT to its neighbours
 \item the node, which sended the ELECT message becomes the parent of the node
 \item the node sends the request to all neighbours except the parent node
 \item the node acknowledges the parent after all the children acknowledged the election
-\item if a node recieves an ELECT message, but has already a parent, it responses immediately, that another node is its parent
+\item if a node recieves an ELECT message, but has already a parent, it responses immediately, that another node is its parent (i.e. an ack without a value)
 \item if a the node has only neighbours, which are the parent or have other parents, the node becomes a leaf and sends back its value
-\item the waiting nodes send the node id and the highest value of the childs to the parent, after all acknowledged
+\item the waiting nodes send the node id and the max value of the children (or himself) to the parent, after all acknowledged
 \item in the end, the initiating node knows the node with the highest value and broadcast to all nodes, that this is the leader
 \end{compactenum}
+
 \begin{minipage}{\linewidth}
 	\centering\includegraphics[width=310px]{gfx/Leader_adhoc.png}
 	\captionof{figure}{Election in wireless networks}
@@ -214,9 +302,9 @@ Look at figure \ref{img:Leader_adhoc}
 \section{The Bully Algorithm(flooding) (Garcia-Mdina, 1982)}
 - process P holds election
 \begin{compactenum}
-\item P sends ELECT message to all processes with higher number
-\item P wins if there is no one responses $\Rightarrow$ P is leader and sends COORDINATOR message to all available nodes.
-\item if Q (with higher number) answers with OK, Q takes over and sends ELECT to all higher nodes again.
+\item P sends ELECT message to all processes with higher uid
+\item P wins if there are no responses $\Rightarrow$ P is leader and sends COORDINATOR message to all available nodes.
+\item if Q (with higher uid) answers with OK, Q takes over and sends ELECT to all higher nodes again.
 \end{compactenum}
 
 \begin{minipage}{\linewidth}
@@ -224,6 +312,4 @@ Look at figure \ref{img:Leader_adhoc}
 	\captionof{figure}{The bully election algorithm}
 	\label{img:leader1}
 \end{minipage}
-
-%BILD DINGDINGDING
 
