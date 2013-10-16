@@ -163,17 +163,25 @@ The idea here is to monitor the client's reads and writes and add an ID to each 
 	\item atomic multicast requirement\\
 	all requests arrive at all servers in the same order
 \end{compactitem}
-\subsection{Distributed Commit}
+
+\section{Distributed Commits}
+
 \begin{compactitem}
-	\item an operatio is performed by group or non of the nodes of the group
+	\item distributed algorithms that coordinate all the processes that participate in a distributed atomic transaction on whether to commit or abort (roll back) the transaction
+	\item specialized type of consensus protocol
+\end{compactitem}
+
+\begin{compactitem}
+	\item an operation is performed by group or non of the nodes of the group
 	\item reliable multicast operation = delivery of message
 	\item distributed transaction: operation = execution of transaction
 	\item uses coordinator
-	\item one-phased commit
-	%bild?
-	\begin{compactitem}
-	\item distributed transaction involves several processors each on a different machine\\
-	2 phases with each 2 steps:\\
+\end{compactitem}
+
+\subsection{Two-Phase commit (2PC) (Jim Gray, 1978)}
+
+\begin{compactitem}
+	\item distributed transaction involves several processors each on a different machine
 	\begin{compactenum}
 		\item coordinator $\xrightarrow{vote\ request}$ all participants
 		\item participant $\xrightarrow[vote\ abort]{vote\ commit}$ coordinator
@@ -183,58 +191,83 @@ The idea here is to monitor the client's reads and writes and add an ID to each 
 		coordinator $\xrightarrow{global-abort}$ all participants\\
 		\item if commit, then participants locally commit\\
 		else participants locally abort\\
-			\begin{minipage}{\linewidth}
-			\centering\includegraphics[width=310px]{gfx/2pc.png}
-			\captionof{figure}{2PC}
-			\label{img:2pc}
-			\end{minipage}
-		\item two-phase commit (2PC) (Jim Gray, 1978)
 	\end{compactenum}
-	Problems if failures occur\\
+\end{compactitem}
+
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=310px]{gfx/2pc.png}
+	\captionof{figure}{2PC}
+	\label{img:2pc}
+\end{minipage}
+
+\subsubsection{Properties}
+\begin{compactitem}
+	\item The protocol achieves its goal even in many cases of temporary system failure (involving either process, network node, communication, etc. failures)
+	\item it is not resilient to all possible failure configurations
 	\begin{compactitem}
 		\item coordinator blocks in: wait
 		\item participant blocks in: ready, init
 	\end{compactitem}
-	$\Rightarrow$ blocking commit protocol
-	\item use timeouts to unblock
+	\item $\Rightarrow$ blocking commit protocol
+\end{compactitem}
+
+\subsubsection*{Variant: use timeouts to unblock}
+\begin{compactitem}
 	\item repeat request
-	\item in state ready P con contact Q\\
+	\item in state ready P can contact Q\\
 	if Q is in contact, then coordinator died after sending to Q\\
 	before sending to P $\Rightarrow$ P can commit\\
 	if Q is in abort $\Rightarrow$ abort\\
 	if Q is in init $\Rightarrow$ abort\\
 	if Q is in ready $\rightarrow$ abort or no decision contact R\\
+\end{compactitem}
+
+\subsection{One-Phase Commit}
+
+\begin{compactitem}
+	\item performance optimization of 2PC
+	\item eliminates the prepare/voting phase of 2PC
+	\item 2PC: enables every participant in a transaction to abort if the ACID properties of the local transaction branches are not guaranteed
+	\item 1PC makes the assumption that these properties are guaranteed at commit time for every local transaction branch
+	\item In other words, the ACID properties of local transaction branches are supposed to be ensured before the 1PC protocol is triggered
+	\item $\Rightarrow$ more efficient / performant, but needs stronger assumptions on the underlying transaction system
+	\item Quelle: Maha Abdallah et al (1998): One-Phase Commit: Does it make sense? 
+\end{compactitem}
+
+\subsection{Three-phase commit (3PC) (Steen, 1981)}
+
+\begin{minipage}{\linewidth}
+	\centering\includegraphics[width=310px]{gfx/3pc.png}
+	\captionof{figure}{3PC}
+	\label{img:3pc}
+\end{minipage}
+
+\begin{compactitem}
+	\item robustness optimization of 2PC
+	\item avoids blocking in the presence of fail-stop crashes
+	\item states satisfy the following conditions
+	\begin{compactenum}
+		\item there is no state from which directly follow commit or abort follows
+		\item there is no state in which it is not possible to make a final decision and from which a transaction to a commit state can be made
+	\end{compactenum}
+	\item $\Rightarrow$ necessary and sufficient conditions for non-blocking commit protocol
+	\item abort branch as in 2PC
+	\item blocking states: paritcipant: init -> abort\\
+	coordinator: wait --> abort\\
+	precommit, knowing P voted for commit\\
+	$\Rightarrow$ global-commit+recovery of P\\
+	participant: ready\\
+		coordinator failed as in 2PC\\
+		precommit: contact other participants: if Q in precommit $\Rightarrow$ commit\\
+		if Q is in init $\Rightarrow$ abort
+	\item Q can be in INIT only if no participant is in precommit
+	\item participant can reach precommit only if coordinator was in precommit already
+	\item In 2PC a crashed participant could recover to commit, while all others are still in ready
+	\item if one process is in ready recovery can be only to states ready, init, abort, precommit\\
+	$\Rightarrow$ surviving processes can come to final solution
 	\end{compactitem}
-	\item Three-phase commit (3PC) (Steen, 1981)\\
-	\begin{compactitem}
-		\item avoids blocking in the presence of fail-stop crashes
-		\item states satisfy the following conditions\\
-		\begin{compactenum}
-			\item there is no state from which directly follow commit or abort follows
-			\item there is no state in which it is not possible to make a final decision and from which a transaction to a commit state can be made
-		\end{compactenum}
-		$\Rightarrow$ necessary and sufficient conditions for non-blocking commit protocol\\
-			\begin{minipage}{\linewidth}
-			\centering\includegraphics[width=310px]{gfx/3pc.png}
-			\captionof{figure}{3PC}
-			\label{img:3pc}
-			\end{minipage}
-		\item abort branch as in 2PC
-		\item blocking states: paritcipant: init -> abort\\
-		coordinator: wait --> abort\\
-		precommit, knowing P voted for commit\\
-		$\Rightarrow$ global-commit+recovery of P\\
-		participant: ready\\
-			coordinator failed as in 2PC\\
-			precommit: contact other participants: if Q in precommit $\Rightarrow$ commit\\
-			if Q is in init $\Rightarrow$ abort
-		\item Q can be in INIT only if no participant is in precommit
-		\item participant can reach precommit only if coordinator was in precommit already
-		\item In 2PC a crashed participant could recover to commit, while all others are still in ready
-		\item if one process is in ready recovery can be only to states ready, init, abort, precommit\\
-		$\Rightarrow$ surviving processes can come to final solution
-	\end{compactitem}
-	\item Paxos (Leslie Lamport, late 80s)
+	
+\subsection{Paxos Commit (Leslie Lamport, late 80s)}
 	\begin{compactitem}
 		\item does not block with at most n/2-1 failures\\
 		%Bild!!!! <- Tobi!!!!
@@ -245,6 +278,6 @@ The idea here is to monitor the client's reads and writes and add an ID to each 
 		\end{compactitem}
 		Duelling proposer
 	\end{compactitem}
-\end{compactitem}
+
 
 
